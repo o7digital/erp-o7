@@ -1,4 +1,4 @@
-import type { ElectronicInvoicingProfile } from "../types.js";
+import type { ElectronicInvoicingProfile } from "../types";
 
 const largeOrMidMarket = ["LARGE", "MID_MARKET"] as const;
 const smallOrMicro = ["SMALL_MEDIUM", "MICRO"] as const;
@@ -207,4 +207,3 @@ export const franceProfile: ElectronicInvoicingProfile = {
     }
   ]
 };
-

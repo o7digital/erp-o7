@@ -1,3 +1,2 @@
-export * from "./einvoicing/registry.js";
-export * from "./einvoicing/types.js";
-
+export * from "./einvoicing/registry";
+export * from "./einvoicing/types";

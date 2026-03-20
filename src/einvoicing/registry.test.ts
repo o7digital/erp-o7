@@ -5,8 +5,8 @@ import {
   getCountryProfile,
   listCountryProfiles,
   validateSetup
-} from "./registry.js";
-import type { EInvoicingSetup } from "./types.js";
+} from "./registry";
+import type { EInvoicingSetup } from "./types";
 
 describe("country profile registry", () => {
   it("returns the two initial country profiles", () => {

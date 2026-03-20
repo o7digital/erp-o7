@@ -1,4 +1,4 @@
-import type { ElectronicInvoicingProfile } from "../types.js";
+import type { ElectronicInvoicingProfile } from "../types";
 
 export const mexicoProfile: ElectronicInvoicingProfile = {
   country: "MX",
@@ -164,4 +164,3 @@ export const mexicoProfile: ElectronicInvoicingProfile = {
     }
   ]
 };
-

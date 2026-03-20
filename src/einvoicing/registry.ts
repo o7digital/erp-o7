@@ -1,5 +1,5 @@
-import { franceProfile } from "./profiles/fr.js";
-import { mexicoProfile } from "./profiles/mx.js";
+import { franceProfile } from "./profiles/fr";
+import { mexicoProfile } from "./profiles/mx";
 import type {
   CompanySize,
   ComplianceFlow,
@@ -11,7 +11,7 @@ import type {
   InvoiceFormat,
   RequirementScope,
   ValidationIssue
-} from "./types.js";
+} from "./types";
 
 const REGISTRY: Record<CountryCode, ElectronicInvoicingProfile> = {
   FR: franceProfile,
@@ -176,4 +176,3 @@ export function validateSetup(setup: EInvoicingSetup): ValidationIssue[] {
 
   return issues;
 }
-
