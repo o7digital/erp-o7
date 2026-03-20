@@ -1,0 +1,32 @@
+{
+  "country": "FR",
+  "companySize": "SMALL_MEDIUM",
+  "company": {
+    "legalName": "O7 DIGITAL FRANCE SAS",
+    "siret": "12345678900012",
+    "vatNumber": "FR12123456789",
+    "billingAddressPostalCode": "75008",
+    "billingAddressCountry": "FR"
+  },
+  "buyer": {
+    "legalName": "CLIENT DEMO SAS",
+    "siret": "98765432100011",
+    "vatNumber": "FR98987654321",
+    "billingAddressPostalCode": "69002",
+    "billingAddressCountry": "FR"
+  },
+  "invoice": {
+    "issueDate": "2026-03-20",
+    "invoiceNumber": "FAC-2026-0001",
+    "supplyDate": "2026-03-20",
+    "currency": "EUR",
+    "vatBreakdown": "20",
+    "format": "FACTUR_X"
+  },
+  "provider": {
+    "platformType": "PDP",
+    "platformName": "PDP_DEMO",
+    "routingAddress": "demo@invoice.example"
+  }
+}
+

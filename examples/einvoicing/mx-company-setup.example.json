@@ -1,0 +1,32 @@
+{
+  "country": "MX",
+  "companySize": "SMALL_MEDIUM",
+  "company": {
+    "legalName": "O7 DIGITAL MEXICO SA DE CV",
+    "rfc": "ABC010203AB1",
+    "taxRegimeCode": "601",
+    "fiscalZipCode": "11560"
+  },
+  "buyer": {
+    "legalName": "CLIENTE DEMO SA DE CV",
+    "rfc": "XAXX010101000",
+    "taxRegimeCode": "601",
+    "fiscalZipCode": "06000",
+    "cfdiUse": "G03"
+  },
+  "invoice": {
+    "issueDate": "2026-03-20",
+    "documentType": "I",
+    "currency": "MXN",
+    "paymentMethod": "PUE",
+    "paymentWay": "03",
+    "placeOfIssueZipCode": "11560",
+    "taxObjectCode": "02",
+    "format": "CFDI_4_0_XML"
+  },
+  "provider": {
+    "stampingMode": "PAC",
+    "platformName": "PAC_DEMO"
+  }
+}
+
