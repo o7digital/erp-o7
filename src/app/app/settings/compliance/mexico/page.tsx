@@ -11,8 +11,10 @@ import {
   providerConnections,
   taxIdentities
 } from "@/lib/erp-data";
+import { getDemoI18n } from "@/lib/server-i18n";
 
-export default function ComplianceMexicoPage() {
+export default async function ComplianceMexicoPage() {
+  const { txt } = await getDemoI18n();
   const mexicoIdentity = taxIdentities.find((identity) => identity.country === "MX");
   const mexicoProvider = providerConnections.find((provider) => provider.country === "MX");
   const mexicoSeries = invoiceSeries.find((series) => series.country === "MX");
@@ -24,48 +26,53 @@ export default function ComplianceMexicoPage() {
   return (
     <div className="page-stack">
       <PageHeader
-        title="Compliance Mexico"
-        description="Setup CFDI 4.0 natif dans l'ERP pour RFC, razon social, regimen fiscal, codigo postal et uso CFDI."
+        title={txt("Compliance Mexico")}
+        description={txt(
+          "Setup CFDI 4.0 natif dans l'ERP pour RFC, razon social, regimen fiscal, codigo postal et uso CFDI."
+        )}
         actions={
           <div className="button-row">
             <Link href="/app/settings/compliance/providers" className="button button-secondary">
-              Provider settings
+              {txt("Provider settings")}
             </Link>
             <Link href="/app/settings/tax-identities" className="button button-secondary">
-              Tax identities
+              {txt("Tax identities")}
             </Link>
             <Link href="/app/settings/invoice-series" className="button">
-              Invoice series
+              {txt("Invoice series")}
             </Link>
           </div>
         }
       />
 
       <div className="two-columns">
-        <SectionCard title="Readiness MX" description="Etat du module CFDI 4.0 pour l'entite active.">
+        <SectionCard title={txt("Readiness MX")} description={txt("Etat du module CFDI 4.0 pour l'entite active.")}>
           <div className="info-grid">
             <div className="info-item">
-              <span>country</span>
+              <span>{txt("country")}</span>
               <strong>MX</strong>
             </div>
             <div className="info-item">
-              <span>module</span>
+              <span>{txt("module")}</span>
               <strong>{mexicoSetting?.moduleLabel}</strong>
             </div>
             <div className="info-item">
-              <span>readiness</span>
+              <span>{txt("readiness")}</span>
               <strong>
-                <StatusBadge value={mexicoSetting?.readiness ?? "not_configured"} />
+                <StatusBadge value={txt(mexicoSetting?.readiness ?? "not_configured")} />
               </strong>
             </div>
             <div className="info-item">
-              <span>provider</span>
+              <span>{txt("provider")}</span>
               <strong>{mexicoProvider?.name}</strong>
             </div>
           </div>
         </SectionCard>
 
-        <SectionCard title="Champs CFDI 4.0" description="Configuration mock directement exploitable par le module invoices.">
+        <SectionCard
+          title={txt("Champs CFDI 4.0")}
+          description={txt("Configuration mock directement exploitable par le module invoices.")}
+        >
           <div className="form-grid">
             <div className="field">
               <label className="field-label">rfc_emisor</label>
@@ -96,7 +103,7 @@ export default function ComplianceMexicoPage() {
       </div>
 
       <div className="two-columns">
-        <SectionCard title="Provider et numerotation" description="Connexion PAC et serie invoice active.">
+        <SectionCard title={txt("Provider et numerotation")} description={txt("Connexion PAC et serie invoice active.")}>
           <ul className="key-value-list">
             <li>
               <span>provider_type</span>
@@ -117,14 +124,14 @@ export default function ComplianceMexicoPage() {
           </ul>
         </SectionCard>
 
-        <SectionCard title="Validations MX" description="Erreurs et warnings retournes sur les factures MX.">
+        <SectionCard title={txt("Validations MX")} description={txt("Erreurs et warnings retournes sur les factures MX.")}>
           <ul className="list">
             {mexicoIssues.map((issue) => (
               <li key={`${issue.field}-${issue.message}`} className="list-item">
                 <strong>{issue.field}</strong>
-                <span className="muted">{issue.message}</span>
+                <span className="muted">{txt(issue.message)}</span>
                 <div>
-                  <StatusBadge value={issue.severity} />
+                  <StatusBadge value={txt(issue.severity)} />
                 </div>
               </li>
             ))}
@@ -132,7 +139,7 @@ export default function ComplianceMexicoPage() {
         </SectionCard>
       </div>
 
-      <SectionCard title="Regles actives MX" description="Champs requis issus du profil CFDI 4.0.">
+      <SectionCard title={txt("Regles actives MX")} description={txt("Champs requis issus du profil CFDI 4.0.")}>
         <ul className="list">
           {countryProfiles.MX.requiredFields.company
             .concat(countryProfiles.MX.requiredFields.buyer)
@@ -140,7 +147,7 @@ export default function ComplianceMexicoPage() {
             .map((field) => (
               <li key={field.key} className="list-item">
                 <strong>{field.key}</strong>
-                <span className="muted">{field.description}</span>
+                <span className="muted">{txt(field.description)}</span>
               </li>
             ))}
         </ul>

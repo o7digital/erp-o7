@@ -15,8 +15,10 @@ import {
   tasks
 } from "@/lib/erp-data";
 import { formatCurrency } from "@/lib/formatters";
+import { getDemoI18n } from "@/lib/server-i18n";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const { languageTag, txt } = await getDemoI18n();
   const pipelineValue = deals.reduce((total, deal) => total + deal.amount, 0);
   const readyInvoices = invoices.filter((invoice) => invoice.providerStatus === "ready").length;
   const blockedTasks = tasks.filter((task) => task.status === "Blocked").length;
@@ -25,34 +27,52 @@ export default function DashboardPage() {
   return (
     <div className="page-stack">
       <PageHeader
-        title="Dashboard"
-        description="Vue d'ensemble de l'activite ERP, du pipe commercial et de la conformite facture electronique."
+        title={txt("Dashboard")}
+        description={txt(
+          "Vue d'ensemble de l'activite ERP, du pipe commercial et de la conformite facture electronique."
+        )}
         actions={
           <div className="button-row">
             <Link href="/app/invoices" className="button">
-              Ouvrir Invoices
+              {txt("Ouvrir Invoices")}
             </Link>
             <Link href="/app/settings/compliance" className="button button-secondary">
-              Ouvrir Compliance
+              {txt("Ouvrir Compliance")}
             </Link>
           </div>
         }
       />
 
       <div className="stats-grid">
-        <StatCard label="Pipeline ouvert" value={formatCurrency(pipelineValue, "EUR")} detail="3 deals actifs" />
-        <StatCard label="Factures prêtes" value={String(readyInvoices)} detail="flux FR/MX prêts a emettre" />
-        <StatCard label="Tasks bloquees" value={String(blockedTasks)} detail="actions compliance a lever" />
-        <StatCard label="Factures a corriger" value={String(invoicesWithIssues)} detail="validations avec erreurs" />
+        <StatCard
+          label={txt("Pipeline ouvert")}
+          value={formatCurrency(pipelineValue, "USD", languageTag)}
+          detail={txt("3 deals actifs")}
+        />
+        <StatCard
+          label={txt("Factures prêtes")}
+          value={String(readyInvoices)}
+          detail={txt("flux FR/MX prêts a emettre")}
+        />
+        <StatCard
+          label={txt("Tasks bloquees")}
+          value={String(blockedTasks)}
+          detail={txt("actions compliance a lever")}
+        />
+        <StatCard
+          label={txt("Factures a corriger")}
+          value={String(invoicesWithIssues)}
+          detail={txt("validations avec erreurs")}
+        />
       </div>
 
       <div className="two-columns">
         <SectionCard
-          title="Pipeline actif"
-          description="Opportunites en cours et prochaine action commerciale."
+          title={txt("Pipeline actif")}
+          description={txt("Opportunites en cours et prochaine action commerciale.")}
           action={
             <Link href="/app/pipeline" className="button button-ghost">
-              Pipeline
+              {txt("Pipeline")}
             </Link>
           }
         >
@@ -62,7 +82,7 @@ export default function DashboardPage() {
             columns={[
               {
                 key: "deal",
-                label: "Deal",
+                label: txt("Deal"),
                 render: (row) => (
                   <div>
                     <strong>{row.name}</strong>
@@ -70,26 +90,33 @@ export default function DashboardPage() {
                   </div>
                 )
               },
-              { key: "stage", label: "Stage", render: (row) => <StatusBadge value={row.stage} /> },
-              { key: "owner", label: "Owner", render: (row) => row.owner },
-              { key: "next", label: "Next step", render: (row) => row.nextStep },
+              {
+                key: "stage",
+                label: txt("Stage"),
+                render: (row) => <StatusBadge value={txt(row.stage)} />
+              },
+              { key: "owner", label: txt("Owner"), render: (row) => row.owner },
+              { key: "next", label: txt("Next step"), render: (row) => txt(row.nextStep) },
               {
                 key: "amount",
-                label: "Montant",
+                label: txt("Montant"),
                 align: "right",
-                render: (row) => formatCurrency(row.amount, "EUR")
+                render: (row) => formatCurrency(row.amount, row.currency, languageTag)
               }
             ]}
           />
         </SectionCard>
 
-        <SectionCard title="Pipeline par stage" description="Concentration de valeur dans les etapes de vente.">
+        <SectionCard
+          title={txt("Pipeline par stage")}
+          description={txt("Concentration de valeur dans les etapes de vente.")}
+        >
           <ul className="list">
             {pipelineStages.map((stage) => (
               <li key={stage.id} className="list-item">
-                <strong>{stage.name}</strong>
+                <strong>{txt(stage.name)}</strong>
                 <span className="muted">
-                  {stage.deals} deals · {formatCurrency(stage.amount, "EUR")}
+                  {stage.deals} {txt("deals")} · {formatCurrency(stage.amount, "USD", languageTag)}
                 </span>
               </li>
             ))}
@@ -99,11 +126,11 @@ export default function DashboardPage() {
 
       <div className="two-columns">
         <SectionCard
-          title="Flux facture electronique"
-          description="Suivi des statuts d'emission, de validation et de transmission."
+          title={txt("Flux facture electronique")}
+          description={txt("Suivi des statuts d'emission, de validation et de transmission.")}
           action={
             <Link href="/app/invoices/events" className="button button-ghost">
-              Logs
+              {txt("Logs")}
             </Link>
           }
         >
@@ -113,7 +140,7 @@ export default function DashboardPage() {
             columns={[
               {
                 key: "invoice",
-                label: "Invoice",
+                label: txt("Invoice"),
                 render: (row) => (
                   <div>
                     <Link href={`/app/invoices/${row.id}`}>
@@ -125,18 +152,33 @@ export default function DashboardPage() {
                   </div>
                 )
               },
-              { key: "business", label: "Metier", render: (row) => <StatusBadge value={row.businessStatus} /> },
-              { key: "electronic", label: "E-invoicing", render: (row) => <StatusBadge value={row.electronicStatus} /> },
-              { key: "provider", label: "Provider", render: (row) => <StatusBadge value={row.providerStatus} /> }
+              {
+                key: "business",
+                label: txt("Metier"),
+                render: (row) => <StatusBadge value={txt(row.businessStatus)} />
+              },
+              {
+                key: "electronic",
+                label: txt("E-invoicing"),
+                render: (row) => <StatusBadge value={txt(row.electronicStatus)} />
+              },
+              {
+                key: "provider",
+                label: txt("Provider"),
+                render: (row) => <StatusBadge value={txt(row.providerStatus)} />
+              }
             ]}
           />
         </SectionCard>
 
-        <SectionCard title="Timeline operations" description="Dernieres actions operationnelles et admin.">
+        <SectionCard
+          title={txt("Timeline operations")}
+          description={txt("Dernieres actions operationnelles et admin.")}
+        >
           <ul className="list">
             {activities.map((activity) => (
               <li key={activity.id} className="timeline-item">
-                <strong>{activity.event}</strong>
+                <strong>{txt(activity.event)}</strong>
                 <span className="muted">
                   {activity.entity} · {activity.actor} · {activity.occurredAt}
                 </span>
@@ -146,14 +188,17 @@ export default function DashboardPage() {
         </SectionCard>
       </div>
 
-      <SectionCard title="Conformite par pays" description="Obligations actives et formats pris en charge dans l'ERP.">
+      <SectionCard
+        title={txt("Conformite par pays")}
+        description={txt("Obligations actives et formats pris en charge dans l'ERP.")}
+      >
         <DataTable
           rows={jurisdictionProfiles}
           getRowId={(row) => row.country}
           columns={[
             {
               key: "country",
-              label: "Pays",
+              label: txt("Pays"),
               render: (row) => (
                 <div>
                   <strong>{row.countryName}</strong>
@@ -161,19 +206,19 @@ export default function DashboardPage() {
                 </div>
               )
             },
-            { key: "model", label: "Mode", render: (row) => row.transmissionModel },
+            { key: "model", label: txt("Mode"), render: (row) => txt(row.transmissionModel) },
             {
               key: "formats",
-              label: "Formats",
+              label: txt("Formats"),
               render: (row) => <div className="inline-stack">{row.supportedFormats.map((format) => <StatusBadge key={format} value={format} />)}</div>
             },
             {
               key: "obligations",
-              label: "Statuts",
+              label: txt("Statuts"),
               render: (row) => (
                 <div className="inline-stack">
                   {row.obligations.map((status) => (
-                    <StatusBadge key={status.flow} value={`${status.flow}: ${status.state}`} />
+                    <StatusBadge key={status.flow} value={`${txt(status.flow)}: ${txt(status.state)}`} />
                   ))}
                 </div>
               )

@@ -7,6 +7,7 @@ import { StatCard } from "@/components/stat-card";
 import { StatusBadge } from "@/components/status-badge";
 import { invoiceValidations, invoices, rejectionLogs } from "@/lib/erp-data";
 import { formatCurrency } from "@/lib/formatters";
+import { getDemoI18n } from "@/lib/server-i18n";
 
 export default async function InvoicesPage({
   searchParams
@@ -18,6 +19,7 @@ export default async function InvoicesPage({
     electronic_status?: string;
   }>;
 }) {
+  const { languageTag, txt } = await getDemoI18n();
   const params = await searchParams;
   const query = params.q?.trim().toLowerCase() ?? "";
   const countryFilter = params.country ?? "all";
@@ -51,81 +53,83 @@ export default async function InvoicesPage({
   return (
     <div className="page-stack">
       <PageHeader
-        title="Invoices"
-        description="Registre facture ERP avec filtres, statuts metier, suivi e-invoicing et acces detail par piece."
+        title={txt("Invoices")}
+        description={txt(
+          "Registre facture ERP avec filtres, statuts metier, suivi e-invoicing et acces detail par piece."
+        )}
         actions={
           <div className="button-row">
             <Link href="/app/invoices/events" className="button button-secondary">
-              Events
+              {txt("Events")}
             </Link>
             <Link href="/app/settings/tax-identities" className="button button-secondary">
-              Tax identities
+              {txt("Tax identities")}
             </Link>
             <Link href="/app/settings/invoice-series" className="button">
-              Invoice series
+              {txt("Invoice series")}
             </Link>
           </div>
         }
       />
 
       <div className="stats-grid">
-        <StatCard label="Factures ouvertes" value={String(openInvoices)} detail="avec balance non nulle" />
-        <StatCard label="Soumises" value={String(transmitted)} detail="transmissions envoyees" />
-        <StatCard label="Rejetees" value={String(rejected)} detail="a corriger en priorite" />
-        <StatCard label="Validations KO" value={String(validationQueue)} detail="factures avec erreurs" />
+        <StatCard label={txt("Factures ouvertes")} value={String(openInvoices)} detail={txt("avec balance non nulle")} />
+        <StatCard label={txt("Soumises")} value={String(transmitted)} detail={txt("transmissions envoyees")} />
+        <StatCard label={txt("Rejetees")} value={String(rejected)} detail={txt("a corriger en priorite")} />
+        <StatCard label={txt("Validations KO")} value={String(validationQueue)} detail={txt("factures avec erreurs")} />
       </div>
 
-      <SectionCard title="Filtres" description="Recherche et filtrage du registre des factures.">
+      <SectionCard title={txt("Filtres")} description={txt("Recherche et filtrage du registre des factures.")}>
         <form className="filter-form" action="/app/invoices" method="get">
           <div className="filter-grid">
             <div className="field">
-              <label className="field-label">Recherche</label>
+              <label className="field-label">{txt("Recherche")}</label>
               <input
                 name="q"
                 defaultValue={params.q ?? ""}
-                placeholder="Numero ou client"
+                placeholder={txt("Numero ou client")}
               />
             </div>
             <div className="field">
-              <label className="field-label">Pays</label>
+              <label className="field-label">{txt("Pays")}</label>
               <select name="country" defaultValue={countryFilter}>
-                <option value="all">Tous</option>
-                <option value="FR">France</option>
-                <option value="MX">Mexique</option>
+                <option value="all">{txt("Tous")}</option>
+                <option value="FR">{txt("France")}</option>
+                <option value="MX">{txt("Mexique")}</option>
               </select>
             </div>
             <div className="field">
-              <label className="field-label">ERP status</label>
+              <label className="field-label">{txt("ERP status")}</label>
               <select name="erp_status" defaultValue={erpStatusFilter}>
-                <option value="all">Tous</option>
-                <option value="draft">draft</option>
-                <option value="issued">issued</option>
-                <option value="partially_paid">partially_paid</option>
-                <option value="paid">paid</option>
-                <option value="cancelled">cancelled</option>
+                <option value="all">{txt("Tous")}</option>
+                <option value="draft">{txt("draft")}</option>
+                <option value="issued">{txt("issued")}</option>
+                <option value="partially_paid">{txt("partially_paid")}</option>
+                <option value="paid">{txt("paid")}</option>
+                <option value="cancelled">{txt("cancelled")}</option>
               </select>
             </div>
             <div className="field">
-              <label className="field-label">Electronic status</label>
+              <label className="field-label">{txt("Electronic status")}</label>
               <select name="electronic_status" defaultValue={electronicStatusFilter}>
-                <option value="all">Tous</option>
-                <option value="not_configured">not_configured</option>
-                <option value="ready">ready</option>
-                <option value="validation_error">validation_error</option>
-                <option value="ready_to_submit">ready_to_submit</option>
-                <option value="submitted">submitted</option>
-                <option value="accepted">accepted</option>
-                <option value="rejected">rejected</option>
+                <option value="all">{txt("Tous")}</option>
+                <option value="not_configured">{txt("not_configured")}</option>
+                <option value="ready">{txt("ready")}</option>
+                <option value="validation_error">{txt("validation_error")}</option>
+                <option value="ready_to_submit">{txt("ready_to_submit")}</option>
+                <option value="submitted">{txt("submitted")}</option>
+                <option value="accepted">{txt("accepted")}</option>
+                <option value="rejected">{txt("rejected")}</option>
               </select>
             </div>
             <div className="field">
-              <label className="field-label">Actions</label>
+              <label className="field-label">{txt("Actions")}</label>
               <div className="inline-actions">
                 <button type="submit" className="button">
-                  Filtrer
+                  {txt("Filtrer")}
                 </button>
                 <Link href="/app/invoices" className="button button-secondary">
-                  Reset
+                  {txt("Reset")}
                 </Link>
               </div>
             </div>
@@ -134,14 +138,17 @@ export default async function InvoicesPage({
       </SectionCard>
 
       <div className="two-columns">
-        <SectionCard title="Registre des factures" description="Vue finance + compliance avec filtres et actions rapides.">
+        <SectionCard
+          title={txt("Registre des factures")}
+          description={txt("Vue finance + compliance avec filtres et actions rapides.")}
+        >
           <DataTable
             rows={filteredInvoices}
             getRowId={(row) => row.id}
             columns={[
               {
                 key: "number",
-                label: "Invoice",
+                label: txt("Invoice"),
                 render: (row) => (
                   <div>
                     <Link href={`/app/invoices/${row.id}`}>
@@ -153,23 +160,31 @@ export default async function InvoicesPage({
                   </div>
                 )
               },
-              { key: "issueDate", label: "Date", render: (row) => row.issueDate },
-              { key: "country", label: "Pays", render: (row) => <StatusBadge value={row.country} /> },
-              { key: "business", label: "ERP status", render: (row) => <StatusBadge value={row.businessStatus} /> },
-              { key: "electronic", label: "Electronic status", render: (row) => <StatusBadge value={row.electronicStatus} /> },
+              { key: "issueDate", label: txt("Date"), render: (row) => row.issueDate },
+              { key: "country", label: txt("Pays"), render: (row) => <StatusBadge value={row.country} /> },
+              {
+                key: "business",
+                label: txt("ERP status"),
+                render: (row) => <StatusBadge value={txt(row.businessStatus)} />
+              },
+              {
+                key: "electronic",
+                label: txt("Electronic status"),
+                render: (row) => <StatusBadge value={txt(row.electronicStatus)} />
+              },
               {
                 key: "total",
-                label: "Montant",
+                label: txt("Montant"),
                 align: "right",
-                render: (row) => formatCurrency(row.total, row.currency)
+                render: (row) => formatCurrency(row.total, row.currency, languageTag)
               },
               {
                 key: "actions",
-                label: "Actions",
+                label: txt("Actions"),
                 render: (row) => (
                   <div className="inline-actions">
                     <Link href={`/app/invoices/${row.id}`} className="table-link">
-                      Voir detail
+                      {txt("Voir detail")}
                     </Link>
                     <Link
                       href={
@@ -179,7 +194,7 @@ export default async function InvoicesPage({
                       }
                       className="table-link"
                     >
-                      Compliance
+                      {txt("Compliance")}
                     </Link>
                   </div>
                 )
@@ -189,11 +204,11 @@ export default async function InvoicesPage({
         </SectionCard>
 
         <SectionCard
-          title="Derniers rejets"
-          description="Codes de rejet et actions a traiter cote e-invoicing."
+          title={txt("Derniers rejets")}
+          description={txt("Codes de rejet et actions a traiter cote e-invoicing.")}
           action={
             <Link href="/app/settings/compliance/mexico" className="button button-ghost">
-              Ouvrir setup MX
+              {txt("Ouvrir setup MX")}
             </Link>
           }
         >
@@ -204,7 +219,7 @@ export default async function InvoicesPage({
                 <span className="muted">
                   {log.country} · {log.code} · {log.field}
                 </span>
-                <div>{log.message}</div>
+                <div>{txt(log.message)}</div>
               </li>
             ))}
           </ul>

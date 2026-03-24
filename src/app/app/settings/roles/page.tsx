@@ -3,23 +3,29 @@ import { PageHeader } from "@/components/page-header";
 import { SectionCard } from "@/components/section-card";
 import { StatusBadge } from "@/components/status-badge";
 import { permissionCatalog, roles } from "@/lib/erp-data";
+import { getDemoI18n } from "@/lib/server-i18n";
 
-export default function SettingsRolesPage() {
+export default async function SettingsRolesPage() {
+  const { txt } = await getDemoI18n();
+
   return (
     <div className="page-stack">
-      <PageHeader title="Roles" description="Roles et permissions pour sales, finance, operations et administration." />
+      <PageHeader
+        title={txt("Roles")}
+        description={txt("Roles et permissions pour sales, finance, operations et administration.")}
+      />
 
       <div className="two-columns">
-        <SectionCard title="Roles actifs" description="Roles appliques dans le workspace.">
+        <SectionCard title={txt("Roles actifs")} description={txt("Roles appliques dans le workspace.")}>
           <DataTable
             rows={roles}
             getRowId={(row) => row.id}
             columns={[
-              { key: "name", label: "Role", render: (row) => row.name },
-              { key: "users", label: "Users", align: "right", render: (row) => row.users },
+              { key: "name", label: txt("Role"), render: (row) => txt(row.name) },
+              { key: "users", label: txt("Users"), align: "right", render: (row) => row.users },
               {
                 key: "permissions",
-                label: "Permissions",
+                label: txt("Permissions"),
                 render: (row) => (
                   <div className="inline-stack">
                     {row.permissions.map((permission) => (
@@ -32,7 +38,7 @@ export default function SettingsRolesPage() {
           />
         </SectionCard>
 
-        <SectionCard title="Catalogue permissions" description="Granularite cible de l'IAM ERP.">
+        <SectionCard title={txt("Catalogue permissions")} description={txt("Granularite cible de l'IAM ERP.")}>
           <ul className="list">
             {permissionCatalog.map((permission) => (
               <li key={permission} className="list-item">
@@ -45,4 +51,3 @@ export default function SettingsRolesPage() {
     </div>
   );
 }
-

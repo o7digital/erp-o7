@@ -3,20 +3,26 @@ import { PageHeader } from "@/components/page-header";
 import { SectionCard } from "@/components/section-card";
 import { StatusBadge } from "@/components/status-badge";
 import { users } from "@/lib/erp-data";
+import { getDemoI18n } from "@/lib/server-i18n";
 
-export default function SettingsUsersPage() {
+export default async function SettingsUsersPage() {
+  const { txt } = await getDemoI18n();
+
   return (
     <div className="page-stack">
-      <PageHeader title="Users" description="Utilisateurs actifs, role assigne, region et dernier acces." />
+      <PageHeader
+        title={txt("Users")}
+        description={txt("Utilisateurs actifs, role assigne, region et dernier acces.")}
+      />
 
-      <SectionCard title="Workspace users" description="Administration equipe et securite d'acces.">
+      <SectionCard title={txt("Workspace users")} description={txt("Administration equipe et securite d'acces.")}>
         <DataTable
           rows={users}
           getRowId={(row) => row.id}
           columns={[
             {
               key: "name",
-              label: "User",
+              label: txt("User"),
               render: (row) => (
                 <div>
                   <strong>{row.name}</strong>
@@ -24,14 +30,13 @@ export default function SettingsUsersPage() {
                 </div>
               )
             },
-            { key: "role", label: "Role", render: (row) => row.role },
-            { key: "region", label: "Region", render: (row) => row.region },
-            { key: "status", label: "Statut", render: (row) => <StatusBadge value={row.status} /> },
-            { key: "lastSeen", label: "Dernier acces", render: (row) => row.lastSeen }
+            { key: "role", label: txt("Role"), render: (row) => txt(row.role) },
+            { key: "region", label: txt("Region"), render: (row) => row.region },
+            { key: "status", label: txt("Statut"), render: (row) => <StatusBadge value={txt(row.status)} /> },
+            { key: "lastSeen", label: txt("Dernier acces"), render: (row) => row.lastSeen }
           ]}
         />
       </SectionCard>
     </div>
   );
 }
-

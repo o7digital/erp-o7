@@ -11,8 +11,10 @@ import {
   invoiceValidations,
   jurisdictionProfiles
 } from "@/lib/erp-data";
+import { getDemoI18n } from "@/lib/server-i18n";
 
-export default function CompliancePage() {
+export default async function CompliancePage() {
+  const { txt } = await getDemoI18n();
   const blockingIssues = invoiceValidations
     .flatMap((entry) => entry.issues)
     .filter((issue) => issue.severity === "error").length;
@@ -20,28 +22,30 @@ export default function CompliancePage() {
   return (
     <div className="page-stack">
       <PageHeader
-        title="Compliance"
-        description="Module interne de facture electronique avec pays actifs, readiness, settings providers et tax identities."
+        title={txt("Compliance")}
+        description={txt(
+          "Module interne de facture electronique avec pays actifs, readiness, settings providers et tax identities."
+        )}
         actions={
           <div className="button-row">
             <Link href="/app/settings/compliance/providers" className="button button-secondary">
-              Provider settings
+              {txt("Provider settings")}
             </Link>
             <Link href="/app/settings/tax-identities" className="button button-secondary">
-              Tax identities
+              {txt("Tax identities")}
             </Link>
             <Link href="/app/settings/invoice-series" className="button">
-              Invoice series
+              {txt("Invoice series")}
             </Link>
           </div>
         }
       />
 
       <div className="stats-grid">
-        <StatCard label="Pays actives" value={String(jurisdictionProfiles.length)} detail="France + Mexique" />
-        <StatCard label="Rules chargees" value={String(complianceRules.length)} detail="noyau FR/MX" />
-        <StatCard label="Readiness KO" value={String(blockingIssues)} detail="erreurs bloquantes detectees" />
-        <StatCard label="Invoices scopees" value={String(invoiceValidations.length)} detail="controlees par le moteur" />
+        <StatCard label={txt("Pays actives")} value={String(jurisdictionProfiles.length)} detail={txt("France + Mexique")} />
+        <StatCard label={txt("Rules chargees")} value={String(complianceRules.length)} detail={txt("noyau FR/MX")} />
+        <StatCard label={txt("Readiness KO")} value={String(blockingIssues)} detail={txt("erreurs bloquantes detectees")} />
+        <StatCard label={txt("Invoices scopees")} value={String(invoiceValidations.length)} detail={txt("controlees par le moteur")} />
       </div>
 
       <div className="cards-grid">
@@ -54,18 +58,25 @@ export default function CompliancePage() {
                 ? "/app/settings/compliance/mexico"
                 : "/app/settings/compliance/france"
             }
+            copy={{
+              taxIdentityLabel: txt("Tax identity"),
+              invoiceSeriesLabel: txt("Invoice series"),
+              openSettingsLabel: txt("Ouvrir settings"),
+              providerSettingsLabel: txt("Provider settings"),
+              taxIdentitiesLabel: txt("Tax identities")
+            }}
             details={
               <ul className="key-value-list">
                 <li>
-                  <span>readiness</span>
-                  <strong>{setting.readiness}</strong>
+                  <span>{txt("readiness")}</span>
+                  <strong>{txt(setting.readiness)}</strong>
                 </li>
                 <li>
-                  <span>provider</span>
+                  <span>{txt("provider")}</span>
                   <strong>{setting.providerLabel}</strong>
                 </li>
                 <li>
-                  <span>invoice_series</span>
+                  <span>{txt("invoice_series")}</span>
                   <strong>{setting.invoiceSeries}</strong>
                 </li>
               </ul>
@@ -75,7 +86,10 @@ export default function CompliancePage() {
       </div>
 
       <div className="two-columns">
-        <SectionCard title="Configuration globale mock" description="Parametres transverses du module facture electronique.">
+        <SectionCard
+          title={txt("Configuration globale mock")}
+          description={txt("Parametres transverses du module facture electronique.")}
+        >
           <div className="form-grid">
             <div className="field">
               <label className="field-label">validation_mode</label>
@@ -100,22 +114,22 @@ export default function CompliancePage() {
               <input defaultValue="finance-ops@o7.digital" />
             </div>
             <div className="field field-full">
-              <label className="field-label">notes</label>
+              <label className="field-label">{txt("notes")}</label>
               <textarea defaultValue="Le module invoices garde les payloads XML/Factur-X, les validations et les journaux de soumission par pays." />
             </div>
           </div>
         </SectionCard>
 
-        <SectionCard title="Regles actives" description="Controle rapide des regles FR/MX chargees.">
+        <SectionCard title={txt("Regles actives")} description={txt("Controle rapide des regles FR/MX chargees.")}>
           <ul className="list">
             {complianceRules.map((rule) => (
               <li key={rule.id} className="list-item">
                 <strong>
                   <StatusBadge value={rule.country} /> {rule.code}
                 </strong>
-                <span className="muted">{rule.description}</span>
+                <span className="muted">{txt(rule.description)}</span>
                 <div>
-                  <StatusBadge value={rule.status} />
+                  <StatusBadge value={txt(rule.status)} />
                 </div>
               </li>
             ))}

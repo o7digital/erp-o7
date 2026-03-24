@@ -3,20 +3,26 @@ import { PageHeader } from "@/components/page-header";
 import { SectionCard } from "@/components/section-card";
 import { StatusBadge } from "@/components/status-badge";
 import { jurisdictionProfiles } from "@/lib/erp-data";
+import { getDemoI18n } from "@/lib/server-i18n";
 
-export default function ComplianceCountriesPage() {
+export default async function ComplianceCountriesPage() {
+  const { txt } = await getDemoI18n();
+
   return (
     <div className="page-stack">
-      <PageHeader title="Compliance Countries" description="Matrice des juridictions activees dans l'ERP." />
+      <PageHeader
+        title={txt("Compliance Countries")}
+        description={txt("Matrice des juridictions activees dans l'ERP.")}
+      />
 
-      <SectionCard title="Profils pays" description="Version reglementaire, formats et obligations actives.">
+      <SectionCard title={txt("Profils pays")} description={txt("Version reglementaire, formats et obligations actives.")}>
         <DataTable
           rows={jurisdictionProfiles}
           getRowId={(row) => row.country}
           columns={[
             {
               key: "country",
-              label: "Pays",
+              label: txt("Pays"),
               render: (row) => (
                 <div>
                   <strong>{row.countryName}</strong>
@@ -24,19 +30,19 @@ export default function ComplianceCountriesPage() {
                 </div>
               )
             },
-            { key: "transmission", label: "Mode", render: (row) => row.transmissionModel },
+            { key: "transmission", label: txt("Mode"), render: (row) => txt(row.transmissionModel) },
             {
               key: "formats",
-              label: "Formats",
+              label: txt("Formats"),
               render: (row) => <div className="inline-stack">{row.supportedFormats.map((format) => <StatusBadge key={format} value={format} />)}</div>
             },
             {
               key: "obligations",
-              label: "Obligations",
+              label: txt("Obligations"),
               render: (row) => (
                 <div className="inline-stack">
                   {row.obligations.map((obligation) => (
-                    <StatusBadge key={obligation.flow} value={`${obligation.flow}: ${obligation.state}`} />
+                    <StatusBadge key={obligation.flow} value={`${txt(obligation.flow)}: ${txt(obligation.state)}`} />
                   ))}
                 </div>
               )
@@ -47,4 +53,3 @@ export default function ComplianceCountriesPage() {
     </div>
   );
 }
-

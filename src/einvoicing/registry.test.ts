@@ -124,7 +124,7 @@ describe("setup validation", () => {
         issueDate: "2026-03-20",
         invoiceNumber: "FAC-2026-0001",
         supplyDate: "2026-03-20",
-        currency: "EUR",
+        currency: "USD",
         vatBreakdown: "20",
         format: "PDF_REPRESENTATION"
       },

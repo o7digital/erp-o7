@@ -4,14 +4,39 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
-import { workspaceProfile } from "@/lib/erp-data";
-import { navigationSections } from "@/lib/nav";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import type { DemoLocale } from "@/lib/demo-locale";
+import type { NavSection } from "@/lib/nav";
 
 function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function ErpShell({ children }: { children: ReactNode }) {
+export function ErpShell({
+  children,
+  locale,
+  navigationSections,
+  workspace,
+  shellCopy
+}: {
+  children: ReactNode;
+  locale: DemoLocale;
+  navigationSections: NavSection[];
+  workspace: {
+    productName: string;
+    workspaceName: string;
+    planName: string;
+    activeSeats: number;
+    seatLimit: number;
+  };
+  shellCopy: {
+    workspaceLabel: string;
+    seatsLabel: string;
+    activeTenantLabel: string;
+    invoicesLabel: string;
+    complianceLabel: string;
+  };
+}) {
   const pathname = usePathname();
 
   return (
@@ -20,8 +45,8 @@ export function ErpShell({ children }: { children: ReactNode }) {
         <div className="sidebar-brand">
           <span className="brand-mark">O7</span>
           <div>
-            <strong>{workspaceProfile.productName}</strong>
-            <p>{workspaceProfile.workspaceName}</p>
+            <strong>{workspace.productName}</strong>
+            <p>{workspace.workspaceName}</p>
           </div>
         </div>
 
@@ -44,13 +69,13 @@ export function ErpShell({ children }: { children: ReactNode }) {
 
         <div className="sidebar-footer">
           <div className="footer-block">
-            <span>Workspace</span>
-            <strong>{workspaceProfile.planName}</strong>
+            <span>{shellCopy.workspaceLabel}</span>
+            <strong>{workspace.planName}</strong>
           </div>
           <div className="footer-block">
-            <span>Seats</span>
+            <span>{shellCopy.seatsLabel}</span>
             <strong>
-              {workspaceProfile.activeSeats}/{workspaceProfile.seatLimit}
+              {workspace.activeSeats}/{workspace.seatLimit}
             </strong>
           </div>
         </div>
@@ -59,15 +84,16 @@ export function ErpShell({ children }: { children: ReactNode }) {
       <div className="shell-main">
         <header className="topbar">
           <div>
-            <p className="topbar-label">Tenant actif</p>
-            <strong>{workspaceProfile.workspaceName}</strong>
+            <p className="topbar-label">{shellCopy.activeTenantLabel}</p>
+            <strong>{workspace.workspaceName}</strong>
           </div>
           <div className="topbar-actions">
+            <LanguageSwitcher locale={locale} />
             <Link href="/app/invoices" className="button button-secondary">
-              Factures
+              {shellCopy.invoicesLabel}
             </Link>
             <Link href="/app/settings/compliance" className="button">
-              Compliance
+              {shellCopy.complianceLabel}
             </Link>
           </div>
         </header>
@@ -76,4 +102,3 @@ export function ErpShell({ children }: { children: ReactNode }) {
     </div>
   );
 }
-

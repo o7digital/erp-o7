@@ -17,12 +17,14 @@ import {
   taxIdentities
 } from "@/lib/erp-data";
 import { formatCurrency } from "@/lib/formatters";
+import { getDemoI18n } from "@/lib/server-i18n";
 
 export default async function InvoiceDetailPage({
   params
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const { languageTag, txt } = await getDemoI18n();
   const { id } = await params;
   const invoice = getInvoiceById(id);
 
@@ -46,10 +48,10 @@ export default async function InvoiceDetailPage({
         actions={
           <div className="button-row">
             <Link href="/app/invoices" className="button button-secondary">
-              Retour invoices
+              {txt("Retour invoices")}
             </Link>
             <Link href="/app/invoices/events" className="button button-secondary">
-              Timeline events
+              {txt("Timeline events")}
             </Link>
             <Link
               href={
@@ -59,7 +61,7 @@ export default async function InvoiceDetailPage({
               }
               className="button"
             >
-              Settings pays
+              {txt("Settings pays")}
             </Link>
           </div>
         }
@@ -67,58 +69,58 @@ export default async function InvoiceDetailPage({
 
       <div className="stats-grid">
         <StatCard
-          label="Montant total"
-          value={formatCurrency(invoice.total, invoice.currency)}
-          detail={`Serie ${invoice.series}`}
+          label={txt("Montant total")}
+          value={formatCurrency(invoice.total, invoice.currency, languageTag)}
+          detail={`${txt("Serie")} ${invoice.series}`}
         />
         <StatCard
-          label="Balance"
-          value={formatCurrency(invoice.balance, invoice.currency)}
-          detail={`Due ${invoice.dueDate}`}
+          label={txt("Balance")}
+          value={formatCurrency(invoice.balance, invoice.currency, languageTag)}
+          detail={`${txt("Due")} ${invoice.dueDate}`}
         />
-        <StatCard label="ERP status" value={invoice.businessStatus} detail="workflow ERP" />
+        <StatCard label={txt("ERP status")} value={txt(invoice.businessStatus)} detail={txt("workflow ERP")} />
         <StatCard
-          label="Electronic status"
-          value={invoice.electronicStatus}
+          label={txt("Electronic status")}
+          value={txt(invoice.electronicStatus)}
           detail={invoice.providerStatus}
         />
       </div>
 
       <div className="two-columns">
-        <SectionCard title="Header facture" description="Infos de base de la piece et du client.">
+        <SectionCard title={txt("Header facture")} description={txt("Infos de base de la piece et du client.")}>
           <div className="info-grid">
             <div className="info-item">
-              <span>Client</span>
+              <span>{txt("Client")}</span>
               <strong>{invoice.client}</strong>
             </div>
             <div className="info-item">
-              <span>Pays</span>
+              <span>{txt("Pays")}</span>
               <strong>{invoice.country}</strong>
             </div>
             <div className="info-item">
-              <span>Date d'emission</span>
+              <span>{txt("Date d'emission")}</span>
               <strong>{invoice.issueDate}</strong>
             </div>
             <div className="info-item">
-              <span>Date d'echeance</span>
+              <span>{txt("Date d'echeance")}</span>
               <strong>{invoice.dueDate}</strong>
             </div>
             <div className="info-item">
-              <span>ERP status</span>
+              <span>{txt("ERP status")}</span>
               <strong>
-                <StatusBadge value={invoice.businessStatus} />
+                <StatusBadge value={txt(invoice.businessStatus)} />
               </strong>
             </div>
             <div className="info-item">
-              <span>Electronic status</span>
+              <span>{txt("Electronic status")}</span>
               <strong>
-                <StatusBadge value={invoice.electronicStatus} />
+                <StatusBadge value={txt(invoice.electronicStatus)} />
               </strong>
             </div>
           </div>
         </SectionCard>
 
-        <SectionCard title="Bloc conformite" description="Champs pays requis pour l'e-invoicing.">
+        <SectionCard title={txt("Bloc conformite")} description={txt("Champs pays requis pour l'e-invoicing.")}>
           <ul className="key-value-list">
             {complianceFields.map((field) => (
               <li key={field.key}>
@@ -131,48 +133,48 @@ export default async function InvoiceDetailPage({
       </div>
 
       <div className="two-columns">
-        <SectionCard title="Lignes facture" description="Contenu economique detaille de la piece.">
+        <SectionCard title={txt("Lignes facture")} description={txt("Contenu economique detaille de la piece.")}>
           <DataTable
             rows={invoice.lines}
             getRowId={(row) => row.id}
             columns={[
-              { key: "label", label: "Ligne", render: (row) => row.label },
-              { key: "quantity", label: "Quantite", align: "right", render: (row) => row.quantity },
+              { key: "label", label: txt("Ligne"), render: (row) => row.label },
+              { key: "quantity", label: txt("Quantite"), align: "right", render: (row) => row.quantity },
               {
                 key: "unitPrice",
                 label: "PU",
                 align: "right",
-                render: (row) => formatCurrency(row.unitPrice, invoice.currency)
+                render: (row) => formatCurrency(row.unitPrice, invoice.currency, languageTag)
               },
               {
                 key: "taxRate",
-                label: "Taxe",
+                label: txt("Taxe"),
                 align: "right",
                 render: (row) => `${row.taxRate}%`
               },
               {
                 key: "total",
-                label: "Total",
+                label: txt("Total"),
                 align: "right",
-                render: (row) => formatCurrency(row.total, invoice.currency)
+                render: (row) => formatCurrency(row.total, invoice.currency, languageTag)
               }
             ]}
           />
         </SectionCard>
 
-        <SectionCard title="Taxes" description="Sous-total, taxes et total facture.">
+        <SectionCard title={txt("Taxes")} description={txt("Sous-total, taxes et total facture.")}>
           <div className="summary-bar">
             <div className="summary-block">
-              <span>Subtotal</span>
-              <strong>{formatCurrency(taxSummary.subtotal, invoice.currency)}</strong>
+              <span>{txt("Subtotal")}</span>
+              <strong>{formatCurrency(taxSummary.subtotal, invoice.currency, languageTag)}</strong>
             </div>
             <div className="summary-block">
-              <span>Taxes</span>
-              <strong>{formatCurrency(taxSummary.taxTotal, invoice.currency)}</strong>
+              <span>{txt("Taxes")}</span>
+              <strong>{formatCurrency(taxSummary.taxTotal, invoice.currency, languageTag)}</strong>
             </div>
             <div className="summary-block">
-              <span>Total</span>
-              <strong>{formatCurrency(taxSummary.total, invoice.currency)}</strong>
+              <span>{txt("Total")}</span>
+              <strong>{formatCurrency(taxSummary.total, invoice.currency, languageTag)}</strong>
             </div>
           </div>
 
@@ -182,7 +184,7 @@ export default async function InvoiceDetailPage({
               <strong>{invoice.format}</strong>
             </div>
             <div className="info-item">
-              <span>Serie</span>
+              <span>{txt("Serie")}</span>
               <strong>{invoice.series}</strong>
             </div>
             <div className="info-item">
@@ -198,19 +200,19 @@ export default async function InvoiceDetailPage({
       </div>
 
       <div className="two-columns">
-        <SectionCard title="Identite fiscale" description="Entite fiscale rattachee a la facture.">
+        <SectionCard title={txt("Identite fiscale")} description={txt("Entite fiscale rattachee a la facture.")}>
           {taxIdentity ? (
             <div className="info-grid">
               <div className="info-item">
-                <span>Label</span>
+                <span>{txt("Label")}</span>
                 <strong>{taxIdentity.label}</strong>
               </div>
               <div className="info-item">
-                <span>Legal name</span>
+                <span>{txt("Legal name")}</span>
                 <strong>{taxIdentity.legalName}</strong>
               </div>
               <div className="info-item">
-                <span>Tax ID</span>
+                <span>{txt("Tax ID")}</span>
                 <strong className="mono">{taxIdentity.taxId}</strong>
               </div>
               <div className="info-item">
@@ -218,66 +220,66 @@ export default async function InvoiceDetailPage({
                 <strong>{taxIdentity.regime}</strong>
               </div>
               <div className="info-item">
-                <span>Postal code</span>
+                <span>{txt("Postal code")}</span>
                 <strong>{taxIdentity.postalCode}</strong>
               </div>
               <div className="info-item">
-                <span>Provider readiness</span>
+                <span>{txt("Provider readiness")}</span>
                 <strong>
-                  <StatusBadge value={taxIdentity.providerStatus} />
+                  <StatusBadge value={txt(taxIdentity.providerStatus)} />
                 </strong>
               </div>
             </div>
           ) : null}
         </SectionCard>
 
-        <SectionCard title="Validations fiscales" description="Erreurs et warnings calcules sur la piece.">
+        <SectionCard title={txt("Validations fiscales")} description={txt("Erreurs et warnings calcules sur la piece.")}>
           {validation && validation.issues.length > 0 ? (
             <ul className="list">
               {validation.issues.map((issue) => (
                 <li key={`${issue.field}-${issue.message}`} className="list-item">
                   <strong>
-                    <StatusBadge value={issue.severity} /> {issue.field}
+                    <StatusBadge value={txt(issue.severity)} /> {issue.field}
                   </strong>
                   <span className="muted">{issue.scope}</span>
-                  <div>{issue.message}</div>
+                  <div>{txt(issue.message)}</div>
                 </li>
               ))}
             </ul>
           ) : (
             <div className="list-item">
-              <strong>Aucune erreur bloquante</strong>
-              <span className="muted">La facture est prete du point de vue validation.</span>
+              <strong>{txt("Aucune erreur bloquante")}</strong>
+              <span className="muted">{txt("La facture est prete du point de vue validation.")}</span>
             </div>
           )}
         </SectionCard>
       </div>
 
       <div className="two-columns">
-        <SectionCard title="Timeline evenements" description="Validation, soumission et retours provider.">
+        <SectionCard title={txt("Timeline evenements")} description={txt("Validation, soumission et retours provider.")}>
           <ul className="list">
             {relatedEvents.map((event) => (
               <li key={event.id} className="timeline-item">
-                <strong>{event.type}</strong>
+                <strong>{txt(event.type)}</strong>
                 <span className="muted">
                   {event.occurredAt} · {event.provider}
                 </span>
                 <div>
-                  <StatusBadge value={event.status} /> {event.message}
+                  <StatusBadge value={txt(event.status)} /> {txt(event.message)}
                 </div>
               </li>
             ))}
           </ul>
         </SectionCard>
 
-        <SectionCard title="Payloads, paiements et rejets" description="Artefacts techniques et encaissements lies.">
+        <SectionCard title={txt("Payloads, paiements et rejets")} description={txt("Artefacts techniques et encaissements lies.")}>
           <ul className="list">
             {invoice.payloadRefs.map((payload) => (
               <li key={payload.id} className="list-item">
                 <strong>{payload.type}</strong>
                 <span className="muted mono">{payload.storage}</span>
                 <div>
-                  <StatusBadge value={payload.status} />
+                  <StatusBadge value={txt(payload.status)} />
                 </div>
               </li>
             ))}
@@ -285,10 +287,10 @@ export default async function InvoiceDetailPage({
               <li key={payment.id} className="list-item">
                 <strong>{payment.method}</strong>
                 <span className="muted">
-                  {payment.paidAt} · {formatCurrency(payment.amount, payment.currency)}
+                  {payment.paidAt} · {formatCurrency(payment.amount, payment.currency, languageTag)}
                 </span>
                 <div>
-                  <StatusBadge value={payment.status} />
+                  <StatusBadge value={txt(payment.status)} />
                 </div>
               </li>
             ))}
@@ -296,15 +298,15 @@ export default async function InvoiceDetailPage({
               <li key={log.id} className="list-item">
                 <strong>{log.code}</strong>
                 <span className="muted">{log.field}</span>
-                <div>{log.message}</div>
+                <div>{txt(log.message)}</div>
               </li>
             ))}
             {invoice.payloadRefs.length === 0 &&
             relatedPayments.length === 0 &&
             invoiceRejections.length === 0 ? (
               <li className="list-item">
-                <strong>Aucun artefact additionnel</strong>
-                <span className="muted">La facture n'a pas encore de payload ni de paiement rattache.</span>
+                <strong>{txt("Aucun artefact additionnel")}</strong>
+                <span className="muted">{txt("La facture n'a pas encore de payload ni de paiement rattache.")}</span>
               </li>
             ) : null}
           </ul>

@@ -13,12 +13,12 @@ import type {
 
 export const workspaceProfile = {
   productName: "O7 ERP SaaS",
-  workspaceName: "Pulse Workspace Europe & LATAM",
+  workspaceName: "Pulse Workspace Americas",
   planName: "Growth",
   activeSeats: 18,
   seatLimit: 25,
-  locale: "fr-FR",
-  defaultCurrency: "EUR"
+  locale: "en-US",
+  defaultCurrency: "USD"
 };
 
 export interface ClientRecord {
@@ -28,6 +28,7 @@ export interface ClientRecord {
   sector: string;
   owner: string;
   arr: number;
+  currency: string;
   openInvoices: number;
   compliance: string;
   tags: string[];
@@ -41,6 +42,7 @@ export const clients: ClientRecord[] = [
     sector: "Agence digitale",
     owner: "Nadia",
     arr: 42000,
+    currency: "USD",
     openInvoices: 2,
     compliance: "PDP ready",
     tags: ["retainer", "france"]
@@ -52,6 +54,7 @@ export const clients: ClientRecord[] = [
     sector: "Services terrain",
     owner: "Luis",
     arr: 51000,
+    currency: "USD",
     openInvoices: 1,
     compliance: "Timbrado ready",
     tags: ["mexico", "field"]
@@ -63,6 +66,7 @@ export const clients: ClientRecord[] = [
     sector: "Conseil B2B",
     owner: "Alicia",
     arr: 29000,
+    currency: "USD",
     openInvoices: 3,
     compliance: "Review routing",
     tags: ["france", "consulting"]
@@ -74,6 +78,7 @@ export const clients: ClientRecord[] = [
     sector: "Support ops",
     owner: "Luis",
     arr: 36000,
+    currency: "USD",
     openInvoices: 2,
     compliance: "Validation required",
     tags: ["mexico", "operations"]
@@ -169,6 +174,7 @@ export const deals = [
     client: "Asteria Studio",
     stage: "Negotiation",
     amount: 18000,
+    currency: "USD",
     probability: 70,
     owner: "Nadia",
     nextStep: "Relecture devis"
@@ -179,6 +185,7 @@ export const deals = [
     client: "Grupo Nativo",
     stage: "Proposal sent",
     amount: 22000,
+    currency: "USD",
     probability: 55,
     owner: "Luis",
     nextStep: "Valider CFDI flow"
@@ -189,6 +196,7 @@ export const deals = [
     client: "Delta Conseil",
     stage: "Qualified",
     amount: 12000,
+    currency: "USD",
     probability: 45,
     owner: "Alicia",
     nextStep: "Workshop mapping"
@@ -208,6 +216,7 @@ export const quotes = [
     number: "DEV-2026-021",
     client: "Asteria Studio",
     amount: 9800,
+    currency: "USD",
     status: "Approved",
     validUntil: "2026-03-29",
     owner: "Nadia"
@@ -217,6 +226,7 @@ export const quotes = [
     number: "DEV-2026-022",
     client: "Grupo Nativo",
     amount: 12000,
+    currency: "USD",
     status: "Sent",
     validUntil: "2026-03-27",
     owner: "Luis"
@@ -226,6 +236,7 @@ export const quotes = [
     number: "DEV-2026-023",
     client: "Delta Conseil",
     amount: 6400,
+    currency: "USD",
     status: "Draft",
     validUntil: "2026-04-02",
     owner: "Alicia"
@@ -238,6 +249,7 @@ export const orders = [
     number: "CMD-FR-301",
     client: "Asteria Studio",
     amount: 9800,
+    currency: "USD",
     fulfillment: "Ready",
     invoicing: "Invoiced",
     status: "Active"
@@ -247,6 +259,7 @@ export const orders = [
     number: "CMD-MX-188",
     client: "Grupo Nativo",
     amount: 12000,
+    currency: "USD",
     fulfillment: "In progress",
     invoicing: "Pending",
     status: "Active"
@@ -256,6 +269,7 @@ export const orders = [
     number: "CMD-FR-302",
     client: "Delta Conseil",
     amount: 6400,
+    currency: "USD",
     fulfillment: "Blocked",
     invoicing: "Draft",
     status: "At risk"
@@ -302,7 +316,7 @@ export const invoices: InvoiceRecord[] = [
     client: "Asteria Studio",
     clientId: "cli-asteria",
     country: "FR",
-    currency: "EUR",
+    currency: "USD",
     issueDate: "2026-03-18",
     dueDate: "2026-03-31",
     total: 9800,
@@ -354,7 +368,7 @@ export const invoices: InvoiceRecord[] = [
         issueDate: "2026-03-18",
         invoiceNumber: "FAC-FR-2026-0142",
         supplyDate: "2026-03-18",
-        currency: "EUR",
+        currency: "USD",
         vatBreakdown: "20",
         format: "FACTUR_X"
       },
@@ -434,7 +448,7 @@ export const invoices: InvoiceRecord[] = [
     client: "Delta Conseil",
     clientId: "cli-delta",
     country: "FR",
-    currency: "EUR",
+    currency: "USD",
     issueDate: "2026-03-20",
     dueDate: "2026-04-03",
     total: 6400,
@@ -473,7 +487,7 @@ export const invoices: InvoiceRecord[] = [
         issueDate: "2026-03-20",
         invoiceNumber: "FAC-FR-2026-0143",
         supplyDate: "2026-03-20",
-        currency: "EUR",
+        currency: "USD",
         vatBreakdown: "20",
         format: "FACTUR_X"
       },
@@ -566,7 +580,7 @@ export const payments = [
     invoiceNumber: "FAC-FR-2026-0142",
     client: "Asteria Studio",
     amount: 7000,
-    currency: "EUR",
+    currency: "USD",
     method: "SEPA",
     paidAt: "2026-03-19",
     status: "paid"
@@ -602,7 +616,7 @@ export const documents = [
     type: "Order attachment",
     client: "Asteria Studio",
     linkedTo: "CMD-FR-301",
-    storage: "S3 EU",
+    storage: "S3 US",
     status: "Stored"
   },
   {
@@ -620,7 +634,7 @@ export const documents = [
     type: "Invoice payload",
     client: "Asteria Studio",
     linkedTo: "FAC-FR-2026-0142",
-    storage: "S3 EU",
+    storage: "S3 US",
     status: "Stored"
   }
 ];
@@ -632,7 +646,7 @@ export const contracts = [
     client: "Asteria Studio",
     renewalDate: "2026-12-31",
     value: 42000,
-    currency: "EUR",
+    currency: "USD",
     status: "Active"
   },
   {
@@ -757,7 +771,7 @@ export const taxIdentities = [
   {
     id: "tax-fr-paris",
     country: "FR" as CountryCode,
-    label: "O7 France HQ",
+    label: "O7 France Entity",
     legalName: "O7 DIGITAL FRANCE SAS",
     taxId: "FR12123456789",
     secondaryId: "12345678900012",
@@ -1109,7 +1123,7 @@ export const billingProfile = {
   subscriptionStatus: "active",
   nextBillingDate: "2026-04-01",
   monthlyAmount: 790,
-  currency: "EUR",
+  currency: "USD",
   seatsIncluded: 25,
   seatsUsed: 18
 };
@@ -1136,7 +1150,7 @@ export const complianceCountrySettings: ComplianceCountrySetting[] = [
     readiness: "ready_to_submit",
     providerLabel: "PDP Axway Sandbox",
     invoiceSeries: "FAC-FR",
-    taxIdentityLabel: "O7 France HQ"
+    taxIdentityLabel: "O7 France Entity"
   }
 ];
 

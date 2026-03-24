@@ -7,11 +7,25 @@ import type { ComplianceCountrySetting } from "@/lib/erp-types";
 export function ComplianceCountryCard({
   setting,
   details,
-  settingsHref
+  settingsHref,
+  copy = {
+    taxIdentityLabel: "Tax identity",
+    invoiceSeriesLabel: "Invoice series",
+    openSettingsLabel: "Ouvrir settings",
+    providerSettingsLabel: "Provider settings",
+    taxIdentitiesLabel: "Tax identities"
+  }
 }: {
   setting: ComplianceCountrySetting;
   details: ReactNode;
   settingsHref: string;
+  copy?: {
+    taxIdentityLabel: string;
+    invoiceSeriesLabel: string;
+    openSettingsLabel: string;
+    providerSettingsLabel: string;
+    taxIdentitiesLabel: string;
+  };
 }) {
   return (
     <section className="card country-card">
@@ -28,11 +42,11 @@ export function ComplianceCountryCard({
 
       <div className="country-meta">
         <div className="info-item">
-          <span>Tax identity</span>
+          <span>{copy.taxIdentityLabel}</span>
           <strong>{setting.taxIdentityLabel}</strong>
         </div>
         <div className="info-item">
-          <span>Invoice series</span>
+          <span>{copy.invoiceSeriesLabel}</span>
           <strong>{setting.invoiceSeries}</strong>
         </div>
       </div>
@@ -41,13 +55,13 @@ export function ComplianceCountryCard({
 
       <div className="button-row">
         <Link href={settingsHref} className="button button-secondary">
-          Ouvrir settings
+          {copy.openSettingsLabel}
         </Link>
         <Link href="/app/settings/compliance/providers" className="button button-ghost">
-          Provider settings
+          {copy.providerSettingsLabel}
         </Link>
         <Link href="/app/settings/tax-identities" className="button button-ghost">
-          Tax identities
+          {copy.taxIdentitiesLabel}
         </Link>
       </div>
     </section>

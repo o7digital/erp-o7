@@ -1,7 +1,7 @@
 export function formatCurrency(
   amount: number,
   currency: string,
-  locale = currency === "MXN" ? "es-MX" : "fr-FR"
+  locale = currency === "MXN" ? "es-MX" : "en-US"
 ): string {
   return new Intl.NumberFormat(locale, {
     style: "currency",
@@ -17,4 +17,3 @@ export function formatDate(date: string, locale = "fr-FR"): string {
     year: "numeric"
   }).format(new Date(date));
 }
-

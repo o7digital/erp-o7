@@ -11,8 +11,10 @@ import {
   providerConnections,
   taxIdentities
 } from "@/lib/erp-data";
+import { getDemoI18n } from "@/lib/server-i18n";
 
-export default function ComplianceFrancePage() {
+export default async function ComplianceFrancePage() {
+  const { txt } = await getDemoI18n();
   const franceIdentity = taxIdentities.find((identity) => identity.country === "FR");
   const franceProvider = providerConnections.find((provider) => provider.country === "FR");
   const franceSeries = invoiceSeries.find((series) => series.country === "FR");
@@ -24,48 +26,53 @@ export default function ComplianceFrancePage() {
   return (
     <div className="page-stack">
       <PageHeader
-        title="Compliance France"
-        description="Setup e-invoicing B2B FR natif dans l'ERP pour TVA, SIREN, profil entreprise, PDP et formats structures."
+        title={txt("Compliance France")}
+        description={txt(
+          "Setup e-invoicing B2B FR natif dans l'ERP pour TVA, SIREN, profil entreprise, PDP et formats structures."
+        )}
         actions={
           <div className="button-row">
             <Link href="/app/settings/compliance/providers" className="button button-secondary">
-              Provider settings
+              {txt("Provider settings")}
             </Link>
             <Link href="/app/settings/tax-identities" className="button button-secondary">
-              Tax identities
+              {txt("Tax identities")}
             </Link>
             <Link href="/app/settings/invoice-series" className="button">
-              Invoice series
+              {txt("Invoice series")}
             </Link>
           </div>
         }
       />
 
       <div className="two-columns">
-        <SectionCard title="Readiness FR" description="Etat du module e-invoicing FR pour l'entite active.">
+        <SectionCard title={txt("Readiness FR")} description={txt("Etat du module e-invoicing FR pour l'entite active.")}>
           <div className="info-grid">
             <div className="info-item">
-              <span>country</span>
+              <span>{txt("country")}</span>
               <strong>FR</strong>
             </div>
             <div className="info-item">
-              <span>module</span>
+              <span>{txt("module")}</span>
               <strong>{franceSetting?.moduleLabel}</strong>
             </div>
             <div className="info-item">
-              <span>readiness</span>
+              <span>{txt("readiness")}</span>
               <strong>
-                <StatusBadge value={franceSetting?.readiness ?? "not_configured"} />
+                <StatusBadge value={txt(franceSetting?.readiness ?? "not_configured")} />
               </strong>
             </div>
             <div className="info-item">
-              <span>provider</span>
+              <span>{txt("provider")}</span>
               <strong>{franceProvider?.name}</strong>
             </div>
           </div>
         </SectionCard>
 
-        <SectionCard title="Champs FR" description="Configuration mock directement exploitable par le module invoices.">
+        <SectionCard
+          title={txt("Champs FR")}
+          description={txt("Configuration mock directement exploitable par le module invoices.")}
+        >
           <div className="form-grid">
             <div className="field">
               <label className="field-label">legal_company_name</label>
@@ -96,7 +103,7 @@ export default function ComplianceFrancePage() {
       </div>
 
       <div className="two-columns">
-        <SectionCard title="Provider et numerotation" description="Connexion PDP et serie invoice active.">
+        <SectionCard title={txt("Provider et numerotation")} description={txt("Connexion PDP et serie invoice active.")}>
           <ul className="key-value-list">
             <li>
               <span>provider_type</span>
@@ -117,14 +124,14 @@ export default function ComplianceFrancePage() {
           </ul>
         </SectionCard>
 
-        <SectionCard title="Validations FR" description="Erreurs et warnings retournes sur les factures FR.">
+        <SectionCard title={txt("Validations FR")} description={txt("Erreurs et warnings retournes sur les factures FR.")}>
           <ul className="list">
             {franceIssues.map((issue) => (
               <li key={`${issue.field}-${issue.message}`} className="list-item">
                 <strong>{issue.field}</strong>
-                <span className="muted">{issue.message}</span>
+                <span className="muted">{txt(issue.message)}</span>
                 <div>
-                  <StatusBadge value={issue.severity} />
+                  <StatusBadge value={txt(issue.severity)} />
                 </div>
               </li>
             ))}
@@ -132,7 +139,7 @@ export default function ComplianceFrancePage() {
         </SectionCard>
       </div>
 
-      <SectionCard title="Regles actives FR" description="Champs requis issus du profil FR.">
+      <SectionCard title={txt("Regles actives FR")} description={txt("Champs requis issus du profil FR.")}>
         <ul className="list">
           {countryProfiles.FR.requiredFields.company
             .concat(countryProfiles.FR.requiredFields.buyer)
@@ -140,7 +147,7 @@ export default function ComplianceFrancePage() {
             .map((field) => (
               <li key={field.key} className="list-item">
                 <strong>{field.key}</strong>
-                <span className="muted">{field.description}</span>
+                <span className="muted">{txt(field.description)}</span>
               </li>
             ))}
         </ul>
