@@ -1,0 +1,518 @@
+.remax-shell {
+  --bg: #120d10;
+  --bg-soft: #1a1015;
+  --panel: rgba(30, 16, 22, 0.88);
+  --panel-solid: #24141b;
+  --line: rgba(255, 160, 151, 0.14);
+  --line-strong: rgba(255, 160, 151, 0.3);
+  --text: #fff5f3;
+  --muted: #d3b6b0;
+  --accent: #ff6b5b;
+  --accent-2: #ffb454;
+  --shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+}
+
+.remax-sidebar {
+  background:
+    radial-gradient(circle at top right, rgba(255, 107, 91, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(19, 11, 15, 0.96), rgba(15, 8, 12, 0.94));
+}
+
+.remax-sidebar-brand {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 107, 91, 0.06));
+}
+
+.remax-brand-mark {
+  background: linear-gradient(135deg, #ff6b5b, #ffb454);
+  box-shadow: 0 18px 36px rgba(255, 107, 91, 0.25);
+}
+
+.remax-main {
+  position: relative;
+}
+
+.remax-main::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 420px;
+  background:
+    radial-gradient(circle at 18% 10%, rgba(255, 107, 91, 0.14), transparent 28%),
+    radial-gradient(circle at 82% 4%, rgba(255, 180, 84, 0.14), transparent 24%);
+  pointer-events: none;
+}
+
+.remax-topbar,
+.remax-page-header,
+.remax-context-card,
+.remax-comparison-column,
+.remax-role-stack,
+.remax-highlight-callout,
+.remax-advisor-card,
+.remax-timeline-item,
+.remax-communication-preview,
+.remax-message-box,
+.remax-architecture-card,
+.remax-flow-step,
+.remax-sidebar-panel,
+.remax-code-card {
+  backdrop-filter: blur(18px);
+}
+
+.remax-topbar,
+.remax-page-header,
+.remax-context-card,
+.remax-comparison-column,
+.remax-role-stack,
+.remax-highlight-callout,
+.remax-advisor-card,
+.remax-timeline-item,
+.remax-communication-preview,
+.remax-message-box,
+.remax-architecture-card,
+.remax-flow-step,
+.remax-sidebar-panel,
+.remax-code-card {
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.remax-topbar {
+  position: relative;
+  margin: 0 28px;
+  padding: 18px 22px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 107, 91, 0.12), transparent 28%),
+    linear-gradient(145deg, rgba(37, 20, 28, 0.9), rgba(23, 12, 18, 0.88));
+}
+
+.remax-sidebar-panel {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 107, 91, 0.05));
+}
+
+.remax-sidebar-panel span,
+.remax-context-card span,
+.remax-role-stack span,
+.remax-advisor-meta span,
+.remax-architecture-card span,
+.remax-flow-step span,
+.remax-comparison-label,
+.remax-compact-list span {
+  display: block;
+  color: #f7a69a;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.remax-sidebar-panel strong {
+  font-size: 18px;
+}
+
+.remax-sidebar-panel p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.remax-sidebar-footer {
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.remax-page-header {
+  position: relative;
+  padding: 26px;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 107, 91, 0.16), transparent 34%),
+    linear-gradient(145deg, rgba(33, 18, 25, 0.94), rgba(18, 10, 14, 0.92));
+}
+
+.remax-header-copy h1 {
+  margin: 10px 0 12px;
+  font-size: clamp(36px, 5vw, 54px);
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+}
+
+.remax-eyebrow {
+  margin: 0;
+  color: #ffb08f;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.remax-context-grid,
+.remax-role-grid,
+.remax-architecture-grid,
+.remax-architecture-flow {
+  display: grid;
+  gap: 16px;
+}
+
+.remax-context-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.remax-context-card,
+.remax-role-stack,
+.remax-highlight-callout,
+.remax-message-box,
+.remax-code-card,
+.remax-architecture-card,
+.remax-flow-step {
+  padding: 16px;
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, rgba(35, 18, 25, 0.9), rgba(22, 12, 17, 0.86));
+}
+
+.remax-context-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+}
+
+.remax-context-card p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.remax-comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.remax-comparison-column {
+  padding: 20px;
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, rgba(35, 18, 25, 0.94), rgba(18, 10, 14, 0.9));
+}
+
+.remax-comparison-column-problem {
+  border-color: rgba(255, 140, 132, 0.24);
+}
+
+.remax-comparison-column-solution {
+  border-color: rgba(255, 184, 84, 0.3);
+}
+
+.remax-comparison-column h3 {
+  margin: 8px 0 0;
+  font-size: 24px;
+  letter-spacing: -0.04em;
+}
+
+.remax-feature-list {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 0;
+  padding-left: 18px;
+}
+
+.remax-feature-list li {
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.remax-role-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.remax-highlight-callout {
+  margin-top: 16px;
+  background:
+    linear-gradient(145deg, rgba(255, 107, 91, 0.16), rgba(255, 180, 84, 0.08));
+}
+
+.remax-highlight-callout strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.remax-highlight-callout p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.remax-compact-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.remax-compact-list div {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.remax-compact-list strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 18px;
+}
+
+.remax-advisor-badge {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  font-size: 13px;
+}
+
+.remax-advisor-badge strong {
+  font-size: 13px;
+}
+
+.remax-advisor-badge small {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.remax-advisor-badge-a {
+  background: rgba(255, 180, 84, 0.14);
+  border-color: rgba(255, 180, 84, 0.28);
+  color: #ffd9ab;
+}
+
+.remax-advisor-badge-m {
+  background: rgba(255, 107, 91, 0.14);
+  border-color: rgba(255, 107, 91, 0.28);
+  color: #ffc3bb;
+}
+
+.remax-advisor-badge-staff {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--line);
+  color: var(--text);
+}
+
+.remax-advisor-badge-recepcion {
+  background: rgba(239, 184, 255, 0.1);
+  border-color: rgba(239, 184, 255, 0.2);
+  color: #f3cbff;
+}
+
+.remax-role-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.remax-advisors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.remax-advisor-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 107, 91, 0.1), transparent 34%),
+    linear-gradient(145deg, rgba(35, 18, 25, 0.92), rgba(19, 10, 14, 0.9));
+  transition: 180ms ease;
+}
+
+.remax-advisor-card:hover,
+.remax-advisor-card.active {
+  border-color: rgba(255, 180, 84, 0.36);
+  transform: translateY(-2px);
+}
+
+.remax-advisor-card > strong {
+  font-size: 18px;
+  letter-spacing: -0.03em;
+}
+
+.remax-advisor-meta {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.remax-advisor-meta strong {
+  display: block;
+  margin-top: 8px;
+}
+
+.remax-inline-note {
+  margin: 18px 0;
+}
+
+.remax-code-card {
+  overflow: auto;
+}
+
+.remax-code-card code {
+  display: block;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.remax-timeline {
+  display: grid;
+  gap: 14px;
+}
+
+.remax-timeline-item {
+  padding: 16px;
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, rgba(35, 18, 25, 0.9), rgba(20, 11, 16, 0.88));
+}
+
+.remax-timeline-topline,
+.remax-timeline-values,
+.remax-communication-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.remax-timeline-topline span {
+  color: var(--muted);
+}
+
+.remax-timeline-item h4 {
+  margin: 10px 0;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+}
+
+.remax-timeline-values span {
+  color: var(--muted);
+}
+
+.remax-timeline-bar {
+  height: 10px;
+  margin: 14px 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.remax-timeline-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff6b5b, #ffb454);
+}
+
+.remax-communication-preview {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 180, 84, 0.1), transparent 28%),
+    linear-gradient(145deg, rgba(35, 18, 25, 0.92), rgba(19, 10, 14, 0.9));
+}
+
+.remax-communication-header {
+  align-items: flex-start;
+}
+
+.remax-communication-header h3 {
+  margin: 10px 0 0;
+  font-size: 22px;
+  letter-spacing: -0.04em;
+}
+
+.remax-message-box p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.remax-roadmap-card {
+  display: grid;
+  gap: 14px;
+}
+
+.remax-architecture-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.remax-architecture-card strong,
+.remax-flow-step strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.remax-architecture-card p,
+.remax-flow-step p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.remax-architecture-flow {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.remax-flow-step span {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: rgba(255, 107, 91, 0.14);
+  border: 1px solid rgba(255, 107, 91, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1120px) {
+  .remax-context-grid,
+  .remax-role-grid,
+  .remax-advisors-grid,
+  .remax-architecture-grid,
+  .remax-architecture-flow,
+  .remax-compact-list,
+  .remax-comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 780px) {
+  .remax-topbar {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+
+  .remax-page-header,
+  .remax-advisor-card,
+  .remax-communication-preview,
+  .remax-timeline-item {
+    padding: 18px;
+  }
+
+  .remax-timeline-topline,
+  .remax-timeline-values,
+  .remax-communication-header {
+    flex-direction: column;
+  }
+}
