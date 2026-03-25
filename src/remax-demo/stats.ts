@@ -1,15 +1,15 @@
 import {
   remaxDemoAdvisors,
   remaxDemoCommunications,
-  remaxDemoProperties,
-  remaxDemoValueHistory
+  remaxDemoProperties
 } from "@/remax-demo/data";
 import type {
-  RemaxActivityItem,
   RemaxAdvisor,
+  RemaxAdvisorAssignment,
   RemaxCommunication,
   RemaxCommunicationType,
   RemaxProperty,
+  RemaxPropertyStatus,
   RemaxValueHistory
 } from "@/remax-demo/types";
 
@@ -19,18 +19,8 @@ const communicationMap = new Map(
   remaxDemoCommunications.map((communication) => [communication.id, communication])
 );
 
-function sortByDateDesc<T extends { fecha: string }>(items: T[]): T[] {
-  return [...items].sort((left, right) => right.fecha.localeCompare(left.fecha));
-}
-
 export function getAdvisorById(id: string): RemaxAdvisor | undefined {
   return advisorMap.get(id);
-}
-
-export function getAdvisorsByIds(ids: string[]): RemaxAdvisor[] {
-  return ids
-    .map((id) => advisorMap.get(id))
-    .filter((advisor): advisor is RemaxAdvisor => Boolean(advisor));
 }
 
 export function getPropertyByClave(clave: string): RemaxProperty | undefined {
@@ -41,204 +31,94 @@ export function getCommunicationById(id: string): RemaxCommunication | undefined
   return communicationMap.get(id);
 }
 
+export function getCurrentValue(property: RemaxProperty): number {
+  return property.historialValores[property.historialValores.length - 1]?.valor ?? 0;
+}
+
+export function getPropertiesByStatus(status: RemaxPropertyStatus): RemaxProperty[] {
+  return remaxDemoProperties.filter((property) => property.estatus === status);
+}
+
+export function getAllValueHistory(): RemaxValueHistory[] {
+  return remaxDemoProperties
+    .flatMap((property) => property.historialValores)
+    .sort((left, right) => right.fecha.localeCompare(left.fecha));
+}
+
 export function getPropertyValueHistory(clave: string): RemaxValueHistory[] {
-  return [...remaxDemoValueHistory]
-    .filter((event) => event.propiedadClave === clave)
-    .sort((left, right) => left.fecha.localeCompare(right.fecha));
+  return getPropertyByClave(clave)?.historialValores ?? [];
 }
 
 export function getPropertyCommunications(clave: string): RemaxCommunication[] {
-  return sortByDateDesc(
-    remaxDemoCommunications.filter((communication) => communication.propiedadClave === clave)
-  );
+  return remaxDemoCommunications
+    .filter((communication) => communication.propiedadClave === clave)
+    .sort((left, right) => right.fecha.localeCompare(left.fecha));
 }
 
-export function getPortfolioStats(referenceMonth = "2026-03") {
-  const activeProperties = remaxDemoProperties.filter((property) => property.estatus === "Activa")
-    .length;
-  const closedProperties = remaxDemoProperties.filter((property) => property.estatus === "Cerrada")
-    .length;
-  const cancelledProperties = remaxDemoProperties.filter(
-    (property) => property.estatus === "Cancelada"
-  ).length;
-  const priceChangesThisMonth = remaxDemoValueHistory.filter(
-    (event) => event.valorAnterior !== null && event.fecha.startsWith(referenceMonth)
-  ).length;
-  const communicationsSent = remaxDemoCommunications.filter(
-    (communication) => communication.estado === "enviado"
-  ).length;
-  const advisorsA = remaxDemoAdvisors.filter((advisor) => advisor.clase === "A").length;
-  const advisorsM = remaxDemoAdvisors.filter((advisor) => advisor.clase === "M").length;
-  const adminStaff = remaxDemoAdvisors.filter(
-    (advisor) => advisor.tipoPersonal === "administrativo"
-  ).length;
-  const receptionStaff = remaxDemoAdvisors.filter(
-    (advisor) => advisor.tipoPersonal === "recepcion"
-  ).length;
+export function getMenuStats() {
+  const active = getPropertiesByStatus("Activa").length;
+  const closed = getPropertiesByStatus("Cerrada").length;
+  const cancelled = getPropertiesByStatus("Cancelada").length;
 
   return {
-    activeProperties,
-    closedProperties,
-    cancelledProperties,
-    priceChangesThisMonth,
-    communicationsSent,
-    advisorsA,
-    advisorsM,
-    adminStaff,
-    receptionStaff
+    active,
+    closed,
+    cancelled,
+    communications: remaxDemoCommunications.length,
+    advisorsA: remaxDemoAdvisors.filter((advisor) => advisor.clase === "A").length,
+    advisorsM: remaxDemoAdvisors.filter((advisor) => advisor.clase === "M").length
   };
 }
 
-export function getLatestPropertyEvents(
-  kind: "alta" | "cierre" | "cancelacion",
-  limit = 4
-): Array<{ fecha: string; property: RemaxProperty }> {
-  const items = remaxDemoProperties
-    .map((property) => {
-      if (kind === "alta") {
-        return { fecha: property.fechaAlta, property };
-      }
-
-      if (kind === "cierre" && property.fechaCierre) {
-        return { fecha: property.fechaCierre, property };
-      }
-
-      if (kind === "cancelacion" && property.fechaCancelacion) {
-        return { fecha: property.fechaCancelacion, property };
-      }
-
-      return null;
-    })
-    .filter((item): item is { fecha: string; property: RemaxProperty } => Boolean(item));
-
-  return items.sort((left, right) => right.fecha.localeCompare(left.fecha)).slice(0, limit);
-}
-
-export function getRecentPriceChanges(limit = 6, referenceMonth = "2026-03") {
-  return sortByDateDesc(
-    remaxDemoValueHistory.filter(
-      (event) => event.valorAnterior !== null && event.fecha.startsWith(referenceMonth)
-    )
-  ).slice(0, limit);
-}
-
-export function getRecentActivity(limit = 8): RemaxActivityItem[] {
-  const propertyEvents: RemaxActivityItem[] = remaxDemoProperties.flatMap((property) => {
-    const items: RemaxActivityItem[] = [
-      {
-        id: `alta-${property.clave}`,
-        fecha: property.fechaAlta,
-        titulo: "Alta registrada",
-        detalle: `${property.clave} · ${property.domicilio}`,
-        tone: "info"
-      }
-    ];
-
-    if (property.fechaCierre) {
-      items.push({
-        id: `cierre-${property.clave}`,
-        fecha: property.fechaCierre,
-        titulo: "Cierre de propiedad",
-        detalle: `${property.clave} · ${property.propietario}`,
-        tone: "success"
-      });
-    }
-
-    if (property.fechaCancelacion) {
-      items.push({
-        id: `cancelacion-${property.clave}`,
-        fecha: property.fechaCancelacion,
-        titulo: "Cancelacion registrada",
-        detalle: `${property.clave} · ${property.propietario}`,
-        tone: "danger"
-      });
-    }
-
-    return items;
-  });
-
-  const communicationEvents: RemaxActivityItem[] = remaxDemoCommunications.map((communication) => ({
-    id: `communication-${communication.id}`,
-    fecha: communication.fecha,
-    titulo: `Comunicado ${communication.tipo}`,
-    detalle: `${communication.propiedadClave} · ${communication.estado}`,
-    tone:
-      communication.tipo === "BAJA"
-        ? "success"
-        : communication.tipo === "CANCELACION"
-          ? "danger"
-          : "info"
-  }));
-
-  const priceEvents: RemaxActivityItem[] = remaxDemoValueHistory
-    .filter((event) => event.valorAnterior !== null)
-    .map((event) => ({
-      id: `price-${event.id}`,
-      fecha: event.fecha,
-      titulo: "Ajuste de valor",
-      detalle: `${event.propiedadClave} · ${event.motivo}`,
-      tone: "warning"
-    }));
-
-  return [...propertyEvents, ...communicationEvents, ...priceEvents]
-    .sort((left, right) => right.fecha.localeCompare(left.fecha))
-    .slice(0, limit);
-}
-
-export function getAdvisorAssignments(advisorId: string): RemaxProperty[] {
-  return remaxDemoProperties.filter((property) =>
-    [
-      ...property.asesoresAlta,
-      ...property.asesoresBaja,
-      ...property.asesoresCancelacion
-    ].includes(advisorId)
-  );
-}
-
-export function getAdvisorParticipation(advisorId: string) {
-  const portfolio = getAdvisorAssignments(advisorId);
-
+export function getPortfolioSummary() {
   return {
-    total: portfolio.length,
-    altas: portfolio.filter((property) => property.asesoresAlta.includes(advisorId)).length,
-    bajas: portfolio.filter((property) => property.asesoresBaja.includes(advisorId)).length,
-    cancelaciones: portfolio.filter((property) =>
-      property.asesoresCancelacion.includes(advisorId)
-    ).length,
-    activasVinculadas: portfolio.filter((property) => property.estatus === "Activa").length
+    alta: remaxDemoProperties.filter((property) => property.estatus === "Activa").length,
+    baja: remaxDemoProperties.filter((property) => property.baja).length,
+    cancelacion: remaxDemoProperties.filter((property) => property.cancelacion).length
   };
+}
+
+export function getAdvisorsByIds(ids: string[]): RemaxAdvisor[] {
+  return ids
+    .map((id) => advisorMap.get(id))
+    .filter((advisor): advisor is RemaxAdvisor => Boolean(advisor));
+}
+
+function getPropertyAssignments(
+  property: RemaxProperty
+): Array<RemaxAdvisorAssignment & { advisor: RemaxAdvisor }> {
+  return [...property.asesoresAlta, ...property.asesoresBaja, ...property.asesoresCancelacion]
+    .map((assignment) => ({
+      ...assignment,
+      advisor: advisorMap.get(assignment.advisorId)
+    }))
+    .filter(
+      (assignment): assignment is RemaxAdvisorAssignment & { advisor: RemaxAdvisor } =>
+        Boolean(assignment.advisor)
+    );
 }
 
 export function getPropertyRoleMatrix(property: RemaxProperty) {
-  const roleMap = new Map<string, Set<string>>();
+  const roleMap = new Map<string, { advisor: RemaxAdvisor; roles: string[] }>();
 
-  for (const advisorId of property.asesoresAlta) {
-    const roles = roleMap.get(advisorId) ?? new Set<string>();
-    roles.add("Alta");
-    roleMap.set(advisorId, roles);
+  for (const assignment of getPropertyAssignments(property)) {
+    const existing = roleMap.get(assignment.advisor.id);
+
+    if (existing) {
+      existing.roles.push(assignment.contexto);
+      continue;
+    }
+
+    roleMap.set(assignment.advisor.id, {
+      advisor: assignment.advisor,
+      roles: [assignment.contexto]
+    });
   }
 
-  for (const advisorId of property.asesoresBaja) {
-    const roles = roleMap.get(advisorId) ?? new Set<string>();
-    roles.add("Baja / cierre");
-    roleMap.set(advisorId, roles);
-  }
-
-  for (const advisorId of property.asesoresCancelacion) {
-    const roles = roleMap.get(advisorId) ?? new Set<string>();
-    roles.add("Cancelacion");
-    roleMap.set(advisorId, roles);
-  }
-
-  return [...roleMap.entries()]
-    .map(([advisorId, roles]) => ({
-      advisor: advisorMap.get(advisorId),
-      roles: [...roles]
-    }))
-    .filter(
-      (item): item is { advisor: RemaxAdvisor; roles: string[] } => Boolean(item.advisor)
-    )
-    .sort((left, right) => left.advisor.nombre.localeCompare(right.advisor.nombre));
+  return [...roleMap.values()].map((item) => ({
+    advisor: item.advisor,
+    roles: [...new Set(item.roles)]
+  }));
 }
 
 export function getPropertiesWithMultipleRoles() {
@@ -247,23 +127,56 @@ export function getPropertiesWithMultipleRoles() {
   );
 }
 
-export function getPriceChangeSummary() {
-  const adjustments = remaxDemoValueHistory.filter((event) => event.valorAnterior !== null);
-  const totalDelta = adjustments.reduce((total, event) => {
-    if (event.valorAnterior === null) {
-      return total;
-    }
+export function getAdviserSummaryRows() {
+  return remaxDemoAdvisors
+    .map((advisor) => {
+      const alta = remaxDemoProperties.filter((property) =>
+        property.asesoresAlta.some((assignment) => assignment.advisorId === advisor.id)
+      );
+      const baja = remaxDemoProperties.filter((property) =>
+        property.asesoresBaja.some((assignment) => assignment.advisorId === advisor.id)
+      );
+      const cancelacion = remaxDemoProperties.filter((property) =>
+        property.asesoresCancelacion.some((assignment) => assignment.advisorId === advisor.id)
+      );
 
-    return total + (event.valorNuevo - event.valorAnterior);
-  }, 0);
+      return {
+        advisor,
+        alta,
+        baja,
+        cancelacion,
+        total: new Set([...alta, ...baja, ...cancelacion].map((property) => property.clave)).size
+      };
+    })
+    .filter((row) => row.total > 0 || row.advisor.tipoPersonal !== "asesor");
+}
 
-  return {
-    totalRecords: remaxDemoValueHistory.length,
-    adjustedProperties: new Set(adjustments.map((event) => event.propiedadClave)).size,
-    averageDelta: adjustments.length === 0 ? 0 : totalDelta / adjustments.length
-  };
+export function getOwnerRows() {
+  return remaxDemoProperties.flatMap((property) =>
+    property.propietarios.map((owner, index) => ({
+      owner,
+      property,
+      no: index + 1
+    }))
+  );
 }
 
 export function getCommunicationsByType(type: RemaxCommunicationType) {
-  return sortByDateDesc(remaxDemoCommunications.filter((item) => item.tipo === type));
+  return remaxDemoCommunications.filter((communication) => communication.tipo === type);
+}
+
+export function getSearchableProperties() {
+  return remaxDemoProperties.map((property) => ({
+    clave: property.clave,
+    colonia: property.address.colonia,
+    domicilio: `${property.address.calle} ${property.address.noExt}`,
+    coto: property.address.coto ?? "",
+    fraccionamiento: property.address.fraccionamiento ?? "",
+    asesor:
+      getAdvisorById(property.asesoresAlta[0]?.advisorId ?? "")?.nombre ??
+      getAdvisorById(property.asesoresCancelacion[0]?.advisorId ?? "")?.nombre ??
+      "",
+    precio: getCurrentValue(property),
+    estatus: property.estatus
+  }));
 }

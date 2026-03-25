@@ -1,24 +1,22 @@
 import type { ReactNode } from "react";
 
 export function RemaxPageHeader({
-  eyebrow = "REMAX demo",
   title,
   description,
   actions
 }: {
-  eyebrow?: string;
   title: string;
   description: string;
   actions?: ReactNode;
 }) {
   return (
-    <header className="page-header remax-page-header">
-      <div className="remax-header-copy">
-        <p className="remax-eyebrow">{eyebrow}</p>
+    <header className="remax-page-header">
+      <div>
+        <p className="remax-eyebrow">REMAX ACTIVA</p>
         <h1>{title}</h1>
-        <p className="page-description">{description}</p>
+        <p>{description}</p>
       </div>
-      {actions ? <div className="page-actions">{actions}</div> : null}
+      {actions ? <div className="remax-header-actions">{actions}</div> : null}
     </header>
   );
 }

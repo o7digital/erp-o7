@@ -1,375 +1,907 @@
 .remax-shell {
-  --bg: #120d10;
-  --bg-soft: #1a1015;
-  --panel: rgba(30, 16, 22, 0.88);
-  --panel-solid: #24141b;
-  --line: rgba(255, 160, 151, 0.14);
-  --line-strong: rgba(255, 160, 151, 0.3);
-  --text: #fff5f3;
-  --muted: #d3b6b0;
-  --accent: #ff6b5b;
-  --accent-2: #ffb454;
-  --shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+  --remax-bg: #eef2f7;
+  --remax-surface: #ffffff;
+  --remax-surface-soft: #f7f9fc;
+  --remax-surface-muted: #e5ebf4;
+  --remax-line: #c8d4e3;
+  --remax-line-strong: #8ea4c1;
+  --remax-text: #1a2433;
+  --remax-muted: #63758b;
+  --remax-red: #d7433f;
+  --remax-blue: #5f88c3;
+  --remax-blue-strong: #4771ad;
+  --remax-gold: #d9b04d;
+  --remax-shadow: 0 18px 48px rgba(65, 86, 118, 0.12);
+  --text: var(--remax-text);
+  --muted: var(--remax-muted);
+  --line: var(--remax-line);
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(95, 136, 195, 0.06), rgba(238, 242, 247, 0)),
+    var(--remax-bg);
+  color: var(--remax-text);
+}
+
+.remax-shell a {
+  color: inherit;
 }
 
 .remax-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 18px 16px 24px;
+  border-right: 1px solid var(--remax-line);
   background:
-    radial-gradient(circle at top right, rgba(255, 107, 91, 0.12), transparent 28%),
-    linear-gradient(180deg, rgba(19, 11, 15, 0.96), rgba(15, 8, 12, 0.94));
+    linear-gradient(180deg, #16202f 0%, #1d2a3f 100%);
+  color: #f5f8fc;
 }
 
-.remax-sidebar-brand {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 107, 91, 0.06));
+.remax-brand-panel,
+.remax-side-note {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.18);
+}
+
+.remax-brand-panel {
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.remax-brand-lockup {
+  display: grid;
+  gap: 4px;
 }
 
 .remax-brand-mark {
-  background: linear-gradient(135deg, #ff6b5b, #ffb454);
-  box-shadow: 0 18px 36px rgba(255, 107, 91, 0.25);
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  color: #f04f4c;
 }
 
-.remax-main {
-  position: relative;
+.remax-brand-sub {
+  font-size: 14px;
+  letter-spacing: 0.42em;
 }
 
-.remax-main::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 420px;
-  background:
-    radial-gradient(circle at 18% 10%, rgba(255, 107, 91, 0.14), transparent 28%),
-    radial-gradient(circle at 82% 4%, rgba(255, 180, 84, 0.14), transparent 24%);
-  pointer-events: none;
+.remax-brand-panel p,
+.remax-side-note p {
+  margin: 10px 0 0;
+  color: rgba(245, 248, 252, 0.78);
+  line-height: 1.5;
 }
 
-.remax-topbar,
-.remax-page-header,
-.remax-context-card,
-.remax-comparison-column,
-.remax-role-stack,
-.remax-highlight-callout,
-.remax-advisor-card,
-.remax-timeline-item,
-.remax-communication-preview,
-.remax-message-box,
-.remax-architecture-card,
-.remax-flow-step,
-.remax-sidebar-panel,
-.remax-code-card {
-  backdrop-filter: blur(18px);
+.remax-nav-section + .remax-nav-section {
+  margin-top: 20px;
 }
 
-.remax-topbar,
-.remax-page-header,
-.remax-context-card,
-.remax-comparison-column,
-.remax-role-stack,
-.remax-highlight-callout,
-.remax-advisor-card,
-.remax-timeline-item,
-.remax-communication-preview,
-.remax-message-box,
-.remax-architecture-card,
-.remax-flow-step,
-.remax-sidebar-panel,
-.remax-code-card {
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
+.remax-nav-title {
+  margin: 0 0 8px;
+  padding: 0 8px;
+  color: rgba(245, 248, 252, 0.62);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
-.remax-topbar {
-  position: relative;
-  margin: 0 28px;
-  padding: 18px 22px;
-  border-radius: 22px;
-  background:
-    radial-gradient(circle at top right, rgba(255, 107, 91, 0.12), transparent 28%),
-    linear-gradient(145deg, rgba(37, 20, 28, 0.9), rgba(23, 12, 18, 0.88));
-}
-
-.remax-sidebar-panel {
+.remax-nav-links {
   display: grid;
-  gap: 8px;
-  margin-top: 18px;
-  padding: 16px;
-  border-radius: 20px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 107, 91, 0.05));
+  gap: 6px;
 }
 
-.remax-sidebar-panel span,
-.remax-context-card span,
-.remax-role-stack span,
-.remax-advisor-meta span,
-.remax-architecture-card span,
-.remax-flow-step span,
-.remax-comparison-label,
-.remax-compact-list span {
+.remax-nav-link {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  color: rgba(245, 248, 252, 0.82);
+  transition: 160ms ease;
+}
+
+.remax-nav-link:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.remax-nav-link.active {
+  border-color: rgba(123, 167, 231, 0.35);
+  background: linear-gradient(180deg, rgba(95, 136, 195, 0.34), rgba(95, 136, 195, 0.18));
+  color: #ffffff;
+}
+
+.remax-side-note {
+  padding: 16px;
+  margin-top: 18px;
+}
+
+.remax-side-note span {
   display: block;
-  color: #f7a69a;
+  color: #b9c8db;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
-.remax-sidebar-panel strong {
+.remax-side-note strong {
+  display: block;
+  margin-top: 8px;
   font-size: 18px;
 }
 
-.remax-sidebar-panel p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.55;
+.remax-main {
+  min-width: 0;
 }
 
-.remax-sidebar-footer {
-  margin-top: 18px;
-  background: rgba(255, 255, 255, 0.03);
+.remax-windowbar {
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+  min-height: 44px;
+  padding: 8px 12px 0;
+  background: #141516;
+}
+
+.remax-window-tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: #1d1f22;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+}
+
+.remax-window-tab.active {
+  background: #fbfdff;
+  color: #1f2937;
+}
+
+.remax-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--remax-line);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 248, 252, 0.96));
+  box-shadow: 0 6px 18px rgba(77, 102, 136, 0.06);
+}
+
+.remax-toolbar-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.remax-toolbar-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #1c2637;
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.remax-toolbar-copy {
+  color: var(--remax-muted);
+  font-size: 14px;
+}
+
+.remax-toolbar-meta {
+  text-align: right;
+}
+
+.remax-toolbar-meta strong {
+  display: block;
+  font-size: 15px;
+}
+
+.remax-toolbar-meta p {
+  margin: 4px 0 0;
+  color: var(--remax-muted);
+  font-size: 13px;
+}
+
+.remax-content {
+  padding: 24px;
+}
+
+.remax-page-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.remax-page-header,
+.remax-card,
+.remax-property-banner,
+.remax-menu-hero-block,
+.remax-context-card,
+.remax-detail-card,
+.remax-key-preview,
+.remax-note-box,
+.remax-role-callout,
+.remax-checklist,
+.remax-timeline-item,
+.remax-communication-preview,
+.remax-message-box {
+  border: 1px solid var(--remax-line);
+  border-radius: 22px;
+  background: var(--remax-surface);
+  box-shadow: var(--remax-shadow);
 }
 
 .remax-page-header {
-  position: relative;
-  padding: 26px;
-  border-radius: 30px;
-  background:
-    radial-gradient(circle at top right, rgba(255, 107, 91, 0.16), transparent 34%),
-    linear-gradient(145deg, rgba(33, 18, 25, 0.94), rgba(18, 10, 14, 0.92));
-}
-
-.remax-header-copy h1 {
-  margin: 10px 0 12px;
-  font-size: clamp(36px, 5vw, 54px);
-  line-height: 0.94;
-  letter-spacing: -0.05em;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 24px;
 }
 
 .remax-eyebrow {
   margin: 0;
-  color: #ffb08f;
+  color: var(--remax-red);
   font-size: 12px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
 }
 
-.remax-context-grid,
-.remax-role-grid,
-.remax-architecture-grid,
-.remax-architecture-flow {
+.remax-page-header h1 {
+  margin: 10px 0 10px;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.remax-page-header p {
+  margin: 0;
+  color: var(--remax-muted);
+  line-height: 1.6;
+}
+
+.remax-header-actions,
+.remax-inline-actions,
+.remax-workflow-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.remax-shell .button {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid #9fb6d8;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #d9e6f8, #bdd2f0);
+  color: #274162;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.remax-shell .button:hover {
+  border-color: #6c8fc3;
+  background: linear-gradient(180deg, #cfe0f7, #adc7ed);
+}
+
+.remax-shell .button-secondary {
+  background: linear-gradient(180deg, #f8fbff, #e6eef9);
+  border-color: #c4d4eb;
+  color: #445978;
+}
+
+.remax-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.remax-summary-strip div,
+.remax-mini-summary div {
+  padding: 14px 16px;
+  border: 1px solid var(--remax-line);
+  border-radius: 18px;
+  background: var(--remax-surface);
+}
+
+.remax-summary-strip span,
+.remax-mini-summary span,
+.remax-context-card span,
+.remax-detail-card span,
+.remax-search-header span {
+  display: block;
+  color: var(--remax-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.remax-summary-strip strong,
+.remax-mini-summary strong,
+.remax-context-card strong,
+.remax-detail-card strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 20px;
+}
+
+.remax-menu-hero {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 16px;
+}
+
+.remax-menu-banner,
+.remax-process-rack,
+.remax-menu-shortcuts,
+.remax-control-panel {
+  border: 1px solid var(--remax-line);
+  border-radius: 20px;
+  background: var(--remax-surface);
+  box-shadow: var(--remax-shadow);
+}
+
+.remax-menu-banner {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 16px;
+}
+
+.remax-menu-banner span {
+  display: block;
+  color: #365171;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.remax-mini-launch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid #c5d6ee;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f7fbff, #dfeaf9);
+  color: #405c7e;
+  font-weight: 600;
+}
+
+.remax-process-rack {
+  display: grid;
+  gap: 12px;
+  padding: 16px 18px;
+}
+
+.remax-process-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.remax-process-line span {
+  color: #314964;
+  font-weight: 700;
+}
+
+.remax-process-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 126px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.remax-process-button.primary {
+  background: linear-gradient(180deg, #dce9fb, #bcd0ef);
+  border-color: #9db7db;
+  color: #284466;
+}
+
+.remax-process-button.danger {
+  background: linear-gradient(180deg, #fbe0df, #f2c2bf);
+  border-color: #e3a5a0;
+  color: #8f2f2c;
+}
+
+.remax-process-button.warning {
+  background: linear-gradient(180deg, #f7eccb, #efdca6);
+  border-color: #dec78a;
+  color: #8d6a16;
+}
+
+.remax-menu-shortcuts {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 16px;
+}
+
+.remax-menu-shortcuts .remax-mini-launch {
+  justify-content: flex-start;
+}
+
+.remax-operation-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 16px;
+}
+
+.remax-operation-main,
+.remax-operation-side {
   display: grid;
   gap: 16px;
+}
+
+.remax-access-button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.remax-access-button-grid-wide {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.remax-access-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid #c8d7eb;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f9fbff, #e5eef9);
+  color: #405c7e;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.remax-access-button.emphasized {
+  background: linear-gradient(180deg, #e6f0ff, #cfe0f8);
+  color: #284466;
+}
+
+.remax-control-panel {
+  padding: 16px;
+}
+
+.remax-control-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.remax-control-row span {
+  color: var(--remax-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.remax-menu-grid,
+.remax-two-columns,
+.remax-context-grid,
+.remax-detail-list {
+  display: grid;
+  gap: 16px;
+}
+
+.remax-menu-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.remax-two-columns {
+  grid-template-columns: 1.2fr 1fr;
 }
 
 .remax-context-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.remax-card {
+  overflow: hidden;
+}
+
 .remax-context-card,
-.remax-role-stack,
-.remax-highlight-callout,
-.remax-message-box,
-.remax-code-card,
-.remax-architecture-card,
-.remax-flow-step {
+.remax-detail-card {
   padding: 16px;
-  border-radius: 22px;
-  background:
-    linear-gradient(145deg, rgba(35, 18, 25, 0.9), rgba(22, 12, 17, 0.86));
 }
 
-.remax-context-card strong {
-  display: block;
-  margin-top: 10px;
-  font-size: 20px;
-  letter-spacing: -0.03em;
+.remax-section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--remax-line);
+  background: #e8eff9;
 }
 
-.remax-context-card p {
-  margin: 10px 0 0;
-  color: var(--muted);
-  line-height: 1.6;
+.remax-section-title strong {
+  font-size: 18px;
+  letter-spacing: -0.02em;
 }
 
-.remax-comparison-grid {
+.remax-section-title-blue {
+  background: linear-gradient(180deg, #d8e6f8, #c8dbf5);
+}
+
+.remax-section-title-red {
+  background: linear-gradient(180deg, #f9d5d4, #f3c5c2);
+}
+
+.remax-section-title-gold {
+  background: linear-gradient(180deg, #f8eccd, #f0dfb1);
+}
+
+.remax-card-body {
+  padding: 18px;
+}
+
+.remax-launch-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.remax-comparison-column {
-  padding: 20px;
-  border-radius: 24px;
-  background:
-    linear-gradient(145deg, rgba(35, 18, 25, 0.94), rgba(18, 10, 14, 0.9));
-}
-
-.remax-comparison-column-problem {
-  border-color: rgba(255, 140, 132, 0.24);
-}
-
-.remax-comparison-column-solution {
-  border-color: rgba(255, 184, 84, 0.3);
-}
-
-.remax-comparison-column h3 {
-  margin: 8px 0 0;
-  font-size: 24px;
-  letter-spacing: -0.04em;
-}
-
-.remax-feature-list {
-  display: grid;
   gap: 12px;
-  margin: 18px 0 0;
-  padding-left: 18px;
 }
 
-.remax-feature-list li {
-  color: var(--text);
-  line-height: 1.6;
+.remax-launch-link {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid #c8d7eb;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f9fbff, #e7eef9);
+  color: #355173;
+  font-weight: 600;
 }
 
-.remax-role-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 16px;
+.remax-launch-link:hover {
+  border-color: #90acd0;
+  background: linear-gradient(180deg, #eff5ff, #dae8fb);
 }
 
-.remax-highlight-callout {
-  margin-top: 16px;
-  background:
-    linear-gradient(145deg, rgba(255, 107, 91, 0.16), rgba(255, 180, 84, 0.08));
+.remax-property-banner {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
 }
 
-.remax-highlight-callout strong {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 18px;
-}
-
-.remax-highlight-callout p {
+.remax-view-title {
   margin: 0;
-  color: var(--text);
+  color: var(--remax-red);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.remax-property-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid rgba(215, 67, 63, 0.82);
+}
+
+.remax-property-line strong {
+  color: #254061;
+}
+
+.remax-workflow-tabs {
+  padding: 4px;
+  border: 1px solid var(--remax-line);
+  border-radius: 16px;
+  background: #f7f9fc;
+}
+
+.remax-workflow-tab {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: #56718f;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remax-workflow-tab.active {
+  border-color: #a7bddc;
+  background: linear-gradient(180deg, #dce8f8, #c7d8f0);
+  color: #274162;
+  font-weight: 700;
+}
+
+.remax-form-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.remax-form-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.remax-form-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.remax-form-grid-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.remax-form-grid-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.remax-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.remax-field span {
+  color: #45627f;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.remax-field input,
+.remax-field select,
+.remax-field textarea {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--remax-line);
+  border-radius: 10px;
+  background: var(--remax-surface-soft);
+  color: var(--remax-text);
+}
+
+.remax-field textarea {
+  min-height: 90px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  resize: vertical;
+}
+
+.remax-field-with-code {
+  display: grid;
+  grid-template-columns: 1fr 64px;
+  gap: 8px;
+}
+
+.remax-key-preview,
+.remax-note-box,
+.remax-role-callout {
+  padding: 14px 16px;
+}
+
+.remax-key-preview span,
+.remax-note-box strong,
+.remax-role-callout strong {
+  display: block;
+}
+
+.remax-key-preview span {
+  color: var(--remax-red);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.remax-key-preview strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 32px;
+  letter-spacing: -0.05em;
+}
+
+.remax-note-box p,
+.remax-role-callout p,
+.remax-context-card p,
+.remax-detail-card p,
+.remax-message-box p {
+  margin: 8px 0 0;
+  color: var(--remax-muted);
   line-height: 1.55;
 }
 
-.remax-compact-list {
+.remax-role-callout {
+  background: linear-gradient(180deg, rgba(215, 67, 63, 0.06), rgba(255, 255, 255, 1));
+}
+
+.remax-field-span-2 {
+  grid-column: span 2;
+}
+
+.remax-field-span-3 {
+  grid-column: span 3;
+}
+
+.remax-field-span-4 {
+  grid-column: span 4;
+}
+
+.remax-subgrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 18px;
+  gap: 16px;
+  margin-top: 16px;
 }
 
-.remax-compact-list div {
-  padding: 14px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.remax-compact-list strong {
-  display: block;
-  margin-top: 8px;
-  font-size: 18px;
-}
-
-.remax-advisor-badge {
-  display: inline-flex;
+.remax-chip-list {
+  display: flex;
   flex-wrap: wrap;
+  gap: 8px;
+}
+
+.remax-chip {
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 12px;
-  border-radius: 16px;
-  border: 1px solid transparent;
+  min-height: 30px;
+  padding: 0 12px;
+  border: 1px solid #c9d8ea;
+  border-radius: 999px;
+  background: #eef4fb;
+  color: #355173;
   font-size: 13px;
 }
 
-.remax-advisor-badge strong {
-  font-size: 13px;
+.remax-checklist {
+  padding: 14px 16px;
 }
 
-.remax-advisor-badge small {
-  font-size: 11px;
+.remax-checklist > span {
+  display: block;
+  color: #45627f;
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-.remax-advisor-badge-a {
-  background: rgba(255, 180, 84, 0.14);
-  border-color: rgba(255, 180, 84, 0.28);
-  color: #ffd9ab;
-}
-
-.remax-advisor-badge-m {
-  background: rgba(255, 107, 91, 0.14);
-  border-color: rgba(255, 107, 91, 0.28);
-  color: #ffc3bb;
-}
-
-.remax-advisor-badge-staff {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: var(--line);
-  color: var(--text);
-}
-
-.remax-advisor-badge-recepcion {
-  background: rgba(239, 184, 255, 0.1);
-  border-color: rgba(239, 184, 255, 0.2);
-  color: #f3cbff;
-}
-
-.remax-role-stack {
-  display: grid;
-  gap: 12px;
-}
-
-.remax-advisors-grid {
+.remax-check-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 10px 16px;
+  margin-top: 12px;
+  color: var(--remax-text);
 }
 
-.remax-advisor-card {
+.remax-mini-summary {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  padding: 18px;
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at top right, rgba(255, 107, 91, 0.1), transparent 34%),
-    linear-gradient(145deg, rgba(35, 18, 25, 0.92), rgba(19, 10, 14, 0.9));
-  transition: 180ms ease;
+  margin-bottom: 16px;
 }
 
-.remax-advisor-card:hover,
-.remax-advisor-card.active {
-  border-color: rgba(255, 180, 84, 0.36);
-  transform: translateY(-2px);
+.remax-search-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
 }
 
-.remax-advisor-card > strong {
-  font-size: 18px;
-  letter-spacing: -0.03em;
+.remax-detail-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.remax-advisor-meta {
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
+.remax-detail-card {
+  padding: 16px;
 }
 
-.remax-advisor-meta strong {
-  display: block;
-  margin-top: 8px;
+.remax-cancel-box {
+  padding: 14px;
+  border: 2px solid rgba(215, 67, 63, 0.5);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 237, 188, 0.28), #fff);
 }
 
-.remax-inline-note {
-  margin: 18px 0;
+.remax-cancel-box-title {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: #f4c649;
+  color: #8e302c;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
 }
 
-.remax-code-card {
-  overflow: auto;
+.remax-shell .table-wrap {
+  border: 1px solid var(--remax-line);
+  border-radius: 16px;
+  background: #fbfdff;
 }
 
-.remax-code-card code {
-  display: block;
-  line-height: 1.7;
-  white-space: pre-wrap;
+.remax-shell .data-table {
+  min-width: 720px;
+  color: var(--remax-text);
+}
+
+.remax-shell .data-table th,
+.remax-shell .data-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--remax-line);
+}
+
+.remax-shell .data-table th {
+  background: #edf3fb;
+  color: #45627f;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.remax-shell .data-table tbody tr:hover {
+  background: #f4f8fd;
+}
+
+.remax-shell .badge {
+  border-radius: 999px;
+}
+
+.remax-shell .badge-success {
+  background: #e2f4ea;
+  border-color: #b2ddc1;
+  color: #1f7a45;
+}
+
+.remax-shell .badge-info {
+  background: #e3eefc;
+  border-color: #bdd0ef;
+  color: #325f9d;
+}
+
+.remax-shell .badge-danger {
+  background: #fde8e7;
+  border-color: #f4c0bc;
+  color: #bf4138;
+}
+
+.remax-shell .badge-warning {
+  background: #fff3d7;
+  border-color: #efd59b;
+  color: #936915;
+}
+
+.remax-shell .badge-neutral {
+  background: #f3f6fa;
+  border-color: #d7e0ea;
+  color: #4b617d;
+}
+
+.remax-shell .info-item {
+  border: 1px solid var(--remax-line);
+  border-radius: 16px;
+  background: var(--remax-surface-soft);
 }
 
 .remax-timeline {
@@ -378,10 +910,7 @@
 }
 
 .remax-timeline-item {
-  padding: 16px;
-  border-radius: 22px;
-  background:
-    linear-gradient(145deg, rgba(35, 18, 25, 0.9), rgba(20, 11, 16, 0.88));
+  padding: 14px 16px;
 }
 
 .remax-timeline-topline,
@@ -392,25 +921,23 @@
   gap: 12px;
 }
 
-.remax-timeline-topline span {
-  color: var(--muted);
-}
-
-.remax-timeline-item h4 {
+.remax-timeline-item h4,
+.remax-communication-header h3 {
   margin: 10px 0;
   font-size: 18px;
   letter-spacing: -0.03em;
 }
 
+.remax-timeline-topline span,
 .remax-timeline-values span {
-  color: var(--muted);
+  color: var(--remax-muted);
 }
 
 .remax-timeline-bar {
-  height: 10px;
-  margin: 14px 0 12px;
+  height: 8px;
+  margin: 12px 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: #e7edf6;
   overflow: hidden;
 }
 
@@ -418,101 +945,97 @@
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #ff6b5b, #ffb454);
+  background: linear-gradient(90deg, var(--remax-blue), var(--remax-red));
 }
 
 .remax-communication-preview {
   display: grid;
-  gap: 16px;
-  padding: 18px;
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at top right, rgba(255, 180, 84, 0.1), transparent 28%),
-    linear-gradient(145deg, rgba(35, 18, 25, 0.92), rgba(19, 10, 14, 0.9));
-}
-
-.remax-communication-header {
-  align-items: flex-start;
-}
-
-.remax-communication-header h3 {
-  margin: 10px 0 0;
-  font-size: 22px;
-  letter-spacing: -0.04em;
-}
-
-.remax-message-box p {
-  margin: 0;
-  line-height: 1.6;
-}
-
-.remax-roadmap-card {
-  display: grid;
   gap: 14px;
+  padding: 16px;
 }
 
-.remax-architecture-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.remax-message-box {
+  padding: 14px 16px;
+  background: var(--remax-surface-soft);
 }
 
-.remax-architecture-card strong,
-.remax-flow-step strong {
-  display: block;
-  margin-top: 10px;
-  font-size: 20px;
+.remax-message-box .muted {
+  margin: 0 0 8px;
+  color: var(--remax-muted);
 }
 
-.remax-architecture-card p,
-.remax-flow-step p {
-  margin: 10px 0 0;
-  color: var(--muted);
+.remax-feature-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.remax-feature-list li {
   line-height: 1.6;
 }
 
-.remax-architecture-flow {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 18px;
-}
-
-.remax-flow-step span {
-  width: 32px;
-  height: 32px;
-  border-radius: 12px;
-  background: rgba(255, 107, 91, 0.14);
-  border: 1px solid rgba(255, 107, 91, 0.2);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (max-width: 1120px) {
-  .remax-context-grid,
-  .remax-role-grid,
-  .remax-advisors-grid,
-  .remax-architecture-grid,
-  .remax-architecture-flow,
-  .remax-compact-list,
-  .remax-comparison-grid {
+@media (max-width: 1220px) {
+  .remax-shell {
     grid-template-columns: 1fr;
+  }
+
+  .remax-sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--remax-line);
+  }
+
+  .remax-summary-strip,
+  .remax-menu-hero,
+  .remax-operation-layout,
+  .remax-two-columns,
+  .remax-context-grid,
+  .remax-detail-list,
+  .remax-form-grid-3,
+  .remax-form-grid-4,
+  .remax-form-grid-5,
+  .remax-form-grid-6,
+  .remax-mini-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .remax-access-button-grid-wide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 780px) {
-  .remax-topbar {
-    margin-left: 18px;
-    margin-right: 18px;
-  }
-
+  .remax-toolbar,
   .remax-page-header,
-  .remax-advisor-card,
-  .remax-communication-preview,
-  .remax-timeline-item {
-    padding: 18px;
-  }
-
+  .remax-property-banner,
+  .remax-search-header,
   .remax-timeline-topline,
   .remax-timeline-values,
   .remax-communication-header {
     flex-direction: column;
+  }
+
+  .remax-content {
+    padding: 16px;
+  }
+
+  .remax-card-body,
+  .remax-page-header,
+  .remax-property-banner {
+    padding: 16px;
+  }
+
+  .remax-check-grid,
+  .remax-launch-grid,
+  .remax-detail-list {
+    grid-template-columns: 1fr;
+  }
+
+  .remax-field-span-2,
+  .remax-field-span-3,
+  .remax-field-span-4 {
+    grid-column: auto;
   }
 }

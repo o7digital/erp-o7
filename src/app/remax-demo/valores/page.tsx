@@ -1,22 +1,15 @@
 import Link from "next/link";
 
 import { DataTable } from "@/components/data-table";
-import { SectionCard } from "@/components/section-card";
-import { StatCard } from "@/components/stat-card";
+import { AccessSection } from "@/remax-demo/components/access-section";
+import { PropertyBanner } from "@/remax-demo/components/property-banner";
 import { RemaxPageHeader } from "@/remax-demo/components/remax-page-header";
 import { ValueHistoryTimeline } from "@/remax-demo/components/value-history-timeline";
-import { remaxDemoProperties, remaxDemoValueHistory } from "@/remax-demo/data";
 import {
   formatCurrencyMXN,
-  formatDateLong,
   getSingleSearchParam
 } from "@/remax-demo/formatters";
-import {
-  getPriceChangeSummary,
-  getPropertyByClave,
-  getPropertyValueHistory,
-  getRecentPriceChanges
-} from "@/remax-demo/stats";
+import { getAllValueHistory, getCurrentValue, getPropertyByClave, getPropertyValueHistory } from "@/remax-demo/stats";
 
 export default async function ValoresPage({
   searchParams
@@ -24,154 +17,90 @@ export default async function ValoresPage({
   searchParams: Promise<{ propiedad?: string | string[] }>;
 }) {
   const params = await searchParams;
-  const selectedKey = getSingleSearchParam(params.propiedad) ?? "RMX-ACT-207";
-  const selectedProperty = getPropertyByClave(selectedKey) ?? remaxDemoProperties[0];
-  const selectedHistory = getPropertyValueHistory(selectedProperty.clave);
-  const summary = getPriceChangeSummary();
-  const alerts = getRecentPriceChanges();
+  const selectedKey = getSingleSearchParam(params.propiedad) ?? "CBR-1748";
+  const property = getPropertyByClave(selectedKey) ?? getPropertyByClave("CBR-1748");
+
+  if (!property) {
+    return null;
+  }
+
+  const events = getPropertyValueHistory(property.clave);
 
   return (
-    <div className="page-stack">
+    <div className="remax-page-stack">
       <RemaxPageHeader
-        eyebrow="Trazabilidad comercial"
-        title="Historial de valores"
-        description="Modulo demo para mostrar que la nueva plataforma conserva historico de precio limpio, consultable y auditable por propiedad, con fecha, motivo, cierre y responsable."
+        title="Valores de propiedad"
+        description="Pantalla inspirada en los modulos de valores de Access. Prioriza la tabla operativa con fecha, moneda, posicion, motivo de cambio y motivo para minuta."
         actions={
-          <div className="button-row">
-            <Link href="/remax-demo/propiedades" className="button button-secondary">
-              Ver propiedades
+          <div className="remax-header-actions">
+            <Link href={`/remax-demo/alta?step=valores&propiedad=${property.clave}`} className="button">
+              Ir a flujo Alta
             </Link>
-            <Link href="/remax-demo/comunicados" className="button">
-              Ver comunicados
+            <Link href={`/remax-demo/baja?step=valores&propiedad=CBR-1748`} className="button button-secondary">
+              Ir a flujo Baja
             </Link>
           </div>
         }
       />
 
-      <div className="stats-grid">
-        <StatCard
-          label="Registros historicos"
-          value={String(summary.totalRecords)}
-          detail="Auditoria comercial"
-        />
-        <StatCard
-          label="Propiedades con ajustes"
-          value={String(summary.adjustedProperties)}
-          detail="Mas de un valor registrado"
-        />
-        <StatCard
-          label="Delta promedio"
-          value={formatCurrencyMXN(summary.averageDelta)}
-          detail="Impacto medio por ajuste"
-        />
-        <StatCard
-          label="Propiedad seleccionada"
-          value={selectedProperty.clave}
-          detail={selectedProperty.domicilio}
-        />
-      </div>
+      <PropertyBanner property={property} title="Registro / revision de valores" />
 
-      <div className="two-columns">
-        <SectionCard
-          title={`Timeline de ${selectedProperty.clave}`}
-          description="Visual de historico para una propiedad seleccionable desde la tabla."
-        >
-          <ValueHistoryTimeline events={selectedHistory} />
-        </SectionCard>
-
-        <SectionCard
-          title="Resumen del activo"
-          description="Vista lateral pensada para consulta comercial y direccion."
-        >
-          <div className="info-grid">
-            <div className="info-item">
-              <span>Propiedad</span>
-              <strong>{selectedProperty.domicilio}</strong>
-            </div>
-            <div className="info-item">
-              <span>Operacion</span>
-              <strong>
-                {selectedProperty.operacion} · {selectedProperty.tipo}
-              </strong>
-            </div>
-            <div className="info-item">
-              <span>Precio actual</span>
-              <strong>{formatCurrencyMXN(selectedProperty.precioActual)}</strong>
-            </div>
-            <div className="info-item">
-              <span>Historial visible</span>
-              <strong>{selectedHistory.length} eventos</strong>
-            </div>
+      <AccessSection title="Registro de Valores de Propiedades">
+        <div className="remax-mini-summary">
+          <div>
+            <span>Valor actual</span>
+            <strong>{formatCurrencyMXN(getCurrentValue(property))}</strong>
           </div>
-
-          <ul className="list">
-            {alerts.map((event) => (
-              <li key={event.id} className="list-item">
-                <strong>
-                  <Link href={`/remax-demo/valores?propiedad=${event.propiedadClave}`}>
-                    {event.propiedadClave}
-                  </Link>
-                </strong>
-                <span className="muted">
-                  {formatDateLong(event.fecha)} · {event.motivo}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </SectionCard>
-      </div>
-
-      <SectionCard
-        title="Bitacora completa de valores"
-        description="Tabla demo portfolio-wide para consulta por direccion, operaciones y asesores."
-      >
+          <div>
+            <span>Eventos de valor</span>
+            <strong>{events.length}</strong>
+          </div>
+          <div>
+            <span>Propiedad</span>
+            <strong>{property.clave}</strong>
+          </div>
+        </div>
         <DataTable
-          rows={[...remaxDemoValueHistory].sort((left, right) => right.fecha.localeCompare(left.fecha))}
+          rows={events}
           getRowId={(row) => row.id}
           columns={[
-            {
-              key: "propiedad",
-              label: "Propiedad",
-              render: (row) => (
-                <div>
+            { key: "clave", label: "Clave Propiedad", render: (row) => row.propiedadClave },
+            { key: "valor", label: "Valor Inicial", align: "right", render: (row) => formatCurrencyMXN(row.valor) },
+            { key: "fecha", label: "Fecha", render: (row) => row.fecha },
+            { key: "moneda", label: "Moneda", render: (row) => row.moneda },
+            { key: "posicion", label: "Posicion", render: (row) => row.posicion || "-" },
+            { key: "motivo", label: "Motivo de cambio", render: (row) => row.motivoCambio },
+            { key: "minuta", label: "Motivo de cambio para senalar en Minuta", render: (row) => row.motivoMinuta }
+          ]}
+        />
+      </AccessSection>
+
+      <div className="remax-two-columns">
+        <AccessSection title="Timeline de la propiedad" accent="blue">
+          <ValueHistoryTimeline events={events} />
+        </AccessSection>
+
+        <AccessSection title="Bitacora global de valores" accent="red">
+          <DataTable
+            rows={getAllValueHistory()}
+            getRowId={(row) => row.id}
+            columns={[
+              {
+                key: "propiedad",
+                label: "Propiedad",
+                render: (row) => (
                   <Link href={`/remax-demo/valores?propiedad=${row.propiedadClave}`}>
                     <strong>{row.propiedadClave}</strong>
                   </Link>
-                  <div className="muted">{row.usuario}</div>
-                </div>
-              )
-            },
-            {
-              key: "fecha",
-              label: "Fecha",
-              render: (row) => formatDateLong(row.fecha)
-            },
-            {
-              key: "anterior",
-              label: "Valor anterior",
-              align: "right",
-              render: (row) =>
-                row.valorAnterior === null ? "Alta inicial" : formatCurrencyMXN(row.valorAnterior)
-            },
-            {
-              key: "nuevo",
-              label: "Nuevo valor",
-              align: "right",
-              render: (row) => formatCurrencyMXN(row.valorNuevo)
-            },
-            {
-              key: "motivo",
-              label: "Motivo",
-              render: (row) => (
-                <div>
-                  <strong>{row.motivo}</strong>
-                  <div className="muted">{row.cierre ?? "Sin cierre asociado"}</div>
-                </div>
-              )
-            }
-          ]}
-        />
-      </SectionCard>
+                )
+              },
+              { key: "fecha", label: "Fecha", render: (row) => row.fecha },
+              { key: "valor", label: "Valor", align: "right", render: (row) => formatCurrencyMXN(row.valor) },
+              { key: "motivo", label: "Motivo", render: (row) => row.motivoCambio }
+            ]}
+          />
+        </AccessSection>
+      </div>
     </div>
   );
 }

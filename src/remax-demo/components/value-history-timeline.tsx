@@ -6,7 +6,7 @@ export function ValueHistoryTimeline({
 }: {
   events: RemaxValueHistory[];
 }) {
-  const maxValue = Math.max(...events.map((event) => event.valorNuevo), 1);
+  const maxValue = Math.max(...events.map((event) => event.valor), 1);
 
   return (
     <div className="remax-timeline">
@@ -16,22 +16,15 @@ export function ValueHistoryTimeline({
             <strong>{formatDateShort(event.fecha)}</strong>
             <span>{event.usuario}</span>
           </div>
-          <h4>{event.motivo}</h4>
+          <h4>{event.motivoCambio}</h4>
           <div className="remax-timeline-values">
-            <span>
-              {event.valorAnterior === null
-                ? "Sin valor previo"
-                : `Anterior: ${formatCurrencyMXN(event.valorAnterior)}`}
-            </span>
-            <strong>{formatCurrencyMXN(event.valorNuevo)}</strong>
+            <span>{event.motivoMinuta}</span>
+            <strong>{formatCurrencyMXN(event.valor)}</strong>
           </div>
           <div className="remax-timeline-bar">
-            <span style={{ width: `${Math.max((event.valorNuevo / maxValue) * 100, 10)}%` }} />
+            <span style={{ width: `${Math.max((event.valor / maxValue) * 100, 10)}%` }} />
           </div>
-          <p className="muted">
-            {event.cierre ? `${event.cierre}. ` : ""}
-            {event.observaciones ?? "Historico preservado para auditoria comercial."}
-          </p>
+          <p className="muted">Moneda: {event.moneda} · Posicion: {event.posicion || "N/A"}</p>
         </article>
       ))}
     </div>

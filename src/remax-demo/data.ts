@@ -2,8 +2,35 @@ import type {
   RemaxAdvisor,
   RemaxCommunication,
   RemaxProperty,
-  RemaxValueHistory
+  RemaxSelectOption
 } from "@/remax-demo/types";
+
+export const remaxCategoryOptions: RemaxSelectOption[] = [
+  { label: "Exclusiva", code: "EX" },
+  { label: "Opcion", code: "OP" },
+  { label: "Coop", code: "CO" },
+  { label: "Otro", code: "OT" }
+];
+
+export const remaxGiroOptions: RemaxSelectOption[] = [
+  { label: "Residencial", code: "R" },
+  { label: "Comercial", code: "C" },
+  { label: "Industrial", code: "I" }
+];
+
+export const remaxTipoOptions: RemaxSelectOption[] = [
+  { label: "Casa", code: "C" },
+  { label: "Departamento", code: "D" },
+  { label: "Bodega", code: "B" },
+  { label: "Local", code: "L" },
+  { label: "Terreno", code: "T" },
+  { label: "Oficina", code: "O" }
+];
+
+export const remaxOperacionOptions: RemaxSelectOption[] = [
+  { label: "Venta", code: "V" },
+  { label: "Renta", code: "R" }
+];
 
 export const remaxDemoAdvisors: RemaxAdvisor[] = [
   {
@@ -20,7 +47,7 @@ export const remaxDemoAdvisors: RemaxAdvisor[] = [
     nombre: "Alejandra Rios",
     clase: "A",
     tipoPersonal: "asesor",
-    rol: "Captacion premium",
+    rol: "Captacion residencial",
     comisionRate: 0.07,
     activo: true
   },
@@ -38,7 +65,7 @@ export const remaxDemoAdvisors: RemaxAdvisor[] = [
     nombre: "Andres Galvan",
     clase: "A",
     tipoPersonal: "asesor",
-    rol: "Inversion patrimonial",
+    rol: "Industrial y logistica",
     comisionRate: 0.0725,
     activo: true
   },
@@ -74,7 +101,7 @@ export const remaxDemoAdvisors: RemaxAdvisor[] = [
     nombre: "Sofia Campos",
     clase: "M",
     tipoPersonal: "asesor",
-    rol: "Captacion digital",
+    rol: "Apoyo comercial",
     comisionRate: 0.045,
     activo: true
   },
@@ -83,7 +110,7 @@ export const remaxDemoAdvisors: RemaxAdvisor[] = [
     nombre: "Valeria Ordonez",
     clase: "M",
     tipoPersonal: "asesor",
-    rol: "Seguimiento de leads",
+    rol: "Seguimiento de inventario",
     comisionRate: 0.0425,
     activo: true
   },
@@ -92,7 +119,7 @@ export const remaxDemoAdvisors: RemaxAdvisor[] = [
     nombre: "Diego Ruiz",
     clase: "M",
     tipoPersonal: "asesor",
-    rol: "Apoyo de cierres",
+    rol: "Rentas residenciales",
     comisionRate: 0.045,
     activo: true
   },
@@ -101,7 +128,7 @@ export const remaxDemoAdvisors: RemaxAdvisor[] = [
     nombre: "Karla Soto",
     clase: "M",
     tipoPersonal: "asesor",
-    rol: "Rentas residenciales",
+    rol: "Control de visitas",
     comisionRate: 0.04,
     activo: true
   },
@@ -110,7 +137,7 @@ export const remaxDemoAdvisors: RemaxAdvisor[] = [
     nombre: "Tomas Herrera",
     clase: "M",
     tipoPersonal: "asesor",
-    rol: "Inventario y visitas",
+    rol: "Inventario y llaves",
     comisionRate: 0.04,
     activo: true
   },
@@ -146,7 +173,7 @@ export const remaxDemoAdvisors: RemaxAdvisor[] = [
     nombre: "Susana Montes",
     clase: null,
     tipoPersonal: "administrativo",
-    rol: "Administracion de expedientes",
+    rol: "Expedientes y contratos",
     comisionRate: null,
     activo: true
   },
@@ -161,751 +188,1374 @@ export const remaxDemoAdvisors: RemaxAdvisor[] = [
   }
 ];
 
-export const remaxDemoValueHistory: RemaxValueHistory[] = [
-  {
-    id: "vh-001",
-    propiedadClave: "RMX-ACT-201",
-    fecha: "2026-01-12",
-    valorAnterior: null,
-    valorNuevo: 6980000,
-    motivo: "Alta inicial",
-    cierre: "Captacion exclusiva por 120 dias",
-    usuario: "Alejandra Rios",
-    observaciones: "Se integra al inventario premium de San Pedro."
-  },
-  {
-    id: "vh-002",
-    propiedadClave: "RMX-ACT-201",
-    fecha: "2026-03-14",
-    valorAnterior: 6980000,
-    valorNuevo: 6850000,
-    motivo: "Ajuste comercial por comparables",
-    cierre: "Continua en promocion activa",
-    usuario: "Pedro Leyva",
-    observaciones: "Se recalibra ticket para acelerar visitas calificadas."
-  },
-  {
-    id: "vh-003",
-    propiedadClave: "RMX-ACT-202",
-    fecha: "2025-11-26",
-    valorAnterior: null,
-    valorNuevo: 5150000,
-    motivo: "Alta inicial",
-    cierre: "Venta exclusiva",
-    usuario: "Daniela Ibarra"
-  },
-  {
-    id: "vh-004",
-    propiedadClave: "RMX-ACT-202",
-    fecha: "2026-01-18",
-    valorAnterior: 5150000,
-    valorNuevo: 5050000,
-    motivo: "Retroalimentacion de visitas",
-    cierre: "Mantener posicion en portal premium",
-    usuario: "Daniela Ibarra"
-  },
-  {
-    id: "vh-005",
-    propiedadClave: "RMX-ACT-202",
-    fecha: "2026-03-09",
-    valorAnterior: 5050000,
-    valorNuevo: 4920000,
-    motivo: "Reposicionamiento de salida",
-    cierre: "Apertura a negociacion seria",
-    usuario: "Daniela Ibarra"
-  },
-  {
-    id: "vh-006",
-    propiedadClave: "RMX-ACT-203",
-    fecha: "2026-02-03",
-    valorAnterior: null,
-    valorNuevo: 98000,
-    motivo: "Alta inicial",
-    cierre: "Renta mensual + mantenimiento",
-    usuario: "Mariana Cisneros"
-  },
-  {
-    id: "vh-007",
-    propiedadClave: "RMX-ACT-204",
-    fecha: "2025-12-15",
-    valorAnterior: null,
-    valorNuevo: 75000,
-    motivo: "Alta inicial",
-    cierre: "Local comercial con exclusividad parcial",
-    usuario: "Andres Galvan"
-  },
-  {
-    id: "vh-008",
-    propiedadClave: "RMX-ACT-204",
-    fecha: "2026-02-28",
-    valorAnterior: 75000,
-    valorNuevo: 72000,
-    motivo: "Ajuste por absorcion de mantenimiento",
-    cierre: "Incluye mantenimiento parcial",
-    usuario: "Andres Galvan"
-  },
-  {
-    id: "vh-009",
-    propiedadClave: "RMX-ACT-205",
-    fecha: "2026-01-28",
-    valorAnterior: null,
-    valorNuevo: 12800000,
-    motivo: "Alta inicial",
-    cierre: "Venta industrial",
-    usuario: "Pedro Leyva"
-  },
-  {
-    id: "vh-010",
-    propiedadClave: "RMX-ACT-205",
-    fecha: "2026-03-21",
-    valorAnterior: 12800000,
-    valorNuevo: 12350000,
-    motivo: "Ajuste por cierre esperado en Q2",
-    cierre: "Operacion en revision avanzada",
-    usuario: "Pedro Leyva"
-  },
-  {
-    id: "vh-011",
-    propiedadClave: "RMX-ACT-206",
-    fecha: "2026-03-04",
-    valorAnterior: null,
-    valorNuevo: 48000,
-    motivo: "Alta inicial",
-    cierre: "Renta residencial con poliza",
-    usuario: "Karla Soto"
-  },
-  {
-    id: "vh-012",
-    propiedadClave: "RMX-ACT-207",
-    fecha: "2025-10-18",
-    valorAnterior: null,
-    valorNuevo: 9500000,
-    motivo: "Alta inicial",
-    cierre: "Terreno con potencial de desarrollo",
-    usuario: "Alejandra Rios"
-  },
-  {
-    id: "vh-013",
-    propiedadClave: "RMX-ACT-207",
-    fecha: "2026-01-30",
-    valorAnterior: 9500000,
-    valorNuevo: 9300000,
-    motivo: "Salida a mercado revisada",
-    cierre: "Se amplian canales de inversionistas",
-    usuario: "Alejandra Rios"
-  },
-  {
-    id: "vh-014",
-    propiedadClave: "RMX-ACT-207",
-    fecha: "2026-03-19",
-    valorAnterior: 9300000,
-    valorNuevo: 9100000,
-    motivo: "Ajuste final para acelerar cierre",
-    cierre: "Meta de pipeline de abril",
-    usuario: "Valeria Ordonez"
-  },
-  {
-    id: "vh-015",
-    propiedadClave: "RMX-ACT-208",
-    fecha: "2026-02-18",
-    valorAnterior: null,
-    valorNuevo: 8500000,
-    motivo: "Alta inicial",
-    cierre: "Venta residencial exclusiva",
-    usuario: "Julieta Mora"
-  },
-  {
-    id: "vh-016",
-    propiedadClave: "RMX-ACT-208",
-    fecha: "2026-03-07",
-    valorAnterior: 8500000,
-    valorNuevo: 8350000,
-    motivo: "Ajuste comercial despues de open house",
-    cierre: "Mejora visibilidad en portal y redes",
-    usuario: "Julieta Mora"
-  },
-  {
-    id: "vh-017",
-    propiedadClave: "RMX-ACT-209",
-    fecha: "2025-09-14",
-    valorAnterior: null,
-    valorNuevo: 3790000,
-    motivo: "Alta inicial",
-    cierre: "Exclusividad residencial",
-    usuario: "Ricardo Salinas"
-  },
-  {
-    id: "vh-018",
-    propiedadClave: "RMX-ACT-209",
-    fecha: "2026-02-24",
-    valorAnterior: 3790000,
-    valorNuevo: 3650000,
-    motivo: "Negociacion de cierre",
-    cierre: "Oferta aceptada",
-    usuario: "Julieta Mora"
-  },
-  {
-    id: "vh-019",
-    propiedadClave: "RMX-ACT-210",
-    fecha: "2025-12-02",
-    valorAnterior: null,
-    valorNuevo: 118000,
-    motivo: "Alta inicial",
-    cierre: "Renta comercial con opcion de expansion",
-    usuario: "Mariana Cisneros"
-  },
-  {
-    id: "vh-020",
-    propiedadClave: "RMX-ACT-210",
-    fecha: "2026-02-14",
-    valorAnterior: 118000,
-    valorNuevo: 110000,
-    motivo: "Paquete de renta anual",
-    cierre: "Contrato a 24 meses",
-    usuario: "Pedro Leyva"
-  },
-  {
-    id: "vh-021",
-    propiedadClave: "RMX-ACT-211",
-    fecha: "2025-08-09",
-    valorAnterior: null,
-    valorNuevo: 5650000,
-    motivo: "Alta inicial",
-    cierre: "Venta comercial",
-    usuario: "Andres Galvan"
-  },
-  {
-    id: "vh-022",
-    propiedadClave: "RMX-ACT-211",
-    fecha: "2026-01-11",
-    valorAnterior: 5650000,
-    valorNuevo: 5400000,
-    motivo: "Cierre por pago de contado",
-    cierre: "Firma notarial programada",
-    usuario: "Andres Galvan"
-  },
-  {
-    id: "vh-023",
-    propiedadClave: "RMX-ACT-212",
-    fecha: "2025-11-05",
-    valorAnterior: null,
-    valorNuevo: 4100000,
-    motivo: "Alta inicial",
-    cierre: "Captacion residencial",
-    usuario: "Valeria Ordonez"
-  },
-  {
-    id: "vh-024",
-    propiedadClave: "RMX-ACT-212",
-    fecha: "2026-03-03",
-    valorAnterior: 4100000,
-    valorNuevo: 3980000,
-    motivo: "Ajuste previo a cancelacion",
-    cierre: "Cliente retira inventario",
-    usuario: "Pedro Leyva"
-  },
-  {
-    id: "vh-025",
-    propiedadClave: "RMX-ACT-213",
-    fecha: "2026-01-10",
-    valorAnterior: null,
-    valorNuevo: 135000,
-    motivo: "Alta inicial",
-    cierre: "Renta mensual",
-    usuario: "Tomas Herrera"
-  },
-  {
-    id: "vh-026",
-    propiedadClave: "RMX-ACT-214",
-    fecha: "2025-12-20",
-    valorAnterior: null,
-    valorNuevo: 34000,
-    motivo: "Alta inicial",
-    cierre: "Renta residencial con administracion",
-    usuario: "Karla Soto"
-  },
-  {
-    id: "vh-027",
-    propiedadClave: "RMX-ACT-214",
-    fecha: "2026-03-16",
-    valorAnterior: 34000,
-    valorNuevo: 32000,
-    motivo: "Ultimo ajuste antes de cancelacion",
-    cierre: "Sin respuesta del propietario",
-    usuario: "Karla Soto"
-  }
-];
+const defaultResidentialSheet = {
+  estilo: "Contemporaneo",
+  proyecto: "Remax Activa Residencial",
+  acabados: "Piso porcelanato y carpinteria en maple",
+  conservacion: "Muy buena",
+  fachada: "Moderna",
+  ventanas: "Aluminio",
+  cristales: "Templado",
+  carpinteria: "Encino",
+  puertas: "Madera solida",
+  otro: "Preparacion para minisplit",
+  amenidades: ["Salon de TV", "Lavanderia", "Jardin"],
+  espacios: [
+    { nombre: "Sala", nivel: "PB", banos: 0, acabados: "Piso marmol" },
+    { nombre: "Comedor", nivel: "PB", banos: 0, acabados: "Muro decorativo" },
+    { nombre: "Rec principal", nivel: "PA", banos: 1, acabados: "Vestidor y terraza" }
+  ]
+};
+
+const defaultCommercialSheet = {
+  categoria: "Industrial",
+  clasificacion: "Bodega operativa",
+  vigilancia: true,
+  telefonos: true,
+  lineas: "2",
+  iluminacion: "LED",
+  banios: 2,
+  elevador: false,
+  estacionamiento: "33 cajones",
+  observaciones: "Espacio listo para operacion con acceso de trailers."
+};
 
 export const remaxDemoCommunications: RemaxCommunication[] = [
   {
-    id: "com-001",
+    id: "com-alta-ibr-op277",
     tipo: "ALTA",
-    propiedadClave: "RMX-ACT-201",
-    fecha: "2026-01-12",
-    asunto: "Alta de departamento premium en Valle de San Agustin",
-    destinatarios: ["captacion@remaxactiva.mx", "direccion@remaxactiva.mx"],
+    propiedadClave: "IBR-OP277",
+    fecha: "2026-03-21",
+    asunto: "COMUNICADO INTERNO: ALTA DE PROPIEDAD, IBR-OP277.",
+    destinatarios: ["todos@remax-activa.com.mx", "inventario@remax-activa.com.mx"],
     estado: "enviado",
-    resumen: "Se registra nueva propiedad con Pedro Leyva y Alejandra Rios como responsables de alta."
+    resumen: "Se informa el alta de la propiedad IBR-OP277 y la apertura del expediente operativo.",
+    remitente: "Inventario REMAX Activa",
+    firma: "Patricia Romo | Coordinacion operativa"
   },
   {
-    id: "com-002",
-    tipo: "ALTA",
-    propiedadClave: "RMX-ACT-202",
-    fecha: "2025-11-26",
-    asunto: "Alta de casa residencial en Del Valle",
-    destinatarios: ["operaciones@remaxactiva.mx", "direccion@remaxactiva.mx"],
-    estado: "enviado",
-    resumen: "Expediente inicial aprobado y listo para publicacion con Daniela Ibarra."
-  },
-  {
-    id: "com-003",
-    tipo: "ALTA",
-    propiedadClave: "RMX-ACT-203",
-    fecha: "2026-02-03",
-    asunto: "Alta de oficina corporativa en Santa Maria",
-    destinatarios: ["rentas@remaxactiva.mx", "recepcion@remaxactiva.mx"],
-    estado: "enviado",
-    resumen: "Se activa seguimiento comercial para renta de oficinas con apoyo de Mariana Cisneros."
-  },
-  {
-    id: "com-004",
-    tipo: "ALTA",
-    propiedadClave: "RMX-ACT-204",
-    fecha: "2025-12-15",
-    asunto: "Alta de local comercial en Cumbres Elite",
-    destinatarios: ["captacion@remaxactiva.mx", "marketing@remaxactiva.mx"],
-    estado: "enviado",
-    resumen: "Local listo para salida en portales con condiciones de renta actualizadas."
-  },
-  {
-    id: "com-005",
-    tipo: "ALTA",
-    propiedadClave: "RMX-ACT-205",
-    fecha: "2026-01-28",
-    asunto: "Alta de bodega industrial en Huinala",
-    destinatarios: ["industrial@remaxactiva.mx", "direccion@remaxactiva.mx"],
-    estado: "enviado",
-    resumen: "Pedro Leyva y Tomas Herrera integran propiedad al inventario industrial."
-  },
-  {
-    id: "com-006",
-    tipo: "ALTA",
-    propiedadClave: "RMX-ACT-206",
-    fecha: "2026-03-04",
-    asunto: "Alta de casa en renta en Paseo de los Leones",
-    destinatarios: ["rentas@remaxactiva.mx", "recepcion@remaxactiva.mx"],
-    estado: "pendiente",
-    resumen: "Comunicado programado pendiente de adjuntar poliza y fotos finales."
-  },
-  {
-    id: "com-007",
-    tipo: "ALTA",
-    propiedadClave: "RMX-ACT-207",
-    fecha: "2025-10-18",
-    asunto: "Alta de terreno para inversion en Carretera Nacional",
-    destinatarios: ["inversion@remaxactiva.mx", "direccion@remaxactiva.mx"],
-    estado: "enviado",
-    resumen: "Se incorpora terreno con estrategia de inversionistas y seguimiento multiasesor."
-  },
-  {
-    id: "com-008",
-    tipo: "ALTA",
-    propiedadClave: "RMX-ACT-208",
-    fecha: "2026-02-18",
-    asunto: "Alta de casa residencial en Bosques del Valle",
-    destinatarios: ["residencial@remaxactiva.mx", "marketing@remaxactiva.mx"],
-    estado: "enviado",
-    resumen: "Julieta Mora y Diego Ruiz coordinan salida comercial y open house."
-  },
-  {
-    id: "com-009",
+    id: "com-baja-cbr-1748",
     tipo: "BAJA",
-    propiedadClave: "RMX-ACT-209",
-    fecha: "2026-03-11",
-    asunto: "Cierre de venta de departamento en Contry",
-    destinatarios: ["comisiones@remaxactiva.mx", "direccion@remaxactiva.mx"],
+    propiedadClave: "CBR-1748",
+    fecha: "2026-03-18",
+    asunto: "COMUNICADO INTERNO: BAJA / CIERRE DE PROPIEDAD, CBR-1748.",
+    destinatarios: ["todos@remax-activa.com.mx", "comisiones@remax-activa.com.mx"],
     estado: "enviado",
-    resumen: "Propiedad marcada como cerrada con cierre apoyado por Julieta Mora y Pedro Leyva."
+    resumen: "La propiedad CBR-1748 pasa a cerrada y se activa el circuito de comisiones.",
+    remitente: "Inventario REMAX Activa",
+    firma: "Erika Valles | Control de comisiones"
   },
   {
-    id: "com-010",
-    tipo: "BAJA",
-    propiedadClave: "RMX-ACT-210",
-    fecha: "2026-02-27",
-    asunto: "Baja por firma de contrato en oficina Fundadores",
-    destinatarios: ["operaciones@remaxactiva.mx", "comisiones@remaxactiva.mx"],
-    estado: "enviado",
-    resumen: "Pedro Leyva participa tanto en alta como en cierre, caso clave para el nuevo modelo de roles."
-  },
-  {
-    id: "com-011",
-    tipo: "BAJA",
-    propiedadClave: "RMX-ACT-211",
-    fecha: "2026-01-22",
-    asunto: "Cierre de venta de local en Mitras Norte",
-    destinatarios: ["comisiones@remaxactiva.mx", "expedientes@remaxactiva.mx"],
+    id: "com-cancel-rtv-571",
+    tipo: "CANCELACION",
+    propiedadClave: "RTV-571",
+    fecha: "2026-03-24",
+    asunto: "COMUNICADO INTERNO: CANCELACION DE PROPIEDAD, RTV-571.",
+    destinatarios: ["todos@remax-activa.com.mx", "direccion@remax-activa.com.mx"],
     estado: "borrador",
-    resumen: "Comunicado listo para validar anexos notariales antes de enviarse."
+    resumen: "Se documenta la cancelacion de RTV-571 con motivo registrado por inventario.",
+    remitente: "Inventario REMAX Activa",
+    firma: "Brenda Noemi Ramirez Cardenas | Inventario"
   },
   {
-    id: "com-012",
+    id: "com-cancel-rtr-2280",
     tipo: "CANCELACION",
-    propiedadClave: "RMX-ACT-212",
-    fecha: "2026-03-08",
-    asunto: "Cancelacion de propiedad residencial en Cumbres Madeira",
-    destinatarios: ["direccion@remaxactiva.mx", "captacion@remaxactiva.mx"],
+    propiedadClave: "RTR-2280",
+    fecha: "2026-03-24",
+    asunto: "COMUNICADO INTERNO: CANCELACION DE PROPIEDAD, CIUDAD DEL SOL.",
+    destinatarios: ["todos@remax-activa.com.mx"],
     estado: "enviado",
-    resumen: "La cancelacion queda trazada con Pedro Leyva y Valeria Ordonez como responsables."
+    resumen: "Se informa la cancelacion de RTR-2280 en Ciudad del Sol, Zapopan.",
+    remitente: "Inventario REMAX Activa",
+    firma: "Brenda Noemi Ramirez Cardenas | Inventario"
   },
   {
-    id: "com-013",
-    tipo: "CANCELACION",
-    propiedadClave: "RMX-ACT-213",
-    fecha: "2026-02-20",
-    asunto: "Cancelacion de bodega en renta en La Fe",
-    destinatarios: ["industrial@remaxactiva.mx", "recepcion@remaxactiva.mx"],
-    estado: "pendiente",
-    resumen: "Se detiene publicacion por cambio de decision del propietario y se agenda seguimiento."
+    id: "com-alta-icv-441",
+    tipo: "ALTA",
+    propiedadClave: "ICV-441",
+    fecha: "2026-02-12",
+    asunto: "COMUNICADO INTERNO: ALTA DE PROPIEDAD, ICV-441.",
+    destinatarios: ["inventario@remax-activa.com.mx", "recepcion@remax-activa.com.mx"],
+    estado: "enviado",
+    resumen: "Nueva captacion residencial lista para salida comercial y ficha tecnica.",
+    remitente: "Inventario REMAX Activa",
+    firma: "Gabriela Perez | Recepcion"
   },
   {
-    id: "com-014",
-    tipo: "CANCELACION",
-    propiedadClave: "RMX-ACT-214",
-    fecha: "2026-03-17",
-    asunto: "Cancelacion de casa en renta en Villas de Anahuac",
-    destinatarios: ["rentas@remaxactiva.mx", "operaciones@remaxactiva.mx"],
-    estado: "borrador",
-    resumen: "Karla Soto aparece tanto en alta como en cancelacion; el nuevo sistema conserva ambos roles."
+    id: "com-baja-ohr-1182",
+    tipo: "BAJA",
+    propiedadClave: "OHR-1182",
+    fecha: "2026-02-28",
+    asunto: "COMUNICADO INTERNO: BAJA DE PROPIEDAD, OHR-1182.",
+    destinatarios: ["comisiones@remax-activa.com.mx", "operaciones@remax-activa.com.mx"],
+    estado: "archivado",
+    resumen: "La oficina OHR-1182 se cierra por firma de contrato anual.",
+    remitente: "Inventario REMAX Activa",
+    firma: "Patricia Romo | Coordinacion operativa"
   }
 ];
 
 export const remaxDemoProperties: RemaxProperty[] = [
   {
-    id: "prop-201",
-    clave: "RMX-ACT-201",
-    domicilio: "Av. Real San Agustin 245",
-    colonia: "Valle de San Agustin",
-    ciudad: "San Pedro Garza Garcia",
-    municipio: "San Pedro Garza Garcia",
-    estado: "Nuevo Leon",
-    tipo: "Departamento",
-    giro: "Residencial",
-    operacion: "Venta",
-    estatus: "Activa",
-    fechaAlta: "2026-01-12",
-    precioActual: 6850000,
-    propietario: "Grupo Monteluz",
-    asesoresAlta: ["alejandra-rios", "pedro-leyva"],
-    asesoresBaja: [],
-    asesoresCancelacion: [],
-    historialValores: ["vh-001", "vh-002"],
-    comunicadoIds: ["com-001"],
-    condicionesOperacion: "Venta exclusiva por 120 dias con estrategia premium.",
-    fichaResumen: "Departamento de 2 recamaras con amenidades de alto valor para cliente patrimonial."
-  },
-  {
-    id: "prop-202",
-    clave: "RMX-ACT-202",
-    domicilio: "Calle Acueducto 91",
-    colonia: "Del Valle",
-    ciudad: "Monterrey",
-    municipio: "Monterrey",
-    estado: "Nuevo Leon",
-    tipo: "Casa",
-    giro: "Residencial",
-    operacion: "Venta",
-    estatus: "Activa",
-    fechaAlta: "2025-11-26",
-    precioActual: 4920000,
-    propietario: "Claudia Benavides",
-    asesoresAlta: ["daniela-ibarra"],
-    asesoresBaja: [],
-    asesoresCancelacion: [],
-    historialValores: ["vh-003", "vh-004", "vh-005"],
-    comunicadoIds: ["com-002"],
-    condicionesOperacion: "Venta con negociacion abierta para pago de contado.",
-    fichaResumen: "Casa familiar en zona consolidada con absorcion parcial de gastos notariales."
-  },
-  {
-    id: "prop-203",
-    clave: "RMX-ACT-203",
-    domicilio: "Blvd. Diaz Ordaz 1880",
-    colonia: "Santa Maria",
-    ciudad: "Monterrey",
-    municipio: "Monterrey",
-    estado: "Nuevo Leon",
-    tipo: "Oficina",
-    giro: "Comercial",
-    operacion: "Renta",
-    estatus: "Activa",
-    fechaAlta: "2026-02-03",
-    precioActual: 98000,
-    propietario: "Desarrollos Delta Norte",
-    asesoresAlta: ["mariana-cisneros", "ricardo-salinas"],
-    asesoresBaja: [],
-    asesoresCancelacion: [],
-    historialValores: ["vh-006"],
-    comunicadoIds: ["com-003"],
-    condicionesOperacion: "Renta mensual mas mantenimiento y adecuaciones menores.",
-    fichaResumen: "Oficina lista para corporativo mediano con acceso directo a vias principales."
-  },
-  {
-    id: "prop-204",
-    clave: "RMX-ACT-204",
-    domicilio: "Av. Lincoln 4401",
-    colonia: "Cumbres Elite",
-    ciudad: "Monterrey",
-    municipio: "Monterrey",
-    estado: "Nuevo Leon",
-    tipo: "Local",
-    giro: "Comercial",
-    operacion: "Renta",
-    estatus: "Activa",
-    fechaAlta: "2025-12-15",
-    precioActual: 72000,
-    propietario: "Comercializadora RYH",
-    asesoresAlta: ["andres-galvan"],
-    asesoresBaja: [],
-    asesoresCancelacion: [],
-    historialValores: ["vh-007", "vh-008"],
-    comunicadoIds: ["com-004"],
-    condicionesOperacion: "Renta con absorcion parcial de mantenimiento.",
-    fichaResumen: "Local ancla sobre avenida de alto flujo con frente comercial amplio."
-  },
-  {
-    id: "prop-205",
-    clave: "RMX-ACT-205",
-    domicilio: "Camino a Huinala 870",
-    colonia: "Huinala",
-    ciudad: "Apodaca",
-    municipio: "Apodaca",
-    estado: "Nuevo Leon",
-    tipo: "Bodega",
+    id: "prop-ibr-op277",
+    folio: 4280,
+    clave: "IBR-OP277",
+    categoria: "Opcion",
+    categoriaCode: "OP",
     giro: "Industrial",
-    operacion: "Venta",
-    estatus: "Activa",
-    fechaAlta: "2026-01-28",
-    precioActual: 12350000,
-    propietario: "Logistica Salcedo",
-    asesoresAlta: ["pedro-leyva", "tomas-herrera"],
-    asesoresBaja: [],
-    asesoresCancelacion: [],
-    historialValores: ["vh-009", "vh-010"],
-    comunicadoIds: ["com-005"],
-    condicionesOperacion: "Venta industrial con margen de cierre en segundo trimestre.",
-    fichaResumen: "Activo logistico con patio de maniobras y conectividad directa al aeropuerto."
-  },
-  {
-    id: "prop-206",
-    clave: "RMX-ACT-206",
-    domicilio: "Av. Paseo de los Leones 1187",
-    colonia: "Cumbres",
-    ciudad: "Monterrey",
-    municipio: "Monterrey",
-    estado: "Nuevo Leon",
-    tipo: "Casa",
-    giro: "Residencial",
+    giroCode: "I",
+    tipo: "Bodega",
+    tipoCode: "B",
     operacion: "Renta",
+    operacionCode: "R",
+    exclusividad: "Opcion",
     estatus: "Activa",
-    fechaAlta: "2026-03-04",
-    precioActual: 48000,
-    propietario: "Martha de la Fuente",
-    asesoresAlta: ["karla-soto"],
+    altaBaja: "Alta",
+    descripcionCorta: "Camino viejo a los Laureles 195, 10-14, El Zapote del Valle",
+    address: {
+      calle: "Camino viejo a los Laureles",
+      noExt: "195",
+      noInt: "10-14",
+      edificio: "",
+      piso: "PB",
+      entreCalles: "Carretera a Chapala",
+      colonia: "El Zapote del Valle",
+      coto: "",
+      fraccionamiento: "",
+      municipio: "Tlajomulco de Zuniga",
+      cp: "45679",
+      entidad: "Jalisco",
+      coordenadasGuiaRoji: "124-C"
+    },
+    agenda: {
+      condicionesVisitas: "Citas",
+      cajaNo: "",
+      disponibilidadVisitas: "Disponible",
+      estatusLlaves: "",
+      telCitas: "3314162474",
+      contactoCitas: "Pedro Leyva",
+      origen: "Personal",
+      origenDetalle: ""
+    },
+    fechas: {
+      alta: "2026-03-21",
+      aviso: "2026-03-21",
+      contrato: "2026-03-21",
+      inicioPromo: "2026-03-21"
+    },
+    referidos: {
+      idRef: "",
+      nombre: "",
+      empresa: ""
+    },
+    ids: {
+      ampi: "",
+      remax: "",
+      catastral: ""
+    },
+    visitaRecorrido: "Programada",
+    comoLlegar: {
+      ligasA: "REMAX, Google Map, Google Earth, AMPI",
+      remax: "remax-activa.com.mx/ibr-op277",
+      googleMap: "maps.google.com/?q=Camino+viejo+a+los+Laureles+195",
+      googleEarth: "earth.google.com/ibr-op277",
+      ampi: "ampi.mx/ibr-op277",
+      fichaArchivo: "IBR-OP277-zde",
+      ftPdf: "IBR-OP277.pdf",
+      comentarios: "Expediente completo y listo para checklist."
+    },
+    caracteristicas: {
+      supTerreno: 564.97,
+      supConstruccion: 4483.36,
+      frente: 157,
+      fondo: 59.61,
+      frentes: 1,
+      recamaras: 0,
+      banos: 2,
+      medioBanos: 0,
+      jardin: false,
+      estacionamientosCubiertos: 0,
+      estacionamientosDescubiertos: 33,
+      nivel: "PB",
+      pisosTotales: 1,
+      exteriorInterior: "Exterior",
+      noUnidades: 0,
+      vistaA: "",
+      elevadores: 0,
+      edad: 0,
+      formaTerreno: "Irregular",
+      inclinacion: "Plano",
+      ubicacion: "Medianero",
+      usoSuelo: "Industrial",
+      restricciones: "",
+      descripcion: "Bodega con patios de maniobra y frente operativo",
+      categoria: "Industrial",
+      notas: "Uso de suelo vigente y accesos para transporte pesado.",
+      servicios: ["Transportes", "Parques", "Comercios", "Bancos"],
+      superficiesValores: [
+        { concepto: "Terreno", metros: 564.97, valor: 0, total: 0 },
+        { concepto: "Areas princip.", metros: 4483.36, valor: 135, total: 605253.6 },
+        { concepto: "Otras areas", metros: 0, valor: 0, total: 0 }
+      ]
+    },
+    condicionesOperacion: {
+      modoComision: "politica",
+      porcentaje: 100,
+      monto: 0,
+      politicaVigente: "Politica de renta vigente",
+      aplicaExcepcion: false,
+      politicaAnterior: "",
+      datosConfirmados: true,
+      comentarios: "Registro de condiciones de operacion renta validado con cliente."
+    },
+    condicionesRenta: {
+      anos: 1,
+      formaPago: "Mensual",
+      rentaAdelantada: true,
+      rentaDeposito: true,
+      aplicaFianza: false,
+      afianzadora: "",
+      montoFianza: 0,
+      fiadorSolidario: true,
+      fiadorBienRaiz: false,
+      contratoTransaccion: true,
+      vigencia: "12 meses",
+      contratoIntermediacion: true,
+      seguroDanios: true,
+      seguroResponsabilidadCivil: true,
+      investigacion: true,
+      costoInvestigacion: 2500,
+      investigador: "Control Activa",
+      herramientaJuridica: "Convenio interno",
+      abogado: "Lic. Sofia Murillo",
+      notario: "N/A",
+      empresa: "Remax Activa",
+      aplicaMantenimiento: true,
+      montoMantenimiento: 12000,
+      periodoMantenimiento: "Mensual",
+      observaciones: "Contrato con mantenimiento y validacion juridica previa."
+    },
+    propietarios: [
+      {
+        id: "owner-ibr-1",
+        nombre: "Oscar Ivan Olivares Barocio",
+        telefono: "3336161800",
+        correo: "oolivares@eventorno.com",
+        principal: true
+      }
+    ],
+    asesoresAlta: [
+      {
+        advisorId: "pedro-leyva",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 100,
+        monto: 605253.6,
+        tipoIntervencion: "Alta",
+        contexto: "Alta"
+      }
+    ],
     asesoresBaja: [],
     asesoresCancelacion: [],
-    historialValores: ["vh-011"],
-    comunicadoIds: ["com-006"],
-    condicionesOperacion: "Renta residencial con poliza y deposito en garantia.",
-    fichaResumen: "Casa amueblada lista para ejecutivos desplazados por proyectos corporativos."
+    fichaTecnica: {
+      residencial: {
+        ...defaultResidentialSheet,
+        estilo: "Industrial adaptable",
+        proyecto: "Operacion renta",
+        acabados: "Muros y piso reforzado",
+        conservacion: "Activa",
+        fachada: "Nave industrial",
+        ventanas: "Fijas",
+        cristales: "Templado",
+        carpinteria: "Metalica",
+        puertas: "Cortina industrial",
+        otro: "Anden de carga",
+        amenidades: ["Jardin", "Lavanderia"],
+        espacios: [
+          { nombre: "Oficina interna", nivel: "PB", banos: 1, acabados: "Yeso y pintura" },
+          { nombre: "Area operativa", nivel: "PB", banos: 1, acabados: "Piso pulido" },
+          { nombre: "Patio", nivel: "PB", banos: 0, acabados: "Concreto" }
+        ]
+      },
+      comercial: {
+        ...defaultCommercialSheet,
+        categoria: "Industrial",
+        clasificacion: "Bodega en renta",
+        estacionamiento: "33 cajones descubiertos"
+      }
+    },
+    historialValores: [
+      {
+        id: "vh-ibr-1",
+        propiedadClave: "IBR-OP277",
+        fecha: "2026-03-21",
+        valor: 605253.6,
+        moneda: "Pesos",
+        posicion: "Ultimo",
+        motivoCambio: "Alta inicial",
+        motivoMinuta: "Alta de propiedad",
+        usuario: "Pedro Leyva"
+      }
+    ]
   },
   {
-    id: "prop-207",
-    clave: "RMX-ACT-207",
-    domicilio: "Carretera Nacional km 261",
-    colonia: "La Rioja",
-    ciudad: "Monterrey",
-    municipio: "Monterrey",
-    estado: "Nuevo Leon",
+    id: "prop-cbr-1748",
+    folio: 2744,
+    clave: "CBR-1748",
+    categoria: "Coop",
+    categoriaCode: "CO",
+    giro: "Comercial",
+    giroCode: "C",
+    tipo: "Bodega",
+    tipoCode: "B",
+    operacion: "Renta",
+    operacionCode: "R",
+    exclusividad: "Coop",
+    estatus: "Cerrada",
+    altaBaja: "Baja",
+    descripcionCorta: "Privada de las Flores 300, Parques de Santa Maria",
+    address: {
+      calle: "Privada de las Flores",
+      noExt: "300",
+      noInt: "",
+      edificio: "",
+      piso: "",
+      entreCalles: "",
+      colonia: "Parques de Santa Maria",
+      coto: "",
+      fraccionamiento: "",
+      municipio: "San Pedro Tlaquepaque",
+      cp: "45600",
+      entidad: "Jalisco",
+      coordenadasGuiaRoji: ""
+    },
+    agenda: {
+      condicionesVisitas: "Citas",
+      cajaNo: "14",
+      disponibilidadVisitas: "Disponible",
+      estatusLlaves: "Activas",
+      telCitas: "3338182001",
+      contactoCitas: "Alejandra Rios",
+      origen: "Portal",
+      origenDetalle: "Cliente informe"
+    },
+    fechas: {
+      alta: "2022-07-13",
+      aviso: "2022-07-13",
+      contrato: "2022-07-13",
+      inicioPromo: "2022-07-13"
+    },
+    referidos: {
+      idRef: "RF-119",
+      nombre: "Carlos Benitez",
+      empresa: "CBR Holdings"
+    },
+    ids: {
+      ampi: "CBR1748",
+      remax: "RMX-CBR1748",
+      catastral: "TLQ-0038-19"
+    },
+    visitaRecorrido: "Visitada",
+    comoLlegar: {
+      ligasA: "Google Map y AMPI",
+      remax: "remax-activa.com.mx/cbr-1748",
+      googleMap: "maps.google.com/?q=Privada+de+las+Flores+300",
+      googleEarth: "",
+      ampi: "ampi.mx/cbr-1748",
+      fichaArchivo: "CBR-1748",
+      ftPdf: "CBR-1748.pdf",
+      comentarios: "Historial de valores revisado antes de cerrar."
+    },
+    caracteristicas: {
+      supTerreno: 900,
+      supConstruccion: 700,
+      frente: 22,
+      fondo: 38,
+      frentes: 1,
+      recamaras: 0,
+      banos: 2,
+      medioBanos: 1,
+      jardin: false,
+      estacionamientosCubiertos: 2,
+      estacionamientosDescubiertos: 8,
+      nivel: "PB",
+      pisosTotales: 1,
+      exteriorInterior: "Exterior",
+      noUnidades: 1,
+      vistaA: "Avenida principal",
+      elevadores: 0,
+      edad: 8,
+      formaTerreno: "Regular",
+      inclinacion: "Plano",
+      ubicacion: "Esquina",
+      usoSuelo: "Comercial",
+      restricciones: "",
+      descripcion: "Bodega comercial cerrada por firma de renta.",
+      categoria: "Comercial",
+      notas: "Se ajusto valor previo a la firma.",
+      servicios: ["Transportes", "Comercios", "Bancos"],
+      superficiesValores: [
+        { concepto: "Terreno", metros: 900, valor: 0, total: 0 },
+        { concepto: "Construccion", metros: 700, valor: 90, total: 63000 }
+      ]
+    },
+    condicionesOperacion: {
+      modoComision: "monto",
+      porcentaje: 0,
+      monto: 70000,
+      politicaVigente: "Monto fijo de colocacion",
+      aplicaExcepcion: true,
+      politicaAnterior: "Politica anterior 2022",
+      datosConfirmados: true,
+      comentarios: "Cierre con excepcion autorizada por direccion."
+    },
+    condicionesRenta: {
+      anos: 3,
+      formaPago: "Mensual",
+      rentaAdelantada: false,
+      rentaDeposito: true,
+      aplicaFianza: false,
+      afianzadora: "",
+      montoFianza: 0,
+      fiadorSolidario: true,
+      fiadorBienRaiz: false,
+      contratoTransaccion: true,
+      vigencia: "36 meses",
+      contratoIntermediacion: false,
+      seguroDanios: true,
+      seguroResponsabilidadCivil: true,
+      investigacion: false,
+      costoInvestigacion: 0,
+      investigador: "",
+      herramientaJuridica: "Contrato privado",
+      abogado: "Lic. Andrea Ramos",
+      notario: "",
+      empresa: "CBR Holdings",
+      aplicaMantenimiento: false,
+      montoMantenimiento: 0,
+      periodoMantenimiento: "",
+      observaciones: "Contrato firmado y propiedad marcada como cerrada."
+    },
+    propietarios: [
+      {
+        id: "owner-cbr-1",
+        nombre: "Carlos Benitez",
+        telefono: "3338910022",
+        correo: "cbenitez@cbrholdings.mx",
+        principal: true
+      }
+    ],
+    asesoresAlta: [
+      {
+        advisorId: "alejandra-rios",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 70,
+        monto: 66500,
+        tipoIntervencion: "Alta",
+        contexto: "Alta"
+      },
+      {
+        advisorId: "sofia-campos",
+        nivel: "M",
+        comisionTipo: "%",
+        participacionPorcentaje: 30,
+        monto: 28500,
+        tipoIntervencion: "Apoyo de alta",
+        contexto: "Alta"
+      }
+    ],
+    asesoresBaja: [
+      {
+        advisorId: "julieta-mora",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 60,
+        monto: 42000,
+        tipoIntervencion: "Cierre",
+        contexto: "Baja / cierre"
+      },
+      {
+        advisorId: "pedro-leyva",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 40,
+        monto: 28000,
+        tipoIntervencion: "Autorizacion cierre",
+        contexto: "Baja / cierre"
+      }
+    ],
+    asesoresCancelacion: [],
+    fichaTecnica: {
+      residencial: defaultResidentialSheet,
+      comercial: {
+        ...defaultCommercialSheet,
+        categoria: "Comercial",
+        clasificacion: "Bodega cerrada"
+      }
+    },
+    historialValores: [
+      {
+        id: "vh-cbr-1",
+        propiedadClave: "CBR-1748",
+        fecha: "2022-07-13",
+        valor: 95000,
+        moneda: "Pesos",
+        posicion: "",
+        motivoCambio: "Alta inicial",
+        motivoMinuta: "Alta",
+        usuario: "Alejandra Rios"
+      },
+      {
+        id: "vh-cbr-2",
+        propiedadClave: "CBR-1748",
+        fecha: "2023-01-09",
+        valor: 70000,
+        moneda: "Pesos",
+        posicion: "",
+        motivoCambio: "Cambio de precio",
+        motivoMinuta: "Cambio de precio",
+        usuario: "Alejandra Rios"
+      },
+      {
+        id: "vh-cbr-3",
+        propiedadClave: "CBR-1748",
+        fecha: "2023-01-23",
+        valor: 63000,
+        moneda: "Pesos",
+        posicion: "Ultimo",
+        motivoCambio: "Ajuste final",
+        motivoMinuta: "Cambio de precio",
+        usuario: "Julieta Mora"
+      }
+    ],
+    baja: {
+      fechaBaja: "2026-03-18",
+      tipoCierre: "Cerrada",
+      condicionCierre: "Contrato firmado a 36 meses",
+      personaRegistra: "Erika Valles",
+      comentarios: "Propiedad lista para minuta y comisiones.",
+      comunicadoId: "com-baja-cbr-1748"
+    }
+  },
+  {
+    id: "prop-rtv-571",
+    folio: 1,
+    clave: "RTV-571",
+    categoria: "Exclusiva",
+    categoriaCode: "EX",
+    giro: "Residencial",
+    giroCode: "R",
     tipo: "Terreno",
-    giro: "Inversion",
+    tipoCode: "T",
     operacion: "Venta",
-    estatus: "Activa",
-    fechaAlta: "2025-10-18",
-    precioActual: 9100000,
-    propietario: "Inversiones Lerma",
-    asesoresAlta: ["alejandra-rios", "valeria-ordonez"],
+    operacionCode: "V",
+    exclusividad: "Exclusiva",
+    estatus: "Cancelada",
+    altaBaja: "Baja",
+    descripcionCorta: "Pedro Salcido 27, Analco",
+    address: {
+      calle: "Pedro Salcido",
+      noExt: "27",
+      noInt: "",
+      edificio: "",
+      piso: "",
+      entreCalles: "Cuauhtemoc y Autlahual",
+      colonia: "Analco",
+      coto: "",
+      fraccionamiento: "",
+      municipio: "Guadalajara",
+      cp: "44450",
+      entidad: "Jalisco",
+      coordenadasGuiaRoji: ""
+    },
+    agenda: {
+      condicionesVisitas: "Citas",
+      cajaNo: "",
+      disponibilidadVisitas: "Disponible",
+      estatusLlaves: "",
+      telCitas: "3310022001",
+      contactoCitas: "Lupita Fonseca",
+      origen: "Personal",
+      origenDetalle: ""
+    },
+    fechas: {
+      alta: "2014-11-01",
+      aviso: "2014-11-01",
+      contrato: "2014-11-01",
+      inicioPromo: "2014-11-01"
+    },
+    referidos: {
+      idRef: "",
+      nombre: "",
+      empresa: ""
+    },
+    ids: {
+      ampi: "",
+      remax: "",
+      catastral: ""
+    },
+    visitaRecorrido: "Por visitar",
+    comoLlegar: {
+      ligasA: "",
+      remax: "",
+      googleMap: "",
+      googleEarth: "",
+      ampi: "",
+      fichaArchivo: "RTV-571",
+      ftPdf: "RTV-571.pdf",
+      comentarios: "Expediente de cancelacion con motivo documentado."
+    },
+    caracteristicas: {
+      supTerreno: 320,
+      supConstruccion: 0,
+      frente: 12,
+      fondo: 26,
+      frentes: 1,
+      recamaras: 0,
+      banos: 0,
+      medioBanos: 0,
+      jardin: false,
+      estacionamientosCubiertos: 0,
+      estacionamientosDescubiertos: 0,
+      nivel: "PB",
+      pisosTotales: 0,
+      exteriorInterior: "Exterior",
+      noUnidades: 0,
+      vistaA: "",
+      elevadores: 0,
+      edad: 0,
+      formaTerreno: "Regular",
+      inclinacion: "Plano",
+      ubicacion: "Medianero",
+      usoSuelo: "Habitacional",
+      restricciones: "",
+      descripcion: "Terreno urbano en zona tradicional.",
+      categoria: "Residencial",
+      notas: "Cancelada por cambio de decision del propietario.",
+      servicios: ["Escuelas", "Comercios"],
+      superficiesValores: [
+        { concepto: "Terreno", metros: 320, valor: 16500, total: 5280000 }
+      ]
+    },
+    condicionesOperacion: {
+      modoComision: "politica",
+      porcentaje: 6,
+      monto: 0,
+      politicaVigente: "Venta residencial 6%",
+      aplicaExcepcion: false,
+      politicaAnterior: "",
+      datosConfirmados: true,
+      comentarios: "Sin excepciones de politica."
+    },
+    propietarios: [
+      {
+        id: "owner-rtv-1",
+        nombre: "Lupita Fonseca",
+        telefono: "3336688001",
+        correo: "lfonseca@gmail.com",
+        principal: true
+      }
+    ],
+    asesoresAlta: [
+      {
+        advisorId: "valeria-ordonez",
+        nivel: "M",
+        comisionTipo: "%",
+        participacionPorcentaje: 100,
+        monto: 5280000,
+        tipoIntervencion: "Alta",
+        contexto: "Alta"
+      }
+    ],
     asesoresBaja: [],
-    asesoresCancelacion: [],
-    historialValores: ["vh-012", "vh-013", "vh-014"],
-    comunicadoIds: ["com-007"],
-    condicionesOperacion: "Venta para desarrollo mixto con analisis de inversionistas.",
-    fichaResumen: "Terreno con frente amplio y narrativa clara para inversionista regional."
+    asesoresCancelacion: [
+      {
+        advisorId: "pedro-leyva",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 50,
+        monto: 2640000,
+        tipoIntervencion: "Cancelacion",
+        contexto: "Cancelacion"
+      },
+      {
+        advisorId: "valeria-ordonez",
+        nivel: "M",
+        comisionTipo: "%",
+        participacionPorcentaje: 50,
+        monto: 2640000,
+        tipoIntervencion: "Seguimiento cancelacion",
+        contexto: "Cancelacion"
+      }
+    ],
+    fichaTecnica: {
+      residencial: {
+        ...defaultResidentialSheet,
+        estilo: "Terreno",
+        proyecto: "Lote urbano",
+        acabados: "Sin aplicar",
+        conservacion: "No aplica",
+        fachada: "No aplica",
+        ventanas: "No aplica",
+        cristales: "No aplica",
+        carpinteria: "No aplica",
+        puertas: "No aplica",
+        otro: "Documentacion urbana",
+        amenidades: ["Jardin"],
+        espacios: [{ nombre: "Terreno", nivel: "PB", banos: 0, acabados: "Libre" }]
+      },
+      comercial: {
+        ...defaultCommercialSheet,
+        categoria: "Lote",
+        clasificacion: "Terreno",
+        banios: 0,
+        estacionamiento: "No aplica"
+      }
+    },
+    historialValores: [
+      {
+        id: "vh-rtv-1",
+        propiedadClave: "RTV-571",
+        fecha: "2025-08-07",
+        valor: 5350000,
+        moneda: "Pesos",
+        posicion: "",
+        motivoCambio: "Alta inicial",
+        motivoMinuta: "Alta",
+        usuario: "Valeria Ordonez"
+      },
+      {
+        id: "vh-rtv-2",
+        propiedadClave: "RTV-571",
+        fecha: "2026-02-14",
+        valor: 5280000,
+        moneda: "Pesos",
+        posicion: "Ultimo",
+        motivoCambio: "Ajuste por mercado",
+        motivoMinuta: "Cambio de precio",
+        usuario: "Pedro Leyva"
+      }
+    ],
+    cancelacion: {
+      fechaAvisoRecepcion: "2025-08-07",
+      fechaCancelacion: "2026-04-08",
+      motivo: "El propietario decide detener la comercializacion.",
+      aplicaComision: true,
+      personaRegistra: "Brenda Noemi Ramirez Cardenas",
+      bajaPor: "Cierre",
+      comentarios: "Cancelacion con comision aplicable por gestion realizada.",
+      comunicadoId: "com-cancel-rtv-571"
+    }
   },
   {
-    id: "prop-208",
-    clave: "RMX-ACT-208",
-    domicilio: "Calle Sendero 66",
-    colonia: "Bosques del Valle",
-    ciudad: "San Pedro Garza Garcia",
-    municipio: "San Pedro Garza Garcia",
-    estado: "Nuevo Leon",
+    id: "prop-rtr-2280",
+    folio: 2280,
+    clave: "RTR-2280",
+    categoria: "Exclusiva",
+    categoriaCode: "EX",
+    giro: "Residencial",
+    giroCode: "R",
     tipo: "Casa",
-    giro: "Residencial",
+    tipoCode: "C",
     operacion: "Venta",
+    operacionCode: "V",
+    exclusividad: "Exclusiva",
+    estatus: "Cancelada",
+    altaBaja: "Baja",
+    descripcionCorta: "Mixcoatl 1421, Ciudad del Sol",
+    address: {
+      calle: "Mixcoatl",
+      noExt: "1421",
+      noInt: "",
+      edificio: "",
+      piso: "",
+      entreCalles: "",
+      colonia: "Ciudad del Sol",
+      coto: "",
+      fraccionamiento: "",
+      municipio: "Zapopan",
+      cp: "45050",
+      entidad: "Jalisco",
+      coordenadasGuiaRoji: ""
+    },
+    agenda: {
+      condicionesVisitas: "Citas",
+      cajaNo: "",
+      disponibilidadVisitas: "Disponible",
+      estatusLlaves: "",
+      telCitas: "3331182002",
+      contactoCitas: "Claudia Gilo Perez",
+      origen: "Personal",
+      origenDetalle: ""
+    },
+    fechas: {
+      alta: "2025-09-02",
+      aviso: "2025-09-02",
+      contrato: "2025-09-02",
+      inicioPromo: "2025-09-04"
+    },
+    referidos: {
+      idRef: "REF-339",
+      nombre: "Lupita Fonseca",
+      empresa: ""
+    },
+    ids: {
+      ampi: "RTR2280",
+      remax: "RMX-RTR2280",
+      catastral: "ZAP-8820"
+    },
+    visitaRecorrido: "Visitada",
+    comoLlegar: {
+      ligasA: "Google Map",
+      remax: "remax-activa.com.mx/rtr-2280",
+      googleMap: "maps.google.com/?q=Mixcoatl+1421",
+      googleEarth: "",
+      ampi: "",
+      fichaArchivo: "RTR-2280",
+      ftPdf: "RTR-2280.pdf",
+      comentarios: "Comunicado enviado a todo el equipo."
+    },
+    caracteristicas: {
+      supTerreno: 240,
+      supConstruccion: 310,
+      frente: 10,
+      fondo: 24,
+      frentes: 1,
+      recamaras: 3,
+      banos: 2,
+      medioBanos: 1,
+      jardin: true,
+      estacionamientosCubiertos: 2,
+      estacionamientosDescubiertos: 0,
+      nivel: "PB-PA",
+      pisosTotales: 2,
+      exteriorInterior: "Exterior",
+      noUnidades: 1,
+      vistaA: "Parque",
+      elevadores: 0,
+      edad: 12,
+      formaTerreno: "Regular",
+      inclinacion: "Plano",
+      ubicacion: "Medianero",
+      usoSuelo: "Habitacional",
+      restricciones: "",
+      descripcion: "Casa familiar en Ciudad del Sol.",
+      categoria: "Residencial",
+      notas: "Cancelada por decision del propietario.",
+      servicios: ["Parques", "Escuelas", "Comercios"],
+      superficiesValores: [
+        { concepto: "Terreno", metros: 240, valor: 13000, total: 3120000 },
+        { concepto: "Construccion", metros: 310, valor: 9800, total: 3038000 }
+      ]
+    },
+    condicionesOperacion: {
+      modoComision: "politica",
+      porcentaje: 6,
+      monto: 0,
+      politicaVigente: "Venta residencial 6%",
+      aplicaExcepcion: false,
+      politicaAnterior: "",
+      datosConfirmados: true,
+      comentarios: "Operacion sin excepciones."
+    },
+    propietarios: [
+      {
+        id: "owner-rtr-1",
+        nombre: "Lupita Fonseca",
+        telefono: "3311110098",
+        correo: "lupita.fonseca@gmail.com",
+        principal: true
+      }
+    ],
+    asesoresAlta: [
+      {
+        advisorId: "daniela-ibarra",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 80,
+        monto: 4920000,
+        tipoIntervencion: "Alta",
+        contexto: "Alta"
+      }
+    ],
+    asesoresBaja: [],
+    asesoresCancelacion: [
+      {
+        advisorId: "daniela-ibarra",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 50,
+        monto: 2460000,
+        tipoIntervencion: "Cancelacion",
+        contexto: "Cancelacion"
+      },
+      {
+        advisorId: "pedro-leyva",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 50,
+        monto: 2460000,
+        tipoIntervencion: "Validacion direccion",
+        contexto: "Cancelacion"
+      }
+    ],
+    fichaTecnica: {
+      residencial: defaultResidentialSheet,
+      comercial: {
+        ...defaultCommercialSheet,
+        categoria: "Residencial",
+        clasificacion: "Casa",
+        banios: 3,
+        estacionamiento: "2 cajones"
+      }
+    },
+    historialValores: [
+      {
+        id: "vh-rtr-1",
+        propiedadClave: "RTR-2280",
+        fecha: "2025-09-02",
+        valor: 5050000,
+        moneda: "Pesos",
+        posicion: "",
+        motivoCambio: "Alta inicial",
+        motivoMinuta: "Alta",
+        usuario: "Daniela Ibarra"
+      },
+      {
+        id: "vh-rtr-2",
+        propiedadClave: "RTR-2280",
+        fecha: "2026-01-12",
+        valor: 4920000,
+        moneda: "Pesos",
+        posicion: "Ultimo",
+        motivoCambio: "Ajuste comercial",
+        motivoMinuta: "Cambio de precio",
+        usuario: "Pedro Leyva"
+      }
+    ],
+    cancelacion: {
+      fechaAvisoRecepcion: "2026-03-24",
+      fechaCancelacion: "2026-03-24",
+      motivo: "Cliente retira la propiedad del mercado.",
+      aplicaComision: false,
+      personaRegistra: "Brenda Noemi Ramirez Cardenas",
+      bajaPor: "Cancelacion",
+      comentarios: "Comunicado ya enviado al equipo completo.",
+      comunicadoId: "com-cancel-rtr-2280"
+    }
+  },
+  {
+    id: "prop-icv-441",
+    folio: 441,
+    clave: "ICV-441",
+    categoria: "Exclusiva",
+    categoriaCode: "EX",
+    giro: "Residencial",
+    giroCode: "R",
+    tipo: "Casa",
+    tipoCode: "C",
+    operacion: "Venta",
+    operacionCode: "V",
+    exclusividad: "Exclusiva",
     estatus: "Activa",
-    fechaAlta: "2026-02-18",
-    precioActual: 8350000,
-    propietario: "Familia Ochoa",
-    asesoresAlta: ["julieta-mora", "diego-ruiz"],
+    altaBaja: "Alta",
+    descripcionCorta: "Paseo del Vergel 441, La Rioja",
+    address: {
+      calle: "Paseo del Vergel",
+      noExt: "441",
+      noInt: "",
+      edificio: "",
+      piso: "",
+      entreCalles: "Camino a la Rioja",
+      colonia: "La Rioja",
+      coto: "Bosques",
+      fraccionamiento: "Privado",
+      municipio: "Monterrey",
+      cp: "64985",
+      entidad: "Nuevo Leon",
+      coordenadasGuiaRoji: "201-B"
+    },
+    agenda: {
+      condicionesVisitas: "Citas",
+      cajaNo: "9",
+      disponibilidadVisitas: "Disponible",
+      estatusLlaves: "En recepcion",
+      telCitas: "8181442200",
+      contactoCitas: "Gabriela Perez",
+      origen: "Referido",
+      origenDetalle: "Cliente informe"
+    },
+    fechas: {
+      alta: "2026-02-12",
+      aviso: "2026-02-12",
+      contrato: "2026-02-12",
+      inicioPromo: "2026-02-16"
+    },
+    referidos: {
+      idRef: "RF-ICV44",
+      nombre: "Cliente Informe",
+      empresa: "REMAX Activa"
+    },
+    ids: {
+      ampi: "ICV441",
+      remax: "RMX-ICV441",
+      catastral: "MTY-552299"
+    },
+    visitaRecorrido: "Programada",
+    comoLlegar: {
+      ligasA: "REMAX y Google Map",
+      remax: "remax-activa.com.mx/icv-441",
+      googleMap: "maps.google.com/?q=Paseo+del+Vergel+441",
+      googleEarth: "",
+      ampi: "",
+      fichaArchivo: "ICV-441",
+      ftPdf: "ICV-441.pdf",
+      comentarios: "Ficha residencial premium con dos propietarios."
+    },
+    caracteristicas: {
+      supTerreno: 280,
+      supConstruccion: 360,
+      frente: 14,
+      fondo: 20,
+      frentes: 1,
+      recamaras: 4,
+      banos: 4,
+      medioBanos: 1,
+      jardin: true,
+      estacionamientosCubiertos: 2,
+      estacionamientosDescubiertos: 1,
+      nivel: "PB-PA",
+      pisosTotales: 2,
+      exteriorInterior: "Exterior",
+      noUnidades: 1,
+      vistaA: "Parque interior",
+      elevadores: 0,
+      edad: 5,
+      formaTerreno: "Regular",
+      inclinacion: "Plano",
+      ubicacion: "Esquina",
+      usoSuelo: "Habitacional",
+      restricciones: "Reglamento condominio",
+      descripcion: "Residencia de alto valor con jardin y acabados premium.",
+      categoria: "Residencial",
+      notas: "Ficha tecnica rica para demo de propietarios y tecnica.",
+      servicios: ["Parques", "Escuelas", "Bancos", "Comercios"],
+      superficiesValores: [
+        { concepto: "Terreno", metros: 280, valor: 16000, total: 4480000 },
+        { concepto: "Construccion", metros: 360, valor: 11250, total: 4050000 }
+      ]
+    },
+    condicionesOperacion: {
+      modoComision: "politica",
+      porcentaje: 6,
+      monto: 0,
+      politicaVigente: "Venta residencial premium 6%",
+      aplicaExcepcion: false,
+      politicaAnterior: "",
+      datosConfirmados: true,
+      comentarios: "Checklist completo y datos confirmados."
+    },
+    propietarios: [
+      {
+        id: "owner-icv-1",
+        nombre: "Marcela Ochoa",
+        telefono: "8119943311",
+        correo: "marcela.ochoa@gmail.com",
+        principal: true
+      },
+      {
+        id: "owner-icv-2",
+        nombre: "Sergio Ochoa",
+        telefono: "8119943322",
+        correo: "sergio.ochoa@gmail.com",
+        principal: false
+      }
+    ],
+    asesoresAlta: [
+      {
+        advisorId: "alejandra-rios",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 70,
+        monto: 5971000,
+        tipoIntervencion: "Captacion",
+        contexto: "Alta"
+      },
+      {
+        advisorId: "ricardo-salinas",
+        nivel: "M",
+        comisionTipo: "%",
+        participacionPorcentaje: 30,
+        monto: 2559000,
+        tipoIntervencion: "Prospeccion",
+        contexto: "Alta"
+      }
+    ],
     asesoresBaja: [],
     asesoresCancelacion: [],
-    historialValores: ["vh-015", "vh-016"],
-    comunicadoIds: ["com-008"],
-    condicionesOperacion: "Venta con open house y pauta digital.",
-    fichaResumen: "Residencia lista para comercializacion premium con narrativa de lifestyle."
+    fichaTecnica: {
+      residencial: {
+        ...defaultResidentialSheet,
+        espacios: [
+          { nombre: "Sala", nivel: "PB", banos: 0, acabados: "Cantera y madera" },
+          { nombre: "Comedor", nivel: "PB", banos: 0, acabados: "Piso porcelanato" },
+          { nombre: "Estudio", nivel: "PB", banos: 0, acabados: "Muebles empotrados" },
+          { nombre: "Rec principal", nivel: "PA", banos: 1, acabados: "Vestidor y terraza" },
+          { nombre: "Rec 2", nivel: "PA", banos: 1, acabados: "Closet" }
+        ]
+      },
+      comercial: {
+        ...defaultCommercialSheet,
+        categoria: "Residencial",
+        clasificacion: "Casa premium",
+        banios: 4,
+        estacionamiento: "2 cubiertos + 1 descubierto"
+      }
+    },
+    historialValores: [
+      {
+        id: "vh-icv-1",
+        propiedadClave: "ICV-441",
+        fecha: "2026-02-12",
+        valor: 8530000,
+        moneda: "Pesos",
+        posicion: "",
+        motivoCambio: "Alta inicial",
+        motivoMinuta: "Alta",
+        usuario: "Alejandra Rios"
+      },
+      {
+        id: "vh-icv-2",
+        propiedadClave: "ICV-441",
+        fecha: "2026-03-07",
+        valor: 8350000,
+        moneda: "Pesos",
+        posicion: "Ultimo",
+        motivoCambio: "Ajuste por open house",
+        motivoMinuta: "Cambio de precio",
+        usuario: "Pedro Leyva"
+      }
+    ]
   },
   {
-    id: "prop-209",
-    clave: "RMX-ACT-209",
-    domicilio: "Av. Eugenio Garza Sada 5501",
-    colonia: "Contry",
-    ciudad: "Monterrey",
-    municipio: "Monterrey",
-    estado: "Nuevo Leon",
-    tipo: "Departamento",
-    giro: "Residencial",
-    operacion: "Venta",
-    estatus: "Cerrada",
-    fechaAlta: "2025-09-14",
-    fechaCierre: "2026-03-11",
-    precioActual: 3650000,
-    propietario: "Hector Martinez",
-    asesoresAlta: ["ricardo-salinas"],
-    asesoresBaja: ["julieta-mora", "pedro-leyva"],
-    asesoresCancelacion: [],
-    historialValores: ["vh-017", "vh-018"],
-    comunicadoIds: ["com-009"],
-    condicionesOperacion: "Venta cerrada con oferta aceptada y proceso notarial en curso.",
-    fichaResumen: "Caso de cierre colaborativo entre asesor junior y liderazgo de direccion."
-  },
-  {
-    id: "prop-210",
-    clave: "RMX-ACT-210",
-    domicilio: "Av. Fundadores 3010",
-    colonia: "Mederos",
-    ciudad: "Monterrey",
-    municipio: "Monterrey",
-    estado: "Nuevo Leon",
+    id: "prop-ohr-1182",
+    folio: 1182,
+    clave: "OHR-1182",
+    categoria: "Opcion",
+    categoriaCode: "OP",
+    giro: "Comercial",
+    giroCode: "C",
     tipo: "Oficina",
-    giro: "Comercial",
+    tipoCode: "O",
     operacion: "Renta",
+    operacionCode: "R",
+    exclusividad: "Opcion",
     estatus: "Cerrada",
-    fechaAlta: "2025-12-02",
-    fechaCierre: "2026-02-27",
-    precioActual: 110000,
-    propietario: "Operadora Sierra Azul",
-    asesoresAlta: ["mariana-cisneros", "pedro-leyva"],
-    asesoresBaja: ["pedro-leyva"],
+    altaBaja: "Baja",
+    descripcionCorta: "Av. Patria 1182, Puerta de Hierro",
+    address: {
+      calle: "Av. Patria",
+      noExt: "1182",
+      noInt: "8B",
+      edificio: "Torre Ejecutiva",
+      piso: "8",
+      entreCalles: "",
+      colonia: "Puerta de Hierro",
+      coto: "",
+      fraccionamiento: "",
+      municipio: "Zapopan",
+      cp: "45116",
+      entidad: "Jalisco",
+      coordenadasGuiaRoji: ""
+    },
+    agenda: {
+      condicionesVisitas: "Citas",
+      cajaNo: "",
+      disponibilidadVisitas: "Disponible",
+      estatusLlaves: "Recepcion",
+      telCitas: "3330001100",
+      contactoCitas: "Mariana Cisneros",
+      origen: "Personal",
+      origenDetalle: ""
+    },
+    fechas: {
+      alta: "2025-12-02",
+      aviso: "2025-12-02",
+      contrato: "2025-12-03",
+      inicioPromo: "2025-12-05"
+    },
+    referidos: {
+      idRef: "",
+      nombre: "",
+      empresa: ""
+    },
+    ids: {
+      ampi: "",
+      remax: "RMX-OHR1182",
+      catastral: ""
+    },
+    visitaRecorrido: "Visitada",
+    comoLlegar: {
+      ligasA: "REMAX",
+      remax: "remax-activa.com.mx/ohr-1182",
+      googleMap: "",
+      googleEarth: "",
+      ampi: "",
+      fichaArchivo: "OHR-1182",
+      ftPdf: "OHR-1182.pdf",
+      comentarios: "Caso util para mostrar asesor con rol en alta y cierre."
+    },
+    caracteristicas: {
+      supTerreno: 180,
+      supConstruccion: 180,
+      frente: 10,
+      fondo: 18,
+      frentes: 1,
+      recamaras: 0,
+      banos: 2,
+      medioBanos: 0,
+      jardin: false,
+      estacionamientosCubiertos: 4,
+      estacionamientosDescubiertos: 0,
+      nivel: "8",
+      pisosTotales: 1,
+      exteriorInterior: "Interior",
+      noUnidades: 1,
+      vistaA: "Zona corporativa",
+      elevadores: 2,
+      edad: 7,
+      formaTerreno: "Regular",
+      inclinacion: "Plano",
+      ubicacion: "Torre",
+      usoSuelo: "Oficina",
+      restricciones: "",
+      descripcion: "Oficina cerrada por contrato anual.",
+      categoria: "Comercial",
+      notas: "Pedro Leyva participa tanto en alta como en cierre.",
+      servicios: ["Bancos", "Comercios", "Transportes"],
+      superficiesValores: [
+        { concepto: "Oficina", metros: 180, valor: 611, total: 110000 }
+      ]
+    },
+    condicionesOperacion: {
+      modoComision: "monto",
+      porcentaje: 0,
+      monto: 110000,
+      politicaVigente: "Monto de colocacion",
+      aplicaExcepcion: false,
+      politicaAnterior: "",
+      datosConfirmados: true,
+      comentarios: "Monto fijo por renta anual."
+    },
+    condicionesRenta: {
+      anos: 2,
+      formaPago: "Mensual",
+      rentaAdelantada: false,
+      rentaDeposito: true,
+      aplicaFianza: false,
+      afianzadora: "",
+      montoFianza: 0,
+      fiadorSolidario: true,
+      fiadorBienRaiz: false,
+      contratoTransaccion: true,
+      vigencia: "24 meses",
+      contratoIntermediacion: true,
+      seguroDanios: false,
+      seguroResponsabilidadCivil: true,
+      investigacion: false,
+      costoInvestigacion: 0,
+      investigador: "",
+      herramientaJuridica: "Convenio",
+      abogado: "Lic. Carlos Meza",
+      notario: "",
+      empresa: "Puerta de Hierro Offices",
+      aplicaMantenimiento: true,
+      montoMantenimiento: 9500,
+      periodoMantenimiento: "Mensual",
+      observaciones: "Contrato cerrado en Q1."
+    },
+    propietarios: [
+      {
+        id: "owner-ohr-1",
+        nombre: "Operadora Ejecutiva PH",
+        telefono: "3332150012",
+        correo: "contacto@executivaph.mx",
+        principal: true
+      }
+    ],
+    asesoresAlta: [
+      {
+        advisorId: "mariana-cisneros",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 70,
+        monto: 77000,
+        tipoIntervencion: "Alta",
+        contexto: "Alta"
+      },
+      {
+        advisorId: "pedro-leyva",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 30,
+        monto: 33000,
+        tipoIntervencion: "Direccion comercial",
+        contexto: "Alta"
+      }
+    ],
+    asesoresBaja: [
+      {
+        advisorId: "pedro-leyva",
+        nivel: "A",
+        comisionTipo: "%",
+        participacionPorcentaje: 100,
+        monto: 110000,
+        tipoIntervencion: "Cierre",
+        contexto: "Baja / cierre"
+      }
+    ],
     asesoresCancelacion: [],
-    historialValores: ["vh-019", "vh-020"],
-    comunicadoIds: ["com-010"],
-    condicionesOperacion: "Contrato a 24 meses con opcion de expansion.",
-    fichaResumen: "Ejemplo clave de asesor con multiples roles en la misma propiedad."
-  },
-  {
-    id: "prop-211",
-    clave: "RMX-ACT-211",
-    domicilio: "Av. Ruiz Cortines 1410",
-    colonia: "Mitras Norte",
-    ciudad: "Monterrey",
-    municipio: "Monterrey",
-    estado: "Nuevo Leon",
-    tipo: "Local",
-    giro: "Comercial",
-    operacion: "Venta",
-    estatus: "Cerrada",
-    fechaAlta: "2025-08-09",
-    fechaCierre: "2026-01-22",
-    precioActual: 5400000,
-    propietario: "Inmuebles Vanyor",
-    asesoresAlta: ["andres-galvan", "sofia-campos"],
-    asesoresBaja: ["andres-galvan"],
-    asesoresCancelacion: [],
-    historialValores: ["vh-021", "vh-022"],
-    comunicadoIds: ["com-011"],
-    condicionesOperacion: "Venta de contado con revision legal cerrada.",
-    fichaResumen: "Operacion comercial cerrada con continuidad completa del asesor lider."
-  },
-  {
-    id: "prop-212",
-    clave: "RMX-ACT-212",
-    domicilio: "Calle Nubes 145",
-    colonia: "Cumbres Madeira",
-    ciudad: "Monterrey",
-    municipio: "Monterrey",
-    estado: "Nuevo Leon",
-    tipo: "Casa",
-    giro: "Residencial",
-    operacion: "Venta",
-    estatus: "Cancelada",
-    fechaAlta: "2025-11-05",
-    fechaCancelacion: "2026-03-08",
-    precioActual: 3980000,
-    propietario: "Lorena Fuentes",
-    asesoresAlta: ["valeria-ordonez"],
-    asesoresBaja: [],
-    asesoresCancelacion: ["pedro-leyva", "valeria-ordonez"],
-    historialValores: ["vh-023", "vh-024"],
-    comunicadoIds: ["com-012"],
-    condicionesOperacion: "Expediente cancelado por retiro voluntario del propietario.",
-    fichaResumen: "Caso de cancelacion donde el mismo asesor puede quedar trazado desde alta hasta salida."
-  },
-  {
-    id: "prop-213",
-    clave: "RMX-ACT-213",
-    domicilio: "Av. Miguel Aleman 920",
-    colonia: "La Fe",
-    ciudad: "San Nicolas de los Garza",
-    municipio: "San Nicolas de los Garza",
-    estado: "Nuevo Leon",
-    tipo: "Bodega",
-    giro: "Industrial",
-    operacion: "Renta",
-    estatus: "Cancelada",
-    fechaAlta: "2026-01-10",
-    fechaCancelacion: "2026-02-20",
-    precioActual: 135000,
-    propietario: "Transporte Krest",
-    asesoresAlta: ["tomas-herrera"],
-    asesoresBaja: [],
-    asesoresCancelacion: ["daniela-ibarra"],
-    historialValores: ["vh-025"],
-    comunicadoIds: ["com-013"],
-    condicionesOperacion: "Renta detenida por cambio de decision del propietario.",
-    fichaResumen: "Expediente industrial util para mostrar cancelaciones con responsables distintos."
-  },
-  {
-    id: "prop-214",
-    clave: "RMX-ACT-214",
-    domicilio: "Priv. de las Villas 18",
-    colonia: "Villas de Anahuac",
-    ciudad: "Escobedo",
-    municipio: "Escobedo",
-    estado: "Nuevo Leon",
-    tipo: "Casa",
-    giro: "Residencial",
-    operacion: "Renta",
-    estatus: "Cancelada",
-    fechaAlta: "2025-12-20",
-    fechaCancelacion: "2026-03-17",
-    precioActual: 32000,
-    propietario: "Sandra Morales",
-    asesoresAlta: ["karla-soto", "diego-ruiz"],
-    asesoresBaja: [],
-    asesoresCancelacion: ["karla-soto"],
-    historialValores: ["vh-026", "vh-027"],
-    comunicadoIds: ["com-014"],
-    condicionesOperacion: "Cancelacion por baja respuesta del propietario tras ultimo ajuste.",
-    fichaResumen: "Otra muestra donde un asesor conserva su rol de alta y cancelacion en el mismo inmueble."
+    fichaTecnica: {
+      residencial: defaultResidentialSheet,
+      comercial: {
+        ...defaultCommercialSheet,
+        categoria: "Comercial",
+        clasificacion: "Oficina",
+        estacionamiento: "4 cajones cubiertos"
+      }
+    },
+    historialValores: [
+      {
+        id: "vh-ohr-1",
+        propiedadClave: "OHR-1182",
+        fecha: "2025-12-02",
+        valor: 118000,
+        moneda: "Pesos",
+        posicion: "",
+        motivoCambio: "Alta inicial",
+        motivoMinuta: "Alta",
+        usuario: "Mariana Cisneros"
+      },
+      {
+        id: "vh-ohr-2",
+        propiedadClave: "OHR-1182",
+        fecha: "2026-02-14",
+        valor: 110000,
+        moneda: "Pesos",
+        posicion: "Ultimo",
+        motivoCambio: "Paquete de cierre",
+        motivoMinuta: "Cambio de precio",
+        usuario: "Pedro Leyva"
+      }
+    ],
+    baja: {
+      fechaBaja: "2026-02-28",
+      tipoCierre: "Cerrada",
+      condicionCierre: "Renta anual firmada con mantenimiento incluido",
+      personaRegistra: "Patricia Romo",
+      comentarios: "Ejemplo claro del bug de Access resuelto con multirol.",
+      comunicadoId: "com-baja-ohr-1182"
+    }
   }
 ];

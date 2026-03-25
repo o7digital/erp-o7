@@ -1,25 +1,20 @@
 import Link from "next/link";
 
 import { DataTable } from "@/components/data-table";
-import { SectionCard } from "@/components/section-card";
-import { StatCard } from "@/components/stat-card";
 import { StatusBadge } from "@/components/status-badge";
 import { CommunicationsPreview } from "@/remax-demo/components/communications-preview";
+import { AccessSection } from "@/remax-demo/components/access-section";
 import { RemaxPageHeader } from "@/remax-demo/components/remax-page-header";
 import { remaxDemoCommunications } from "@/remax-demo/data";
-import { formatDateLong, getSingleSearchParam } from "@/remax-demo/formatters";
-import {
-  getCommunicationById,
-  getCommunicationsByType,
-  getPropertyByClave
-} from "@/remax-demo/stats";
+import { getSingleSearchParam } from "@/remax-demo/formatters";
+import { getCommunicationById, getCommunicationsByType, getPropertyByClave } from "@/remax-demo/stats";
 
-function getStatusTone(status: string) {
+function getTone(status: string) {
   if (status === "enviado") {
     return "success" as const;
   }
 
-  if (status === "pendiente") {
+  if (status === "borrador") {
     return "warning" as const;
   }
 
@@ -32,136 +27,74 @@ export default async function ComunicadosPage({
   searchParams: Promise<{ comunicado?: string | string[] }>;
 }) {
   const params = await searchParams;
-  const selectedId = getSingleSearchParam(params.comunicado) ?? "com-012";
-  const selectedCommunication =
-    getCommunicationById(selectedId) ?? [...remaxDemoCommunications].sort((a, b) => b.fecha.localeCompare(a.fecha))[0];
-  const selectedProperty = getPropertyByClave(selectedCommunication.propiedadClave);
-  const enviados = remaxDemoCommunications.filter((item) => item.estado === "enviado").length;
-  const pendientes = remaxDemoCommunications.filter((item) => item.estado === "pendiente").length;
-  const borradores = remaxDemoCommunications.filter((item) => item.estado === "borrador").length;
+  const selectedId = getSingleSearchParam(params.comunicado) ?? "com-cancel-rtr-2280";
+  const communication = getCommunicationById(selectedId) ?? remaxDemoCommunications[0];
+  const property = getPropertyByClave(communication.propiedadClave);
 
   return (
-    <div className="page-stack">
+    <div className="remax-page-stack">
       <RemaxPageHeader
-        eyebrow="Automatizacion y trazabilidad"
         title="Comunicados"
-        description="Modulo demo para demostrar que cada alta, baja o cancelacion puede generar y registrar un comunicado dentro del sistema, sin depender de Access mas Outlook manual."
+        description="Pantalla dedicada a los comunicados de alta, baja y cancelacion. El objetivo es enseñar el reemplazo de Access + Outlook manual por un registro centralizado."
         actions={
-          <div className="button-row">
-            <Link href="/remax-demo/dashboard" className="button button-secondary">
-              Volver al dashboard
+          <div className="remax-header-actions">
+            <Link href="/remax-demo/cancelacion?step=comunicado&propiedad=RTR-2280" className="button">
+              Comunicado cancelacion
             </Link>
-            <Link href="/remax-demo/arquitectura" className="button">
-              Ver roadmap
+            <Link href="/remax-demo/alta?step=asesores&propiedad=IBR-OP277" className="button button-secondary">
+              Volver a operacion
             </Link>
           </div>
         }
       />
 
-      <div className="stats-grid">
-        <StatCard label="Enviados" value={String(enviados)} detail="Listos y auditables" />
-        <StatCard label="Pendientes" value={String(pendientes)} detail="Esperan disparador o anexos" />
-        <StatCard label="Borradores" value={String(borradores)} detail="Pendientes de validacion" />
-        <StatCard
-          label="Tipos activos"
-          value="ALTA / BAJA / CANCELACION"
-          detail="Flujos homologados"
-        />
+      <div className="remax-summary-strip">
+        <div>
+          <span>ALTA</span>
+          <strong>{getCommunicationsByType("ALTA").length}</strong>
+        </div>
+        <div>
+          <span>BAJA</span>
+          <strong>{getCommunicationsByType("BAJA").length}</strong>
+        </div>
+        <div>
+          <span>CANCELACION</span>
+          <strong>{getCommunicationsByType("CANCELACION").length}</strong>
+        </div>
       </div>
 
-      <div className="two-columns">
-        <SectionCard
-          title="Registro de comunicados"
-          description="Listado centralizado por tipo, propiedad, fecha, destinatarios y estado."
-        >
+      <div className="remax-two-columns">
+        <AccessSection title="Bitacora de comunicados">
           <DataTable
-            rows={[...remaxDemoCommunications].sort((left, right) => right.fecha.localeCompare(left.fecha))}
+            rows={remaxDemoCommunications}
             getRowId={(row) => row.id}
             columns={[
               {
                 key: "asunto",
-                label: "Comunicado",
+                label: "Asunto",
                 render: (row) => (
-                  <div>
-                    <Link href={`/remax-demo/comunicados?comunicado=${row.id}`}>
-                      <strong>{row.asunto}</strong>
-                    </Link>
-                    <div className="muted">{row.propiedadClave}</div>
-                  </div>
+                  <Link href={`/remax-demo/comunicados?comunicado=${row.id}`}>
+                    <strong>{row.asunto}</strong>
+                  </Link>
                 )
               },
-              {
-                key: "tipo",
-                label: "Tipo",
-                render: (row) => <StatusBadge value={row.tipo} tone={row.tipo === "BAJA" ? "info" : row.tipo === "CANCELACION" ? "danger" : "success"} />
-              },
-              {
-                key: "fecha",
-                label: "Fecha",
-                render: (row) => formatDateLong(row.fecha)
-              },
-              {
-                key: "destinatarios",
-                label: "Destinatarios",
-                render: (row) => `${row.destinatarios.length} contactos`
-              },
+              { key: "tipo", label: "Tipo", render: (row) => row.tipo },
+              { key: "propiedad", label: "Propiedad", render: (row) => row.propiedadClave },
+              { key: "fecha", label: "Fecha", render: (row) => row.fecha },
+              { key: "destinatarios", label: "Destinatarios", render: (row) => `${row.destinatarios.length} contactos` },
               {
                 key: "estado",
                 label: "Estado",
-                render: (row) => <StatusBadge value={row.estado} tone={getStatusTone(row.estado)} />
+                render: (row) => <StatusBadge value={row.estado} tone={getTone(row.estado)} />
               }
             ]}
           />
-        </SectionCard>
+        </AccessSection>
 
-        <SectionCard
-          title="Preview del comunicado"
-          description="Panel lateral para mostrar como se veria el mensaje y su rastro operativo."
-        >
-          <CommunicationsPreview
-            communication={selectedCommunication}
-            property={selectedProperty}
-          />
-        </SectionCard>
+        <AccessSection title="Preview del comunicado" accent="red">
+          <CommunicationsPreview communication={communication} property={property} />
+        </AccessSection>
       </div>
-
-      <SectionCard
-        title="Automatizacion propuesta"
-        description="Mensaje comercial claro: el sistema moderno centraliza plantillas, disparadores y auditoria."
-      >
-        <div className="remax-context-grid">
-          <article className="remax-context-card">
-            <span>Trigger</span>
-            <strong>Alta / baja / cancelacion</strong>
-            <p>Un cambio operativo dispara el comunicado desde la propia webapp.</p>
-          </article>
-          <article className="remax-context-card">
-            <span>Plantilla</span>
-            <strong>Contenido homologado</strong>
-            <p>Se controla asunto, resumen, destinatarios y estado dentro del sistema.</p>
-          </article>
-          <article className="remax-context-card">
-            <span>Auditoria</span>
-            <strong>Bitacora centralizada</strong>
-            <p>Direccion y administrativos pueden revisar que se envio y cuando.</p>
-          </article>
-        </div>
-
-        <div className="remax-compact-list">
-          <div>
-            <span>Altas</span>
-            <strong>{getCommunicationsByType("ALTA").length}</strong>
-          </div>
-          <div>
-            <span>Bajas</span>
-            <strong>{getCommunicationsByType("BAJA").length}</strong>
-          </div>
-          <div>
-            <span>Cancelaciones</span>
-            <strong>{getCommunicationsByType("CANCELACION").length}</strong>
-          </div>
-        </div>
-      </SectionCard>
     </div>
   );
 }

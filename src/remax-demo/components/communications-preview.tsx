@@ -1,5 +1,5 @@
 import { StatusBadge } from "@/components/status-badge";
-import { formatDateLong } from "@/remax-demo/formatters";
+import { formatDateLong, formatPropertyAddress } from "@/remax-demo/formatters";
 import type { RemaxCommunication, RemaxProperty } from "@/remax-demo/types";
 
 function getTone(status: RemaxCommunication["estado"]) {
@@ -7,11 +7,7 @@ function getTone(status: RemaxCommunication["estado"]) {
     return "success" as const;
   }
 
-  if (status === "pendiente") {
-    return "warning" as const;
-  }
-
-  return "neutral" as const;
+  return status === "borrador" ? ("warning" as const) : ("neutral" as const);
 }
 
 export function CommunicationsPreview({
@@ -38,12 +34,16 @@ export function CommunicationsPreview({
         </div>
         <div className="info-item">
           <span>Fecha</span>
-          <strong>{formatDateLong(communication.fecha)}</strong>
-        </div>
-        <div className="info-item">
-          <span>Propiedad</span>
-          <strong>{property ? `${property.clave} · ${property.domicilio}` : communication.propiedadClave}</strong>
-        </div>
+            <strong>{formatDateLong(communication.fecha)}</strong>
+          </div>
+          <div className="info-item">
+            <span>Propiedad</span>
+            <strong>
+              {property
+                ? `${property.clave} · ${formatPropertyAddress(property)}`
+                : communication.propiedadClave}
+            </strong>
+          </div>
         <div className="info-item">
           <span>Destinatarios</span>
           <strong>{communication.destinatarios.length}</strong>
@@ -53,6 +53,11 @@ export function CommunicationsPreview({
       <div className="remax-message-box">
         <p className="muted">Resumen registrado</p>
         <p>{communication.resumen}</p>
+      </div>
+
+      <div className="remax-message-box">
+        <p className="muted">Firma</p>
+        <p>{communication.firma}</p>
       </div>
 
       <div className="remax-message-box">
